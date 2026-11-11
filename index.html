@@ -99,6 +99,17 @@ p{margin:0}
 .onepage b{font:800 28px/1 var(--head);color:var(--gold-2)}
 .onepage span{font-size:14px;color:#d4e5e3}
 @media (max-width:900px){.hero .wrap{grid-template-columns:1fr}}
+.hero.photo{background:linear-gradient(100deg,rgba(8,34,36,.94) 0%,rgba(11,52,53,.84) 42%,rgba(11,52,53,.35) 100%),var(--img) center/cover no-repeat}
+.hero.photo::before{display:none}
+@media (max-width:900px){.hero.photo{background:linear-gradient(180deg,rgba(8,34,36,.9),rgba(11,52,53,.82)),var(--img) center/cover no-repeat}}
+.photos{display:grid;grid-template-columns:1.35fr 1fr 1fr;gap:14px}
+.photos figure{margin:0;position:relative;border-radius:16px;overflow:hidden;background:#0b2b2e;min-height:230px}
+.photos img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s}
+.photos figure:hover img{transform:scale(1.03)}
+.photos figcaption{position:absolute;inset:auto 0 0 0;padding:28px 14px 12px;background:linear-gradient(transparent,rgba(5,25,27,.85));color:#fff;font:600 13.5px/1.35 var(--body)}
+.photos figcaption small{display:block;font-weight:500;font-size:11.5px;opacity:.75;margin-top:2px}
+@media (max-width:800px){.photos{grid-template-columns:1fr}.photos figure{min-height:200px}}
+#v-ingresar{background:linear-gradient(rgba(8,34,36,.72),rgba(8,34,36,.72)),url(img/sismo-rescate.jpg) center/cover no-repeat;min-height:calc(100vh - 66px)}
 
 /* sections */
 section.band{padding-block:56px}
@@ -278,7 +289,7 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
 <main id="main">
 <!-- =================== PÚBLICO =================== -->
 <div id="v-inicio" data-view>
-  <section class="hero"><div class="wrap">
+  <section class="hero photo" style="--img:url(img/sismo-catedral.jpg)"><div class="wrap">
     <div>
       <span class="eyebrow">Plan de Acción Específico · PAE departamental</span>
       <h1>Plataforma Departamental de Consolidación del PAE</h1>
@@ -301,6 +312,17 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
       <div class="grid4" id="pubKpis"></div>
       <div style="display:flex;gap:10px;flex-wrap:wrap;margin:20px 0 12px;align-items:center"><span class="chip sin">Sin iniciar</span><span class="chip dil">En diligenciamiento</span><span class="chip env">Enviado</span><span class="chip val">Validado</span><span class="muted" id="pubCorte" style="margin-left:auto;font-size:13px"></span></div>
       <div class="mgrid" id="pubMunis"></div>
+    </div>
+  </section>
+
+  <section class="band cream" aria-labelledby="h-fotos">
+    <div class="wrap">
+      <div class="shead"><div><h2 id="h-fotos">Lo que estamos reconstruyendo</h2><p>Detrás de cada cifra de esta plataforma hay una vereda, una plaza o una casa que hay que levantar de nuevo.</p></div></div>
+      <div class="photos">
+        <figure><img src="img/sismo-limpieza-sm.jpg" srcset="img/sismo-limpieza-sm.jpg 900w, img/sismo-limpieza.jpg 1800w" sizes="(max-width:800px) 100vw, 40vw" alt="Vecinos retiran escombros de una casa colapsada en un municipio de Caldas" loading="lazy"><figcaption>Remoción de escombros con la comunidad<small>Ilustración</small></figcaption></figure>
+        <figure><img src="img/sismo-policia-sm.jpg" srcset="img/sismo-policia-sm.jpg 900w, img/sismo-policia.jpg 1800w" sizes="(max-width:800px) 100vw, 30vw" alt="Un policía recorre una calle con una edificación colapsada" loading="lazy"><figcaption>Seguridad en las zonas afectadas<small>Ilustración</small></figcaption></figure>
+        <figure><img src="img/sismo-rescate-sm.jpg" srcset="img/sismo-rescate-sm.jpg 900w, img/sismo-rescate.jpg 1800w" sizes="(max-width:800px) 100vw, 30vw" alt="Rescatistas caminan entre las ruinas de una iglesia y casas derrumbadas" loading="lazy"><figcaption>Búsqueda, rescate y evaluación de daños<small>Ilustración</small></figcaption></figure>
+      </div>
     </div>
   </section>
 
@@ -359,7 +381,7 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
 
 <!-- =================== PROYECTOS FASE III =================== -->
 <div id="v-fase3" data-view hidden>
-  <section class="hero"><div class="wrap" style="grid-template-columns:1fr">
+  <section class="hero photo" style="--img:url(img/sismo-maquinaria.jpg)"><div class="wrap" style="grid-template-columns:1fr">
     <div>
       <span class="eyebrow">Cartera Única · madurez de proyectos</span>
       <h1>Proyectos Fase III</h1>
