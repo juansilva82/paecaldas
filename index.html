@@ -54,6 +54,21 @@ p{margin:0}
 .nav a[aria-current="page"]{background:var(--teal);color:#fff}
 .nav .who{font:600 12.5px var(--body);color:var(--muted);padding:0 6px}
 .nav a.cta{background:var(--gold);color:#fff}
+.f3filters{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;margin:22px 0 16px}
+.f3filters label{display:flex;flex-direction:column;gap:4px;font:600 12.5px var(--body);color:var(--muted);min-width:150px;max-width:280px}
+.f3filters label.grow{max-width:none}
+.f3filters label.grow{flex:1;min-width:200px}
+.f3filters select,.f3filters input{font:14px var(--body);padding:9px 10px;border:1px solid #d6d3c9;border-radius:10px;background:#fff;color:var(--ink,#1d2b2a)}
+.f3list{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:14px}
+.f3card{background:#fff;border:1px solid #e4e1d8;border-radius:16px;padding:16px 18px;display:flex;flex-direction:column;gap:8px}
+.f3card h3{font:700 16px/1.3 var(--head);color:var(--teal);margin:0}
+.f3card .top{display:flex;justify-content:space-between;gap:8px;align-items:flex-start;font:600 12.5px var(--body);color:var(--muted)}
+.f3card p{margin:0;font-size:13.5px;color:#3f4a49}
+.f3card .tags{display:flex;flex-wrap:wrap;gap:6px}
+.f3card .tag{font:600 11.5px var(--body);background:var(--soft);color:var(--teal);padding:4px 8px;border-radius:999px}
+.f3card .tag.ok{background:#e3f1e7;color:#22663a}.f3card .tag.no{background:#f7ece0;color:#8a5a1d}
+.f3card .money{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;border-top:1px solid #eee;padding-top:8px;margin-top:auto}
+.f3card .money b{display:block;font:700 14px var(--head);color:var(--ink,#1d2b2a)}.f3card .money span{font-size:11.5px;color:var(--muted)}
 @media (max-width:760px){.brand img.rea{display:none}.top{position:static}}
 
 /* buttons */
@@ -342,6 +357,31 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
   </section>
 </div>
 
+<!-- =================== PROYECTOS FASE III =================== -->
+<div id="v-fase3" data-view hidden>
+  <section class="hero"><div class="wrap" style="grid-template-columns:1fr">
+    <div>
+      <span class="eyebrow">Cartera Única · madurez de proyectos</span>
+      <h1>Proyectos Fase III</h1>
+      <p class="lead">Proyectos que los municipios reportan con estudios y diseños definitivos (Fase III de la MGA: factibilidad) o ya listos para gestionar recursos. Son los que pueden presentarse de inmediato al Fondo Milagro, al SGR, a la Subcuenta Sismo 2026, a obras por impuestos o a cooperación.</p>
+      <span class="pill" id="f3Corte">Cargando…</span>
+    </div>
+  </div></section>
+  <section class="band white"><div class="wrap">
+    <div class="grid4" id="f3Kpis"></div>
+    <div class="f3filters">
+      <label>Subregión<select id="f3Sub"><option value="">Todas</option></select></label>
+      <label>Municipio<select id="f3Mun"><option value="">Todos</option></select></label>
+      <label>Línea PAE<select id="f3Lin"><option value="">Todas</option></select></label>
+      <label>Etapa<select id="f3Eta"><option value="">Fase III y listos para recursos</option><option>Factibilidad y diseños</option><option>Para gestión de recursos</option></select></label>
+      <label class="grow">Buscar<input id="f3Q" type="search" placeholder="Nombre, objetivo, localización…"></label>
+      <button class="btn small" type="button" id="f3Xlsx">Descargar Excel</button>
+    </div>
+    <div id="f3List" class="f3list"></div>
+    <div class="note info" style="margin-top:18px"><b class="t">Cómo entra un proyecto a esta lista</b>El municipio registra el proyecto en su reporte con la etapa «Factibilidad y diseños» o «Para gestión de recursos». La marca <em>Validado</em> indica que la Gobernación ya revisó el reporte del municipio; los demás son información reportada por el municipio, pendiente de validación.</div>
+  </div></section>
+</div>
+
 <!-- =================== LOGIN =================== -->
 <div id="v-ingresar" data-view hidden>
   <div class="wrap">
@@ -432,7 +472,7 @@ async function demo(a,b){
   const db=demoDB(),u=SES&&SES.usuario,adm=u==="gobernacion";
   const done=x=>{demoSave(db);return x};
   if(a==="login"){if(b.clave!=="demo")return{ok:false,error:"En modo demostración la contraseña es «demo»"};const m=MUNI[b.usuario];demoLog(db,b.usuario,m?b.usuario:"","Ingresó a la plataforma");return done({ok:true,token:"demo",usuario:b.usuario,rol:b.usuario==="gobernacion"?"gobernacion":"municipio",municipio:m||null})}
-  if(a==="publico"){return{ok:true,datos:{municipios:MUN.map(m=>{const r=demoRep(db,m.dane);return pubAgg(m,r.estado,r.actualizado,r.reporte,r.adm.lineaBase)}),acciones:db.acciones||window.PAE_ACCIONES||[],corte:new Date().toISOString()}}}
+  if(a==="publico"){return{ok:true,datos:{municipios:MUN.map(m=>{const r=demoRep(db,m.dane);return pubAgg(m,r.estado,r.actualizado,r.reporte,r.adm.lineaBase)}),fase3:MUN.flatMap(m=>{const r=demoRep(db,m.dane);return fase3Of(r.reporte,m,r.estado)}),acciones:db.acciones||window.PAE_ACCIONES||[],corte:new Date().toISOString()}}}
   if(a==="mi")return done({ok:true,reporte:demoOut(u,demoRep(db,u),false)});
   if(a==="guardar"){const d=adm?b.dane:u,r=demoRep(db,d);if(Number(b.version)!==r.version)return{ok:false,error:"conflicto",mensaje:"Hay una versión más reciente.",reporte:demoOut(d,r,adm)};if(r.estado==="sin iniciar")r.estado="diligenciamiento";if(r.estado==="validado"&&!adm){r.estado="enviado";demoLog(db,u,d,"Editó un reporte validado: vuelve a «enviado»")}r.reporte=b.reporte;r.version++;r.actualizado=new Date().toISOString();return done({ok:true,version:r.version,estado:r.estado,actualizado:r.actualizado})}
   if(a==="enviar"){const r=demoRep(db,u);r.estado="enviado";r.enviado=new Date().toISOString();demoLog(db,u,u,"Envió el reporte a la Gobernación");return done({ok:true,estado:"enviado"})}
@@ -454,6 +494,11 @@ function pubAgg(m,estado,act,rep,lb){
   N.forEach(x=>{if(x.sector)porSector[x.sector]=(porSector[x.sector]||0)+1});
   return{dane:m.dane,municipio:m.nombre,subregion:m.subregion,estado,actualizado:act,necesidades:N.length,urgenciaAlta:N.filter(x=>x.urgencia==="Alta").length,personas:N.reduce((a,x)=>a+num(x.personas),0),intervenciones:I.length,costoIntervenciones:I.reduce((a,x)=>a+num(x.costo),0),proyectos:P.length,costoProyectos:P.reduce((a,x)=>a+num(x.costo),0),confirmado:P.reduce((a,x)=>a+num(x.confirmado),0),porLinea,porEje,porTax,porSector,lineaBase:lb||{}};
 }
+
+/* Proyectos en Fase III (estudios y diseños definitivos) o listos para gestionar recursos — misma regla que el servidor */
+const ETAPAS_FASE3=["Factibilidad y diseños","Para gestión de recursos"];
+function fase3Of(rep,m,estado){const I={};(rep.intervenciones||[]).forEach(x=>I[x.id]=x);
+  return(rep.proyectos||[]).filter(x=>ETAPAS_FASE3.includes(x.etapa)&&x.nombre).map(x=>{const iv=I[x.intervencion]||{};return{dane:m.dane,municipio:m.nombre,subregion:m.subregion,estado,id:x.id||"",nombre:x.nombre||"",objetivo:x.objetivo||"",producto:x.producto||"",localizacion:x.localizacion||"",beneficiarios:num(x.beneficiarios),etapa:x.etapa,linea:iv.linea||"",eje:iv.eje||"",taxonomia:iv.taxonomia||"",costo:num(x.costo),confirmado:num(x.confirmado),via:x.via||"",estudios:x.estudios||"",predio:x.predio||"",presupuesto:x.presupuesto||""}})}
 
 /* ================= ESQUEMA DEL REPORTE ================= */
 const opts=a=>a.map(x=>[x,x]);
@@ -477,7 +522,7 @@ const F={
   {k:"cp",l:"De ese costo: corto plazo 2026–2027",type:"money"},{k:"mp",l:"Mediano plazo 2028–2030",type:"money"},{k:"_eje",l:"Eje (según la línea)",type:"derived"},
   {k:"taxonomia",l:"Código Taxonomía Nacional",type:"tax",cls:"full",hint:"Para el reporte a la UNGRD (formato FR-1703-SMD-11)"}],
  pro:[
-  {k:"intervencion",l:"Intervención principal",type:"ref",ref:"int",req:1,cls:"two"},{k:"etapa",l:"Etapa del proyecto",type:"select",o:opts(L.etapa),req:1},
+  {k:"intervencion",l:"Intervención principal",type:"ref",ref:"int",req:1,cls:"two"},{k:"etapa",l:"Etapa del proyecto",type:"select",o:opts(L.etapa),req:1,hint:"«Factibilidad y diseños» = Fase III MGA; se publica en Proyectos Fase III"},
   {k:"nombre",l:"Nombre del proyecto",req:1,cls:"two"},{k:"responsable",l:"Responsable",req:1},
   {k:"problema",l:"Problema",type:"textarea",req:1,cls:"full"},{k:"objetivo",l:"Objetivo",type:"textarea",req:1,cls:"full"},
   {k:"producto",l:"Producto"},{k:"localizacion",l:"Localización"},{k:"beneficiarios",l:"Beneficiarios",type:"number"},
@@ -512,7 +557,7 @@ function alertas(rep){
 /* ================= NAV / ROUTER ================= */
 function renderNav(){
   const v=(location.hash||"#inicio").slice(1);
-  let h=`<a href="#inicio">Consolidado</a><a href="#acciones">Acciones de la Gobernación</a>`;
+  let h=`<a href="#inicio">Consolidado</a><a href="#acciones">Acciones de la Gobernación</a><a href="#fase3">Proyectos Fase III</a>`;
   if(SES&&SES.rol==="municipio")h+=`<a href="#municipio">Mi reporte</a>`;
   if(SES&&SES.rol==="gobernacion")h+=`<a href="#gobernacion">Panel Gobernación</a>`;
   h+=`<a href="instructivo-pae-caldas.pdf" target="_blank" rel="noopener">Instructivo</a>`;
@@ -522,7 +567,7 @@ function renderNav(){
   $$("#nav a").forEach(a=>{if(a.getAttribute("href")==="#"+v)a.setAttribute("aria-current","page")});
   const lb=$("#logoutBtn");if(lb)lb.addEventListener("click",()=>logout());
 }
-const VIEWS=["inicio","ingresar","municipio","gobernacion"];
+const VIEWS=["inicio","fase3","ingresar","municipio","gobernacion"];
 function route(){
   let v=(location.hash||"#inicio").slice(1);
   const anc=["consolidado","acciones"].includes(v)?v:null;
@@ -535,6 +580,7 @@ function route(){
   $$("[data-view]").forEach(el=>el.hidden=el.id!=="v-"+v);
   renderNav();
   if(v==="inicio")loadPublic();
+  if(v==="fase3")loadFase3();
   if(v==="ingresar")initLogin();
   if(v==="municipio")openMunicipio();
   if(v==="gobernacion")openGob();
@@ -591,6 +637,42 @@ async function loadPublic(){
   hbars($("#pubSub"),[["Centro Sur",13984,"· 59,5 %"],["Bajo Occidente",3996,"· 17,0 %"],["Alto Occidente",2310,"· 9,8 %"],["Norte",1977,"· 8,4 %"],["Alto Oriente",685,"· 2,9 %"],["Magdalena Caldense",540,"· 2,3 %"]],"var(--gold)");
   renderAcciones(d.acciones||[],$("#pubAcc"));
 }
+
+/* ================= PROYECTOS FASE III ================= */
+let F3=null;
+async function loadFase3(){
+  try{const j=DEMO?await demo("publico"):await apiGet({action:"publico"});if(!j.ok)throw new Error(j.error);F3=j.datos.fase3||[];$("#f3Corte").textContent="Corte: "+fdt(j.datos.corte)+(DEMO?" · modo demostración":"")}
+  catch(e){$("#f3List").innerHTML='<div class="empty">No fue posible cargar los proyectos. Intente recargar la página.</div>';return}
+  const opt=(sel,vals)=>{const cur=sel.value;sel.innerHTML=sel.options[0].outerHTML+vals.map(([v,t])=>`<option value="${esc(v)}">${esc(t)}</option>`).join("");sel.value=cur};
+  opt($("#f3Sub"),[...new Set(MUN.map(m=>m.subregion))].sort().map(x=>[x,x]));
+  opt($("#f3Mun"),[...MUN].sort((a,b)=>a.nombre.localeCompare(b.nombre,"es")).map(m=>[m.dane,m.nombre]));
+  opt($("#f3Lin"),LIN.map(l=>[l.id,`${l.id} · ${l.nombre}`]));
+  renderFase3();
+}
+function f3Filtrados(){
+  const sub=$("#f3Sub").value,mun=$("#f3Mun").value,lin=$("#f3Lin").value,eta=$("#f3Eta").value,q=$("#f3Q").value.trim().toLowerCase();
+  return(F3||[]).filter(x=>(!sub||x.subregion===sub)&&(!mun||x.dane===mun)&&(!lin||x.linea===lin)&&(!eta||x.etapa===eta)&&(!q||[x.nombre,x.objetivo,x.localizacion,x.producto,x.municipio].join(" ").toLowerCase().includes(q)))
+    .sort((a,b)=>a.municipio.localeCompare(b.municipio,"es")||String(a.id).localeCompare(String(b.id)));
+}
+function renderFase3(){
+  if(!F3)return;const P=f3Filtrados(),c=P.reduce((a,x)=>a+x.costo,0),cf=P.reduce((a,x)=>a+x.confirmado,0);
+  $("#f3Kpis").innerHTML=[[fmt(P.length),"proyectos en Fase III o listos",""],[fmt(new Set(P.map(x=>x.dane)).size),"municipios con proyectos","b"],[money(c),"costo total","v"],[money(Math.max(0,c-cf)),"brecha por financiar","g"]].map(([b,s,k])=>`<div class="stat ${k}"><b class="num">${b}</b><span>${s}</span></div>`).join("");
+  const lin=id=>{const l=LIN.find(z=>z.id===id);return l?`${l.id} · ${l.nombre}`:""};
+  const t=(k,v)=>v?`<span class="tag ${v==="Sí"?"ok":v==="No"?"no":""}">${k}: ${esc(v)}</span>`:"";
+  $("#f3List").innerHTML=P.map(x=>`<article class="f3card">
+    <div class="top"><span>${esc(x.municipio)} · ${esc(x.subregion)} · ${esc(x.id)}</span>${x.estado==="validado"?chip("validado"):""}</div>
+    <h3>${esc(x.nombre)}</h3>
+    ${x.objetivo?`<p>${esc(x.objetivo)}</p>`:""}
+    <div class="tags"><span class="tag">${esc(x.etapa==="Factibilidad y diseños"?"Fase III · factibilidad y diseños":"Listo para gestionar recursos")}</span>${x.linea?`<span class="tag">${esc(lin(x.linea))}</span>`:""}${x.taxonomia?`<span class="tag">${esc(x.taxonomia)}</span>`:""}${t("Estudios",x.estudios)}${t("Predio",x.predio)}${t("Presupuesto",x.presupuesto)}</div>
+    ${x.localizacion||x.beneficiarios?`<p class="muted" style="font-size:12.5px">${esc([x.localizacion,x.beneficiarios?fmt(x.beneficiarios)+" beneficiarios":""].filter(Boolean).join(" · "))}</p>`:""}
+    <div class="money"><div><b class="num">${money(x.costo)}</b><span>costo</span></div><div><b class="num">${money(x.confirmado)}</b><span>confirmado</span></div><div><b class="num">${x.costo?money(Math.max(0,x.costo-x.confirmado)):"—"}</b><span>brecha${x.via?" · "+esc(x.via):""}</span></div></div>
+  </article>`).join("")||'<div class="empty">Todavía no hay proyectos en Fase III con estos filtros. Aparecerán aquí a medida que los municipios los reporten.</div>';
+}
+["#f3Sub","#f3Mun","#f3Lin","#f3Eta"].forEach(id=>$(id).addEventListener("change",renderFase3));
+$("#f3Q").addEventListener("input",renderFase3);
+$("#f3Xlsx").addEventListener("click",()=>{const P=f3Filtrados();
+  const C=[["municipio","Municipio",16],["dane","DANE",8],["subregion","Subregión",16],["id","ID",8],["nombre","Proyecto",44],["objetivo","Objetivo",40],["producto","Producto",24],["localizacion","Localización",22],["beneficiarios","Beneficiarios",12],["etapa","Etapa",22],["linea","Línea PAE",10],["taxonomia","Taxonomía",14],["costo","Costo (pesos)",16],["confirmado","Confirmado (pesos)",16],["brecha","Brecha (pesos)",16],["via","Vía de financiación",20],["estudios","Estudios y diseños",12],["predio","Predio",10],["presupuesto","Presupuesto",12],["validado","Reporte validado",12]];
+  XLSX.escribir([{nombre:"Proyectos Fase III",columnas:C.map(([,t,w])=>({t,w})),filas:P.map(x=>C.map(([k])=>k==="brecha"?(x.costo?Math.max(0,x.costo-x.confirmado):""):k==="validado"?(x.estado==="validado"?"Sí":"No"):x[k]===0&&["costo","confirmado","beneficiarios"].includes(k)?"":x[k]))}],`Proyectos_Fase_III_PAE_Caldas_${new Date().toISOString().slice(0,10)}.xlsx`)});
 
 /* ================= LOGIN ================= */
 function initLogin(){
