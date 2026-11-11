@@ -1,0 +1,997 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Plataforma PAE Caldas · Reconstruir es Avanzar</title>
+<meta name="description" content="Plataforma Departamental de Consolidación del Plan de Acción Específico (PAE) de Caldas tras el sismo del 10 de agosto de 2026. Los 27 municipios reportan necesidades, intervenciones y proyectos para la Cartera Única.">
+<meta property="og:title" content="Plataforma PAE Caldas · Reconstruir es Avanzar">
+<meta property="og:description" content="Consolidación municipal del Plan de Acción Específico para la recuperación de Caldas.">
+<meta property="og:image" content="img/reconstruir.png">
+<meta name="theme-color" content="#0b2b2e">
+<meta name="robots" content="noindex">
+<link rel="icon" href="img/escudo.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap">
+<script src="config.js"></script>
+<script src="catalogo.js"></script>
+<script src="xlsx.js"></script>
+<style>
+:root{
+  --dark:#0b2b2e; --teal:#0f5c5c; --teal-2:#137070; --gold:#c8902a; --gold-2:#e2b04a; --green:#3a8a3f; --blue:#2a6fb0;
+  --ink:#16292b; --muted:#5b6b6c; --line:#e3ddd0; --bg:#faf7f0; --cream:#f3eee2; --surface:#fff; --soft:#e8f0ef;
+  --crit:#b23b2a; --crit-bg:#f9e6e2; --warn:#a46a0e; --warn-bg:#fbf0dc; --ok:#2f7a3c; --ok-bg:#e5f1e5;
+  --st-dil:#a46a0e; --st-env:#2a6fb0; --st-val:#2f7a3c; --st-sin:#8a9596;
+  --head:"Poppins","Segoe UI",Arial,sans-serif; --body:"Inter","Segoe UI",system-ui,sans-serif;
+  --shadow:0 1px 2px rgba(11,43,46,.06),0 10px 26px rgba(11,43,46,.07);
+}
+*{box-sizing:border-box}
+html{scroll-padding-top:80px}
+body{margin:0;background:var(--bg);color:var(--ink);font:15.5px/1.55 var(--body)}
+img{max-width:100%;display:block}
+a{color:var(--teal)}
+h1,h2,h3,h4{font-family:var(--head);margin:0;line-height:1.15;color:var(--teal);text-wrap:balance}
+p{margin:0}
+[hidden]{display:none!important}
+:focus-visible{outline:3px solid var(--gold-2);outline-offset:2px}
+.wrap{max-width:1240px;margin:0 auto;padding:0 max(18px,env(safe-area-inset-left))}
+.eyebrow{font:700 12px/1.2 var(--body);letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+.muted{color:var(--muted)}
+.num{font-variant-numeric:tabular-nums}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.bar4{height:5px;background:linear-gradient(90deg,var(--teal) 0 38%,var(--gold) 38% 56%,var(--green) 56% 74%,var(--blue) 74% 100%);width:min(560px,100%);border-radius:3px}
+
+/* header */
+.top{position:sticky;top:0;z-index:40;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 2px 10px rgba(11,43,46,.05)}
+.top .wrap{display:flex;align-items:center;gap:16px;min-height:66px;flex-wrap:wrap;padding-block:8px}
+.brand{display:flex;align-items:center;gap:14px;text-decoration:none;margin-right:auto}
+.brand img.gob{height:34px;width:auto}
+.brand .sep{width:1px;height:34px;background:var(--line)}
+.brand img.rea{height:36px;width:auto}
+.nav{display:flex;gap:4px;flex-wrap:wrap;align-items:center}
+.nav a,.nav button{all:unset;cursor:pointer;font:600 13.5px/1 var(--head);color:var(--teal);padding:10px 13px;border-radius:999px}
+.nav a:hover,.nav button:hover{background:var(--soft)}
+.nav a[aria-current="page"]{background:var(--teal);color:#fff}
+.nav .who{font:600 12.5px var(--body);color:var(--muted);padding:0 6px}
+.nav a.cta{background:var(--gold);color:#fff}
+@media (max-width:760px){.brand img.rea{display:none}.top{position:static}}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;cursor:pointer;text-decoration:none;font:600 14px/1 var(--head);padding:12px 18px;border-radius:10px;background:var(--teal);color:#fff;white-space:nowrap}
+.btn:hover{filter:brightness(1.1)}
+.btn.gold{background:var(--gold)}
+.btn.green{background:var(--green)}
+.btn.ghost{background:transparent;color:var(--teal);box-shadow:inset 0 0 0 1.5px var(--teal)}
+.btn.danger{background:var(--crit)}
+.btn.small{padding:8px 12px;font-size:13px;border-radius:8px}
+.btn.xs{padding:5px 9px;font-size:12px;border-radius:7px}
+.btn[disabled]{opacity:.45;cursor:not-allowed;filter:none}
+.linkbtn{all:unset;cursor:pointer;color:var(--teal);text-decoration:underline;font-size:13.5px}
+
+/* hero */
+.hero{background:linear-gradient(160deg,#0b2b2e 0%,#0f4f50 45%,#13706d 75%,#58704a 100%);color:#fff;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(112deg,transparent 0 230px,rgba(255,255,255,.05) 230px 231px);pointer-events:none}
+.hero .wrap{position:relative;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:36px;align-items:center;padding-block:52px 56px}
+.hero .eyebrow{color:var(--gold-2)}
+.hero h1{color:#fff;font-size:clamp(30px,4.4vw,50px);font-weight:800;margin-top:12px}
+.hero p.lead{color:#d4e5e3;font-size:clamp(16px,1.6vw,18.5px);margin-top:14px;max-width:62ch}
+.hero .ctas{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+.hero .btn.ghost{color:#fff;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.7)}
+.pill{display:inline-flex;gap:8px;align-items:center;border:1px solid rgba(255,255,255,.4);border-radius:999px;padding:6px 14px;font-size:13px;color:#e6f1ef;margin:16px 8px 0 0}
+.onepage{background:rgba(5,25,27,.55);border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:22px;display:grid;gap:0}
+.onepage .r{display:grid;grid-template-columns:86px minmax(0,1fr);gap:10px;align-items:center;padding:12px 0;border-top:1px solid rgba(255,255,255,.12)}
+.onepage .r:first-of-type{border-top:0}
+.onepage b{font:800 28px/1 var(--head);color:var(--gold-2)}
+.onepage span{font-size:14px;color:#d4e5e3}
+@media (max-width:900px){.hero .wrap{grid-template-columns:1fr}}
+
+/* sections */
+section.band{padding-block:56px}
+section.band.white{background:#fff}
+section.band.cream{background:var(--cream)}
+.shead{display:flex;gap:16px;align-items:flex-end;margin-bottom:26px;flex-wrap:wrap}
+.shead .n{font:800 64px/.8 var(--head);color:var(--gold)}
+.shead h2{font-size:clamp(23px,2.8vw,33px)}
+.shead p{color:var(--muted);margin-top:6px;max-width:80ch}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+@media (max-width:960px){.grid3,.grid4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:700px){.grid2,.grid3,.grid4{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:var(--shadow);min-width:0}
+.card h3{font-size:18px}
+.card .sub{color:var(--muted);font-size:13.5px;margin-top:4px}
+.stat{background:var(--cream);border-radius:14px;padding:16px 18px;border-top:4px solid var(--teal);display:grid;gap:3px}
+.stat.g{border-top-color:var(--gold)} .stat.v{border-top-color:var(--green)} .stat.b{border-top-color:var(--blue)}
+.stat b{font:800 30px/1.05 var(--head);color:var(--dark)}
+.stat span{font-size:14px;color:var(--ink)}
+.stat small{font:700 10.5px var(--body);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.note{border-left:4px solid var(--gold);background:var(--warn-bg);border-radius:0 14px 14px 0;padding:14px 18px;font-size:14.5px}
+.note.info{border-color:var(--teal);background:var(--soft)}
+.note.crit{border-color:var(--crit);background:var(--crit-bg)}
+.note.ok{border-color:var(--green);background:var(--ok-bg)}
+.note b.t{display:block;font:700 11.5px var(--body);letter-spacing:.14em;text-transform:uppercase;margin-bottom:4px}
+
+/* bars */
+.hb{display:grid;gap:7px}
+.hb .r{display:grid;grid-template-columns:var(--lw,170px) minmax(0,1fr);gap:10px;align-items:center;font-size:13.5px}
+.hb .r > span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hb .bar{display:flex;align-items:center;gap:8px;min-width:0}
+.hb .bar i{display:block;height:18px;border-radius:0 5px 5px 0;background:var(--teal);flex:none;min-width:2px}
+.hb .bar em{font-style:normal;white-space:nowrap;color:var(--muted)}
+.hb .bar em b{color:var(--ink)}
+.cmp{display:grid;gap:10px}
+.cmp .r{display:grid;grid-template-columns:minmax(0,260px) minmax(0,1fr) 110px;gap:10px;align-items:center;font-size:13.5px}
+.cmp .track{height:18px;background:#efe9db;border-radius:5px;position:relative;overflow:hidden}
+.cmp .track i{position:absolute;inset:0 auto 0 0;background:var(--teal);border-radius:5px}
+.cmp .r b.code{font:700 13px var(--head);color:var(--teal);margin-right:5px}
+.cmp .v{text-align:right;font-weight:600}
+@media (max-width:700px){.cmp .r{grid-template-columns:minmax(0,1fr) 92px}.cmp .track{grid-column:1/-1;order:3}}
+
+/* status chips */
+.chip{display:inline-flex;align-items:center;gap:6px;font:600 12px/1 var(--body);padding:5px 10px;border-radius:999px;background:#eef1f1;color:var(--muted);white-space:nowrap}
+.chip::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor}
+.chip.dil{color:var(--st-dil);background:var(--warn-bg)} .chip.env{color:var(--st-env);background:#e3eef8} .chip.val{color:var(--st-val);background:var(--ok-bg)} .chip.sin{color:var(--st-sin)}
+.tag{display:inline-block;font:700 11px/1 var(--body);padding:4px 8px;border-radius:6px;background:var(--soft);color:var(--teal)}
+.tag.crit{background:var(--crit-bg);color:var(--crit)} .tag.warn{background:var(--warn-bg);color:var(--warn)}
+
+/* municipalities grid */
+.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+.mcard{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:grid;gap:6px}
+.mcard b{font:600 15px var(--head);color:var(--dark)}
+.mcard .meta{font-size:12.5px;color:var(--muted)}
+
+/* tables */
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table.t{width:100%;border-collapse:collapse;font-size:14px;background:#fff}
+table.t th{background:var(--teal);color:#fff;font:600 12px/1.25 var(--head);text-align:left;padding:10px;letter-spacing:.02em;position:sticky;top:0}
+table.t td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+table.t td:first-child{white-space:nowrap}
+table.t tr:hover td{background:#fcfaf4}
+table.t td.r,table.t th.r{text-align:right}
+
+/* timeline */
+.tl{display:grid;gap:10px;position:relative;padding-left:96px}
+.tl::before{content:"";position:absolute;left:78px;top:6px;bottom:6px;width:3px;background:linear-gradient(var(--gold),var(--teal));border-radius:2px}
+.tl .it{position:relative;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 16px}
+.tl .it::before{content:"";position:absolute;left:-24px;top:16px;width:13px;height:13px;border-radius:50%;background:#fff;border:3px solid var(--teal)}
+.tl .it.hl{background:#fbf5e6}
+.tl .it.hl::before{background:var(--gold);border-color:var(--gold)}
+.tl .d{position:absolute;left:-96px;top:10px;width:62px;text-align:right;font:800 20px/1 var(--head);color:var(--dark)}
+.tl .d small{display:block;font:700 10.5px var(--body);letter-spacing:.12em;color:var(--muted);margin-top:3px}
+.tl h4{font-size:15.5px}
+.tl p{font-size:13.5px;margin-top:3px}
+.tl .src{font-size:12px;color:var(--muted);margin-top:4px}
+.tl .mon{font:700 12px var(--body);letter-spacing:.16em;color:var(--gold);margin:6px 0 0 -2px}
+@media (max-width:560px){.tl{padding-left:74px}.tl::before{left:58px}.tl .d{left:-74px;width:48px;font-size:17px}}
+
+/* calendar */
+.cal{display:grid;gap:0}
+.cal .r{display:grid;grid-template-columns:120px minmax(0,1fr) 130px;gap:14px;padding:12px 0;border-bottom:1px solid var(--line);align-items:start}
+.cal .r b.f{font:700 13.5px var(--head);color:var(--dark)}
+.cal .r h4{font-size:15px}
+.cal .r p{font-size:13.5px;color:var(--muted)}
+.cal .days{text-align:right;font:700 13px var(--head);color:var(--teal)}
+.cal .days.soon{color:var(--crit)} .cal .days.past{color:var(--muted);font-weight:500}
+@media (max-width:640px){.cal .r{grid-template-columns:1fr}.cal .days{text-align:left}}
+
+/* login */
+.login{max-width:440px;margin:48px auto;display:grid;gap:16px}
+label.f{display:grid;gap:5px;font-size:13.5px;font-weight:600;color:var(--ink);min-width:0}
+label.f .req{color:var(--crit)}
+label.f small{font-weight:400;color:var(--muted);font-size:12.5px}
+input[type=text],input[type=password],input[type=email],input[type=tel],input[type=url],input[type=date],input[type=number],select,textarea{font:inherit;font-size:15px;color:var(--ink);background:#fff;border:1.5px solid #d6cfbf;border-radius:9px;padding:9px 11px;width:100%;min-width:0}
+input:focus,select:focus,textarea:focus{border-color:var(--teal);outline:none;box-shadow:0 0 0 3px rgba(15,92,92,.15)}
+textarea{min-height:70px;resize:vertical}
+input.miss,select.miss,textarea.miss{border-color:var(--warn);background:#fffaf0}
+.chk{display:flex;gap:8px;align-items:flex-start;font-size:14px;font-weight:500}
+.chk input{width:18px;height:18px;margin-top:2px;accent-color:var(--teal)}
+
+/* workspace */
+.ws-head{background:linear-gradient(120deg,var(--dark),var(--teal));color:#fff}
+.ws-head .wrap{padding-block:26px 22px;display:flex;gap:18px;align-items:flex-end;flex-wrap:wrap}
+.ws-head h1{color:#fff;font-size:clamp(24px,3.2vw,36px)}
+.ws-head .eyebrow{color:var(--gold-2)}
+.ws-head .meta{color:#cfe2e0;font-size:14px;margin-top:6px}
+.ws-head .right{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.steps{position:sticky;top:66px;z-index:30;background:#fff;border-bottom:1px solid var(--line)}
+@media (max-width:760px){.steps{top:0}}
+.steps .wrap{display:flex;gap:0;overflow-x:auto;padding-block:0}
+.steps button{all:unset;cursor:pointer;display:flex;gap:9px;align-items:center;padding:13px 16px 11px;border-bottom:3px solid transparent;white-space:nowrap;font:600 14px var(--head);color:var(--muted)}
+.steps button i{font-style:normal;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#ece6d8;color:var(--dark);font:700 13px var(--head)}
+.steps button[aria-current="step"]{color:var(--teal);border-bottom-color:var(--gold)}
+.steps button[aria-current="step"] i{background:var(--teal);color:#fff}
+.steps button .cnt{font:600 11.5px var(--body);color:var(--muted);background:var(--cream);border-radius:999px;padding:2px 7px}
+.steps button .al{width:8px;height:8px;border-radius:50%;background:var(--crit)}
+.steps button:focus-visible{outline:3px solid var(--gold-2);outline-offset:-3px}
+.savebar{display:flex;gap:10px;align-items:center;font-size:13px;color:#cfe2e0}
+.savebar .dot{width:9px;height:9px;border-radius:50%;background:#7fd08a}
+.savebar.saving .dot{background:var(--gold-2)} .savebar.err .dot{background:#ff8a7a} .savebar.ro .dot{background:#aaa}
+.ws-body{padding-block:24px 70px;display:grid;gap:18px}
+.fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px 14px}
+.fields .full{grid-column:1/-1} .fields .two{grid-column:span 2}
+@media (max-width:860px){.fields{grid-template-columns:repeat(2,minmax(0,1fr))}.fields .two{grid-column:1/-1}}
+@media (max-width:560px){.fields{grid-template-columns:1fr}}
+.item{background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow)}
+.item > summary{list-style:none;cursor:pointer;display:flex;gap:12px;align-items:center;padding:14px 16px;flex-wrap:wrap}
+.item > summary::-webkit-details-marker{display:none}
+.item > summary .code{font:800 15px var(--head);color:var(--gold);min-width:56px}
+.item > summary .tt{font-weight:600;flex:1 1 260px;min-width:0}
+.item > summary .tt small{display:block;font-weight:400;color:var(--muted);font-size:12.5px}
+.item > summary::after{content:"▾";color:var(--muted);transition:transform .2s}
+.item[open] > summary::after{transform:rotate(180deg)}
+.item[open] > summary{border-bottom:1px solid var(--line)}
+.item .body{padding:16px;display:grid;gap:14px}
+.item .actions{display:flex;justify-content:flex-end;gap:8px}
+.listhead{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.listhead h2{font-size:22px;margin-right:auto}
+.alerts{display:grid;gap:6px}
+.alerts li{list-style:none;display:flex;gap:10px;align-items:flex-start;font-size:14px;padding:8px 12px;border-radius:9px;background:#fff;border:1px solid var(--line)}
+.alerts{margin:0;padding:0}
+.alerts li .tag{flex:none;margin-top:1px}
+.alerts li button{margin-left:auto}
+.obs{display:grid;gap:8px}
+.obs .o{background:#fff;border-left:4px solid var(--blue);border-radius:0 10px 10px 0;padding:10px 14px;font-size:14px}
+.obs .o.dev{border-color:var(--crit)}
+.obs .o small{display:block;color:var(--muted);font-size:12px;margin-bottom:3px}
+.empty{border:2px dashed var(--line);border-radius:14px;padding:28px;text-align:center;color:var(--muted);display:grid;gap:10px;justify-items:center}
+.example{background:var(--ok-bg);border-left:4px solid var(--green);border-radius:0 12px 12px 0;padding:12px 16px;font-size:14px}
+.ro-banner{background:#e3eef8;border-left:4px solid var(--blue);padding:10px 14px;border-radius:0 10px 10px 0;font-size:14px}
+
+/* modal-lite (inline panel) */
+.panel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--shadow);display:grid;gap:12px}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--dark);color:#fff;padding:12px 18px;border-radius:12px;font-size:14px;z-index:90;box-shadow:0 10px 30px rgba(0,0,0,.25);max-width:min(92vw,560px)}
+.toast.err{background:var(--crit)}
+
+footer{background:var(--dark);color:#bcd2d0;font-size:13.5px;margin-top:0}
+footer .wrap{padding-block:30px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:20px;align-items:center}
+footer img{height:38px;width:auto}
+footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
+@media (max-width:700px){footer .wrap{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="#inicio" aria-label="Inicio">
+    <img class="gob" src="img/gobierno-caldas.png" alt="Gobierno de Caldas" width="221" height="34">
+    <span class="sep" aria-hidden="true"></span>
+    <img class="rea" src="img/reconstruir.png" alt="Caldas, Reconstruir es Avanzar" width="149" height="36">
+  </a>
+  <nav class="nav" id="nav" aria-label="Secciones"></nav>
+</div></header>
+
+<main id="main">
+<!-- =================== PÚBLICO =================== -->
+<div id="v-inicio" data-view>
+  <section class="hero"><div class="wrap">
+    <div>
+      <span class="eyebrow">Plan de Acción Específico · PAE departamental</span>
+      <h1>Plataforma Departamental de Consolidación del PAE</h1>
+      <p class="lead">Los 27 municipios de Caldas reportan aquí, con un mismo formato, qué se dañó, qué se va a hacer, cuánto cuesta y qué tan listo está cada proyecto. Con esa información la Gobernación construye la Cartera Única y la traduce a la taxonomía del PAE Nacional.</p>
+      <div class="ctas"><a class="btn gold" href="#ingresar">Ingresar a reportar</a><a class="btn ghost" href="#consolidado">Ver el consolidado</a><a class="btn ghost" href="instructivo-pae-caldas.pdf" target="_blank" rel="noopener">Instructivo (PDF)</a></div>
+      <span class="pill">Sismo M 7,4 · 10 de agosto de 2026</span><span class="pill">Decreto 392 · calamidad pública</span>
+    </div>
+    <div class="onepage" aria-label="En una página">
+      <span class="eyebrow">En una página</span>
+      <div class="r"><b>27</b><span>municipios reportan con usuario propio</span></div>
+      <div class="r"><b>3 · 17</b><span>ejes y líneas del PAE departamental</span></div>
+      <div class="r"><b>5</b><span>pasos: identificación, necesidades, intervenciones, proyectos y envío</span></div>
+      <div class="r"><b>6</b><span>productos para decidir y gestionar recursos</span></div>
+    </div>
+  </div></section>
+
+  <section class="band white" id="consolidado" aria-labelledby="h-av">
+    <div class="wrap">
+      <div class="shead"><span class="n">01</span><div><h2 id="h-av">Avance del reporte municipal</h2><p>Estado de cada municipio en la plataforma. Las cifras son agregadas; los detalles de cada reporte son de uso de la Gobernación.</p><div class="bar4" style="margin-top:10px"></div></div></div>
+      <div class="grid4" id="pubKpis"></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin:20px 0 12px;align-items:center"><span class="chip sin">Sin iniciar</span><span class="chip dil">En diligenciamiento</span><span class="chip env">Enviado</span><span class="chip val">Validado</span><span class="muted" id="pubCorte" style="margin-left:auto;font-size:13px"></span></div>
+      <div class="mgrid" id="pubMunis"></div>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="h-pae">
+    <div class="wrap">
+      <div class="shead"><span class="n">02</span><div><h2 id="h-pae">Cartera reportada frente al PAE</h2><p>Costo de las intervenciones reportadas por los 26 municipios distintos de Manizales, comparado con la necesidad estimada por línea en el PAE departamental (19-oct-2026). Manizales se lee aparte porque el dimensionamiento departamental cubre a los otros 26.</p></div></div>
+      <div class="grid2">
+        <div class="card"><h3>Eje 1 · Rehabilitación</h3><p class="sub">Millones de pesos · barra = reportado / necesidad estimada</p><div class="cmp" id="cmpE1" style="margin-top:14px"></div></div>
+        <div class="card"><h3>Eje 2 · Reconstrucción resiliente</h3><p class="sub">Millones de pesos · barra = reportado / necesidad estimada</p><div class="cmp" id="cmpE2" style="margin-top:14px"></div></div>
+      </div>
+      <div class="grid3" style="margin-top:20px" id="pubTot"></div>
+      <div class="note info" style="margin-top:18px"><b class="t">Eje 3 · Reducción del riesgo y reconstrucción segura</b>Es transversal: no tiene líneas ni valores propios. Sus medidas se registran dentro de las intervenciones de los ejes 1 y 2, marcando la casilla correspondiente.</div>
+    </div>
+  </section>
+
+  <section class="band white" aria-labelledby="h-lb">
+    <div class="wrap">
+      <div class="shead"><span class="n">03</span><div><h2 id="h-lb">Línea base de afectaciones</h2><p>Cada cifra se muestra con su fuente y su fecha de corte; las series no se suman ni se promedian entre sí.</p></div></div>
+      <div class="grid3">
+        <div class="stat"><small>EDAN 14-sep</small><b class="num">22.469</b><span>familias afectadas</span></div>
+        <div class="stat"><small>EDAN 14-sep</small><b class="num">23.492</b><span>viviendas averiadas (20.503) o destruidas (2.989)</span></div>
+        <div class="stat"><small>EDAN 14-sep</small><b class="num">7 · 334</b><span>personas fallecidas · heridas</span></div>
+        <div class="stat"><small>EDAN 14-sep</small><b class="num">436</b><span>centros educativos afectados</span></div>
+        <div class="stat g"><small>DPN EDANPRI 11-oct</small><b class="num">$2,88 b</b><span>daños valorados (billones)</span></div>
+        <div class="stat g"><small>PAE 19-oct</small><b class="num">$2,23 b</b><span>necesidad estimada PAE (26 municipios)</span></div>
+      </div>
+      <div class="grid2" style="margin-top:22px">
+        <div class="card"><h3>Viviendas afectadas por municipio</h3><p class="sub">EDAN, corte 14-sep-2026 · Manizales: 11.513 (49 %), se muestra aparte</p><div class="hb" id="pubViv" style="margin-top:12px;--lw:110px"></div></div>
+        <div>
+          <div class="card"><h3>Por subregión</h3><p class="sub">EDAN, corte 14-sep-2026</p><div class="hb" id="pubSub" style="margin-top:12px;--lw:140px"></div></div>
+          <div class="scroll" style="margin-top:16px"><table class="t"><thead><tr><th>Indicador</th><th class="r">Cifra</th><th>Fuente y corte</th></tr></thead><tbody>
+            <tr><td>Centros de salud afectados</td><td class="r">18</td><td>EDAN, 14-sep-2026</td></tr>
+            <tr><td>Sistemas de acueducto afectados</td><td class="r">53 (20 municipales, 33 veredales)</td><td>EDAN; Fondo Milagro ambiental, 27-oct</td></tr>
+            <tr><td>Centros comunitarios afectados</td><td class="r">171</td><td>EDAN, 14-sep-2026</td></tr>
+            <tr><td>Familias inscritas en el RUD</td><td class="r">22.132 (45.324 personas)</td><td>RUD UNGRD, 27-oct-2026</td></tr>
+          </tbody></table></div>
+        </div>
+      </div>
+      <div class="note" style="margin-top:18px"><b class="t">Atención con las cifras</b>El reporte del día cero (Decreto 392), el EDAN, el RUD y el EDANPRI tienen cortes y métodos distintos; por ejemplo, el Decreto 392 registraba 124 viviendas destruidas, el RUD registra 573 y el EDAN/CMGRD 2.673. La plataforma muestra cada cifra con su fuente y su fecha, nunca las promedia.</div>
+    </div>
+  </section>
+
+  <section class="band cream" aria-labelledby="h-acc">
+    <div class="wrap grid2" style="align-items:start">
+      <div>
+        <div class="shead"><span class="n">04</span><div><h2 id="h-acc">Acciones de la Gobernación</h2><p>Del día cero a hoy. El equipo coordinador mantiene esta cronología al día.</p></div></div>
+        <div class="tl" id="pubAcc"></div>
+      </div>
+      <div>
+        <div class="shead"><span class="n">05</span><div><h2>Calendario y vencimientos</h2><p>Días restantes de cada hito. Ritmo de reporte: actualización municipal cada quince días y corte consolidado mensual.</p></div></div>
+        <div class="card"><div class="cal" id="pubCal"></div></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- =================== LOGIN =================== -->
+<div id="v-ingresar" data-view hidden>
+  <div class="wrap">
+    <form class="login card" id="loginForm" autocomplete="on">
+      <img src="img/reconstruir.png" alt="Caldas, Reconstruir es Avanzar" style="height:60px;width:auto;justify-self:center">
+      <h1 style="font-size:24px;text-align:center">Ingresar a la plataforma</h1>
+      <p class="muted" style="text-align:center;font-size:14px">Delegados municipales y equipo coordinador de la reconstrucción.</p>
+      <label class="f">Usuario<select id="lgUser" autocomplete="username" required></select></label>
+      <label class="f">Contraseña<input type="password" id="lgPass" autocomplete="current-password" required></label>
+      <div id="lgMsg" class="note crit" hidden></div>
+      <button class="btn" type="submit" id="lgBtn">Ingresar</button>
+      <p class="muted" style="font-size:13px;text-align:center">¿Olvidó su contraseña? Solicítela al equipo coordinador de la reconstrucción de la Gobernación.</p>
+      <p id="demoHint" class="note info" hidden style="font-size:13px"><b class="t">Modo demostración</b>La plataforma aún no está conectada a la base de datos. Use cualquier usuario con la contraseña <strong>demo</strong>; los datos solo se guardan en este navegador.</p>
+    </form>
+  </div>
+</div>
+
+<!-- =================== MUNICIPIO =================== -->
+<div id="v-municipio" data-view hidden>
+  <div class="ws-head"><div class="wrap">
+    <div><span class="eyebrow" id="wsEyebrow">Reporte municipal</span><h1 id="wsTitle">Municipio</h1><p class="meta" id="wsMeta"></p></div>
+    <div class="right">
+      <span id="wsEstado"></span>
+      <span class="savebar" id="saveBar"><span class="dot"></span><span id="saveTxt">—</span></span>
+    </div>
+  </div></div>
+  <nav class="steps" aria-label="Pasos del reporte"><div class="wrap" id="stepsNav"></div></nav>
+  <div class="wrap ws-body" id="wsBody"></div>
+</div>
+
+<!-- =================== GOBERNACIÓN =================== -->
+<div id="v-gobernacion" data-view hidden>
+  <div class="ws-head"><div class="wrap">
+    <div><span class="eyebrow">Equipo coordinador de la reconstrucción</span><h1>Panel de la Gobernación</h1><p class="meta" id="gMeta">Revisión, validación y productos de la consolidación.</p></div>
+    <div class="right"><button class="btn gold small" type="button" id="gReload">Actualizar datos</button></div>
+  </div></div>
+  <nav class="steps" aria-label="Secciones del panel"><div class="wrap" id="gTabs"></div></nav>
+  <div class="wrap ws-body" id="gBody"></div>
+</div>
+</main>
+
+<footer><div class="wrap">
+  <div style="display:grid;gap:12px">
+    <div class="logos"><img src="img/gobierno-caldas-blanco.png" alt="Gobierno de Caldas" width="250" height="38"><img src="img/reconstruir-blanco.png" alt="Caldas, Reconstruir es Avanzar" width="158" height="38"></div>
+    <span>Secretaría de Medio Ambiente · Unidad Departamental de Gestión del Riesgo · Equipo Coordinador de la Reconstrucción.<br>Referencia nacional: <a href="https://portal.gestiondelriesgo.gov.co/pae" target="_blank" rel="noopener" style="color:#e2b04a">portal.gestiondelriesgo.gov.co/pae</a></span>
+  </div>
+  <div style="text-align:right;display:grid;gap:6px;justify-items:end"><span id="syncState">—</span><a href="instructivo-pae-caldas.pdf" target="_blank" rel="noopener" style="color:#e2b04a">Instructivo de la plataforma (PDF)</a></div>
+</div></footer>
+
+<script>
+"use strict";
+/* ================= BASE ================= */
+const CFG=window.PAE_CONFIG||{}, API=(CFG.apiUrl||"").trim(), DEMO=!API;
+const MUN=window.PAE_MUNICIPIOS, LIN=window.PAE_LINEAS, EJES=window.PAE_EJES, L=window.PAE_LISTAS, TAX=window.PAE_TAXONOMIA;
+const MUNI=Object.fromEntries(MUN.map(m=>[m.dane,m])), LINEA=Object.fromEntries(LIN.map(l=>[l.id,l])), TAXI=Object.fromEntries(TAX.map(t=>[t.c,t]));
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const num=v=>{const n=Number(String(v??"").replace(/\./g,"").replace(/,/g,".").replace(/[^\d.-]/g,""));return isFinite(n)?n:0};
+const fmt=n=>Math.round(n).toLocaleString("es-CO");
+const fmtM=n=>(n/1e6).toLocaleString("es-CO",{maximumFractionDigits:n/1e6<10?1:0});           // pesos -> millones
+const money=n=>n?("$"+fmt(n)):"—";
+const moneyM=n=>"$"+fmtM(n)+" M";
+const fdate=s=>{if(!s)return"";const d=new Date(s);return isNaN(d)?s:d.toLocaleDateString("es-CO",{day:"numeric",month:"short",year:"numeric"})};
+const fdt=s=>{if(!s)return"";const d=new Date(s);return isNaN(d)?s:d.toLocaleString("es-CO",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"})};
+function lsGet(k){try{return JSON.parse(localStorage.getItem(k)||"null")}catch(e){return null}}
+function lsSet(k,v){try{v==null?localStorage.removeItem(k):localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+function toast(t,err){const d=document.createElement("div");d.className="toast"+(err?" err":"");d.setAttribute("role","status");d.textContent=t;document.body.appendChild(d);setTimeout(()=>d.remove(),err?6000:3200)}
+const ESTADO={"sin iniciar":["sin","Sin iniciar"],"diligenciamiento":["dil","En diligenciamiento"],"enviado":["env","Enviado"],"validado":["val","Validado"]};
+const chip=e=>{const x=ESTADO[e]||ESTADO["sin iniciar"];return `<span class="chip ${x[0]}">${x[1]}</span>`};
+
+/* ================= API (o demo local) ================= */
+let SES=lsGet("pae.sesion");
+async function apiGet(params){const u=new URL(API);Object.entries(params).forEach(([k,v])=>u.searchParams.set(k,v));const r=await fetch(u,{cache:"no-store"});return r.json()}
+async function apiPost(body){const r=await fetch(API,{method:"POST",body:JSON.stringify(body)});return r.json()}
+async function call(action,extra){
+  if(DEMO)return demo(action,extra||{});
+  const j=await apiPost(Object.assign({action,token:SES&&SES.token},extra||{}));
+  if(j.error==="sesion"){logout(true);throw new Error(j.mensaje||"Sesión expirada")}
+  return j;
+}
+/* ---- demo: misma lógica que el servidor, guardada en este navegador ---- */
+function demoDB(){return lsGet("pae.demo")||{reportes:{},acciones:null,bitacora:[]}}
+function demoSave(db){lsSet("pae.demo",db)}
+function demoRep(db,d){if(!db.reportes[d])db.reportes[d]={estado:"sin iniciar",version:0,actualizado:"",enviado:"",validado:"",reporte:{},adm:{lineaBase:window.PAE_VIV_EDAN&&window.PAE_VIV_EDAN[MUNI[d].nombre]!=null?{viviendasAfectadas:window.PAE_VIV_EDAN[MUNI[d].nombre],fuente:"EDAN, corte 14-sep-2026"}:{}}};return db.reportes[d]}
+function demoOut(d,r,admin){const o={dane:d,municipio:MUNI[d].nombre,subregion:MUNI[d].subregion,estado:r.estado,version:r.version,actualizado:r.actualizado,enviado:r.enviado,validado:r.validado,reporte:r.reporte,observaciones:r.adm.observaciones||[],lineaBase:r.adm.lineaBase||{}};if(admin){o.dictamen=r.adm.dictamen||"";o.prioridad=r.adm.prioridad||"";o.fondoMilagro=r.adm.fondoMilagro||""}return o}
+function demoLog(db,u,d,a,det){db.bitacora.unshift({fecha:new Date().toISOString(),usuario:u==="gobernacion"?"Gobernación":(MUNI[u]?MUNI[u].nombre:u),municipio:d&&MUNI[d]?MUNI[d].nombre:"",accion:a,detalle:det||""})}
+async function demo(a,b){
+  const db=demoDB(),u=SES&&SES.usuario,adm=u==="gobernacion";
+  const done=x=>{demoSave(db);return x};
+  if(a==="login"){if(b.clave!=="demo")return{ok:false,error:"En modo demostración la contraseña es «demo»"};const m=MUNI[b.usuario];demoLog(db,b.usuario,m?b.usuario:"","Ingresó a la plataforma");return done({ok:true,token:"demo",usuario:b.usuario,rol:b.usuario==="gobernacion"?"gobernacion":"municipio",municipio:m||null})}
+  if(a==="publico"){return{ok:true,datos:{municipios:MUN.map(m=>{const r=demoRep(db,m.dane);return pubAgg(m,r.estado,r.actualizado,r.reporte,r.adm.lineaBase)}),acciones:db.acciones||window.PAE_ACCIONES||[],corte:new Date().toISOString()}}}
+  if(a==="mi")return done({ok:true,reporte:demoOut(u,demoRep(db,u),false)});
+  if(a==="guardar"){const d=adm?b.dane:u,r=demoRep(db,d);if(Number(b.version)!==r.version)return{ok:false,error:"conflicto",mensaje:"Hay una versión más reciente.",reporte:demoOut(d,r,adm)};if(r.estado==="sin iniciar")r.estado="diligenciamiento";if(r.estado==="validado"&&!adm){r.estado="enviado";demoLog(db,u,d,"Editó un reporte validado: vuelve a «enviado»")}r.reporte=b.reporte;r.version++;r.actualizado=new Date().toISOString();return done({ok:true,version:r.version,estado:r.estado,actualizado:r.actualizado})}
+  if(a==="enviar"){const r=demoRep(db,u);r.estado="enviado";r.enviado=new Date().toISOString();demoLog(db,u,u,"Envió el reporte a la Gobernación");return done({ok:true,estado:"enviado"})}
+  if(a==="cambiarClave")return{ok:true,token:"demo"};
+  if(!adm)return{ok:false,error:"Acción reservada a la Gobernación"};
+  if(a==="todos")return done({ok:true,reportes:MUN.map(m=>demoOut(m.dane,demoRep(db,m.dane),true)),acciones:db.acciones||window.PAE_ACCIONES||[]});
+  if(a==="bitacora")return{ok:true,bitacora:b.dane?db.bitacora.filter(x=>x.municipio===MUNI[b.dane].nombre):db.bitacora};
+  if(a==="observar"||a==="devolver"){const r=demoRep(db,b.dane);r.adm.observaciones=r.adm.observaciones||[];r.adm.observaciones.push({fecha:new Date().toISOString(),texto:b.texto,tipo:a==="devolver"?"devolución":"observación"});if(a==="devolver")r.estado="diligenciamiento";demoLog(db,u,b.dane,a==="devolver"?"Devolvió el reporte con observaciones":"Dejó una observación",b.texto.slice(0,200));return done({ok:true,estado:r.estado})}
+  if(a==="validar"){const r=demoRep(db,b.dane);r.estado="validado";r.validado=new Date().toISOString();demoLog(db,u,b.dane,"Validó el reporte");return done({ok:true,estado:"validado"})}
+  if(a==="resetClave")return{ok:true,clave:"demo"};
+  if(a==="admin"){const r=demoRep(db,b.dane);Object.assign(r.adm,b.datos);demoLog(db,u,b.dane,"Actualizó datos de la Gobernación");return done({ok:true})}
+  if(a==="acciones"){db.acciones=b.acciones;return done({ok:true})}
+  return{ok:false,error:"Acción no válida"};
+}
+/* agregado público (igual al del servidor) */
+function pubAgg(m,estado,act,rep,lb){
+  const N=rep.necesidades||[],I=rep.intervenciones||[],P=rep.proyectos||[],porLinea={},porEje={},porTax={},porSector={};
+  I.forEach(x=>{const c=num(x.costo);if(x.linea)porLinea[x.linea]=(porLinea[x.linea]||0)+c;if(x.eje)porEje[x.eje]=(porEje[x.eje]||0)+c;if(x.taxonomia)porTax[x.taxonomia]=(porTax[x.taxonomia]||0)+c});
+  N.forEach(x=>{if(x.sector)porSector[x.sector]=(porSector[x.sector]||0)+1});
+  return{dane:m.dane,municipio:m.nombre,subregion:m.subregion,estado,actualizado:act,necesidades:N.length,urgenciaAlta:N.filter(x=>x.urgencia==="Alta").length,personas:N.reduce((a,x)=>a+num(x.personas),0),intervenciones:I.length,costoIntervenciones:I.reduce((a,x)=>a+num(x.costo),0),proyectos:P.length,costoProyectos:P.reduce((a,x)=>a+num(x.costo),0),confirmado:P.reduce((a,x)=>a+num(x.confirmado),0),porLinea,porEje,porTax,porSector,lineaBase:lb||{}};
+}
+
+/* ================= ESQUEMA DEL REPORTE ================= */
+const opts=a=>a.map(x=>[x,x]);
+const LINEAS_OPTS=LIN.map(l=>[l.id,`${l.id} · ${l.nombre}`]);
+const F={
+ ident:[
+  {k:"responsable",l:"Responsable del reporte",req:1},{k:"cargo",l:"Cargo"},{k:"dependencia",l:"Dependencia",req:1},
+  {k:"correo",l:"Correo electrónico",type:"email"},{k:"telefono",l:"Teléfono",type:"tel"},{k:"fechaCorte",l:"Fecha de corte de la información",type:"date",req:1}],
+ nec:[
+  {k:"ubicacion",l:"Vereda o barrio",req:1},{k:"sector",l:"Sector",type:"select",o:opts(L.sectores),req:1},{k:"fuente",l:"Fuente del dato",type:"select",o:opts(L.fuentes),req:1},
+  {k:"descripcion",l:"Descripción del daño o carencia",type:"textarea",req:1,cls:"full"},
+  {k:"urgencia",l:"Urgencia",type:"select",o:opts(L.urgencia),req:1},{k:"tipologia",l:"Tipología de respuesta (PAE 4.4)",type:"select",o:opts(L.tipologia)},{k:"personas",l:"Personas afectadas",type:"number"},
+  {k:"unidades",l:"Unidades afectadas",type:"number"},{k:"unidadMedida",l:"Unidad de medida",hint:"viviendas, sedes, km, m³…"},{k:"soporte",l:"Soporte",hint:"N.º de formulario EDAN, acta, informe…"},
+  {k:"enlace",l:"Enlace al soporte",type:"url",cls:"two"},{k:"obs",l:"Observaciones",type:"textarea",cls:"full"}],
+ int:[
+  {k:"necesidad",l:"Necesidad que atiende",type:"ref",ref:"nec",req:1},{k:"linea",l:"Línea del PAE departamental",type:"select",o:LINEAS_OPTS,req:1,cls:"two"},
+  {k:"nombre",l:"Intervención",req:1,cls:"two",hint:"Qué se va a hacer"},{k:"responsable",l:"Responsable",req:1},
+  {k:"horizonte",l:"Horizonte",type:"select",o:opts(L.horizonte),req:1},{k:"estado",l:"Estado",type:"select",o:opts(L.estadoIntervencion),req:1},{k:"poblacion",l:"Población beneficiada",type:"number"},
+  {k:"resultado",l:"Resultado esperado",type:"textarea",cls:"full"},
+  {k:"costo",l:"Costo estimado (pesos)",type:"money"},{k:"precision",l:"Precisión del costo",type:"select",o:opts(L.precision)},{k:"riesgo",l:"Incorpora medidas de reducción del riesgo (Eje 3)",type:"check"},
+  {k:"cp",l:"De ese costo: corto plazo 2026–2027",type:"money"},{k:"mp",l:"Mediano plazo 2028–2030",type:"money"},{k:"_eje",l:"Eje (según la línea)",type:"derived"},
+  {k:"taxonomia",l:"Código Taxonomía Nacional",type:"tax",cls:"full",hint:"Para el reporte a la UNGRD (formato FR-1703-SMD-11)"}],
+ pro:[
+  {k:"intervencion",l:"Intervención principal",type:"ref",ref:"int",req:1,cls:"two"},{k:"etapa",l:"Etapa del proyecto",type:"select",o:opts(L.etapa),req:1},
+  {k:"nombre",l:"Nombre del proyecto",req:1,cls:"two"},{k:"responsable",l:"Responsable",req:1},
+  {k:"problema",l:"Problema",type:"textarea",req:1,cls:"full"},{k:"objetivo",l:"Objetivo",type:"textarea",req:1,cls:"full"},
+  {k:"producto",l:"Producto"},{k:"localizacion",l:"Localización"},{k:"beneficiarios",l:"Beneficiarios",type:"number"},
+  {k:"costo",l:"Costo total (pesos)",type:"money"},{k:"confirmado",l:"Recursos confirmados (pesos)",type:"money",hint:"Solo con soporte: CDP, convenio o acto de asignación"},{k:"_brecha",l:"Brecha",type:"derived"},
+  {k:"fuente",l:"Fuente de los recursos confirmados"},{k:"via",l:"Vía de financiación por gestionar",type:"select",o:opts(L.vias)},{k:"estudios",l:"Estudios y diseños",type:"select",o:opts(L.sinoTramite)},
+  {k:"predio",l:"Predio disponible",type:"select",o:opts(L.sinoTramite)},{k:"presupuesto",l:"Presupuesto detallado",type:"select",o:opts(L.sinoTramite)},{k:"proximoPaso",l:"Próximo paso",cls:"full"}]
+};
+const PREF={nec:"N",int:"I",pro:"P"}, KEY={nec:"necesidades",int:"intervenciones",pro:"proyectos"};
+const emptyRep=()=>({ident:{},necesidades:[],intervenciones:[],proyectos:[]});
+function nextId(list,p){let m=0;list.forEach(x=>{const n=Number(String(x.id||"").split("-")[1]);if(n>m)m=n});return p+"-"+String(m+1).padStart(3,"0")}
+
+/* ================= CONTROL DE CALIDAD ================= */
+function alertas(rep){
+  const A=[],I=rep.ident||{},N=rep.necesidades||[],IV=rep.intervenciones||[],P=rep.proyectos||[];
+  const nIds=new Set(N.map(x=>x.id)),iIds=new Set(IV.map(x=>x.id));
+  const miss=F.ident.filter(f=>f.req&&!String(I[f.k]||"").trim());
+  if(miss.length)A.push({n:"crit",paso:0,t:`Identificación incompleta: falta ${miss.map(f=>f.l.toLowerCase()).join(", ")}`});
+  if(!N.length)A.push({n:"crit",paso:1,t:"Sin necesidades registradas: registre al menos una"});
+  IV.forEach(x=>{if(!nIds.has(x.necesidad))A.push({n:"crit",paso:2,id:x.id,t:`${x.id}: intervención sin un ID de necesidad válido`})});
+  P.forEach(x=>{if(!iIds.has(x.intervencion))A.push({n:"crit",paso:3,id:x.id,t:`${x.id}: proyecto sin intervención válida`})});
+  P.forEach(x=>{if(num(x.confirmado)>num(x.costo)&&num(x.costo))A.push({n:"crit",paso:3,id:x.id,t:`${x.id}: recursos confirmados mayores que el costo. No registre fuentes potenciales como confirmadas`})});
+  P.forEach(x=>{if(num(x.confirmado)&&!num(x.costo))A.push({n:"crit",paso:3,id:x.id,t:`${x.id}: tiene recursos confirmados pero no costo total`})});
+  IV.forEach(x=>{if(num(x.cp)+num(x.mp)>num(x.costo)&&(num(x.cp)||num(x.mp)))A.push({n:"crit",paso:2,id:x.id,t:`${x.id}: corto más mediano plazo supera el costo estimado`})});
+  const usadas=new Set(IV.map(x=>x.necesidad));
+  N.forEach(x=>{if(!usadas.has(x.id))A.push({n:"warn",paso:1,id:x.id,t:`${x.id}: necesidad sin intervención. Defina cómo se atenderá en el PAE`})});
+  IV.forEach(x=>{if(!num(x.costo))A.push({n:"warn",paso:2,id:x.id,t:`${x.id}: intervención sin costo (déjelo vacío si no hay estimación; no lo invente)`})});
+  P.forEach(x=>{if(!num(x.costo))A.push({n:"warn",paso:3,id:x.id,t:`${x.id}: proyecto sin costo`})});
+  [["nec",1],["int",2],["pro",3]].forEach(([t,p])=>(rep[KEY[t]]||[]).forEach(x=>{const m=F[t].filter(f=>f.req&&!String(x[f.k]||"").trim()&&f.type!=="ref");if(m.length)A.push({n:"warn",paso:p,id:x.id,t:`${x.id}: campos obligatorios sin diligenciar (${m.map(f=>f.l.toLowerCase()).join(", ")})`})}));
+  return A;
+}
+
+/* ================= NAV / ROUTER ================= */
+function renderNav(){
+  const v=(location.hash||"#inicio").slice(1);
+  let h=`<a href="#inicio">Consolidado</a>`;
+  if(SES&&SES.rol==="municipio")h+=`<a href="#municipio">Mi reporte</a>`;
+  if(SES&&SES.rol==="gobernacion")h+=`<a href="#gobernacion">Panel Gobernación</a>`;
+  h+=`<a href="instructivo-pae-caldas.pdf" target="_blank" rel="noopener">Instructivo</a>`;
+  if(SES)h+=`<span class="who">${esc(SES.rol==="gobernacion"?"Gobernación":(SES.municipio||{}).nombre)}</span><button type="button" id="logoutBtn">Salir</button>`;
+  else h+=`<a href="#ingresar" class="cta">Ingresar</a>`;
+  $("#nav").innerHTML=h;
+  $$("#nav a").forEach(a=>{if(a.getAttribute("href")==="#"+v)a.setAttribute("aria-current","page")});
+  const lb=$("#logoutBtn");if(lb)lb.addEventListener("click",()=>logout());
+}
+const VIEWS=["inicio","ingresar","municipio","gobernacion"];
+function route(){
+  let v=(location.hash||"#inicio").slice(1);
+  if(v==="consolidado"){v="inicio";setTimeout(()=>$("#consolidado").scrollIntoView(),30)}
+  if(!VIEWS.includes(v))v="inicio";
+  if(v==="municipio"&&!(SES&&SES.rol==="municipio"))v=SES?"gobernacion":"ingresar";
+  if(v==="gobernacion"&&!(SES&&SES.rol==="gobernacion"))v=SES?"municipio":"ingresar";
+  if(v==="ingresar"&&SES)v=SES.rol==="gobernacion"?"gobernacion":"municipio";
+  if(("#"+v)!==location.hash&&location.hash!=="#consolidado")history.replaceState(null,"","#"+v);
+  $$("[data-view]").forEach(el=>el.hidden=el.id!=="v-"+v);
+  renderNav();
+  if(v==="inicio")loadPublic();
+  if(v==="ingresar")initLogin();
+  if(v==="municipio")openMunicipio();
+  if(v==="gobernacion")openGob();
+  if(location.hash!=="#consolidado")scrollTo(0,0);
+}
+addEventListener("hashchange",route);
+
+/* ================= PÚBLICO ================= */
+const CAL=[
+ ["2026-08-10","Decreto 392: calamidad pública departamental","Abre el régimen especial de contratación (Ley 1523, art. 66) y ordena el PAE"],
+ ["2026-08-10","Decreto 393: urgencia manifiesta","Contratación directa con relación directa con la emergencia; copia de contratos a la Contraloría"],
+ ["2026-08-11","Decreto 1171: desastre nacional por 12 meses","Marco de la reconstrucción con la UNGRD"],
+ ["2026-09-01","Vence el plazo de 15 días hábiles para el PAE (Decreto 392)","El PAE de respuesta se aprobó el 14 de agosto; el de recuperación se actualiza en versiones"],
+ ["2026-10-08","Actualización del PAE Nacional (FR-1703-SMD-11)","Formato y taxonomía a los que se traduce la Cartera Única"],
+ ["2026-10-19","PAE departamental, versión preliminar","Referencia de ejes, líneas y necesidad estimada"],
+ ["2026-11-19","Vencimiento asociado al Decreto 1419","Priorizar el reporte de proyectos que dependan de esa medida"],
+ ["2026-12-31","Vencimiento asociado al Decreto 1414","Cierre de vigencia: compromisos 2026 reportados"],
+ ["2027-02-10","Fin de los seis meses de la calamidad departamental, salvo prórroga","Revisar con el Consejo Departamental si se prorroga y ajustar el PAE"],
+ ["2027-08-11","Fin de la situación de desastre nacional (Decreto 1171)","Proyectos de corto plazo (2026–2027) en ejecución"],
+ ["2030-12-31","Mediano plazo del PAE Nacional (2028–2030)","Proyectos de reconstrucción definitiva"]];
+function renderCal(){
+  const hoy=new Date();hoy.setHours(0,0,0,0);
+  $("#pubCal").innerHTML=CAL.map(([d,t,p])=>{const f=new Date(d+"T00:00:00"),dias=Math.round((f-hoy)/864e5);
+    const lbl=dias<0?"Cumplido":dias===0?"Hoy":`Faltan ${fmt(dias)} días`;
+    return `<div class="r"><b class="f">${d==="2030-12-31"?"2028–2030":fdate(d)}</b><div><h4>${esc(t)}</h4><p>${esc(p)}</p></div><span class="days ${dias<0?"past":dias<=30?"soon":""}">${lbl}</span></div>`}).join("");
+}
+function renderAcciones(list,el){
+  const s=[...list].sort((a,b)=>String(a.fecha).localeCompare(String(b.fecha)));let mes="",h="";
+  const M=["ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE"];
+  s.forEach(a=>{const d=new Date(a.fecha+"T00:00:00");const mk=M[d.getMonth()]+" "+d.getFullYear();if(mk!==mes){mes=mk;h+=`<div class="mon">${mk}</div>`}
+    const hl=/día cero|PAE|portafolio|balance a tres/i.test(a.titulo);
+    h+=`<div class="it${hl?" hl":""}"><span class="d">${d.getDate()}<small>${M[d.getMonth()].slice(0,3)}</small></span><h4>${esc(a.titulo)}</h4><p>${esc(a.texto)}</p>${a.fuente?`<p class="src">Fuente: ${esc(a.fuente)}</p>`:""}</div>`});
+  el.innerHTML=h||'<p class="muted">Sin acciones registradas.</p>';
+}
+function cmpBars(el,rows){
+  el.innerHTML=rows.map(r=>{const p=r.nec?Math.min(100,r.rep/(r.nec*1e6)*100):0;return `<div class="r"><span><b class="code">${r.id}</b>${esc(r.nombre)}</span><div class="track" role="img" aria-label="${r.id}: reportado ${fmtM(r.rep)} millones de ${fmt(r.nec)} millones"><i style="width:${p}%"></i></div><span class="v num">${fmtM(r.rep)} / ${fmt(r.nec)}</span></div>`}).join("");
+}
+function hbars(el,rows,color){const mx=Math.max(1,...rows.map(r=>r[1]));el.innerHTML=rows.map(([k,v,ex])=>`<div class="r"><span title="${esc(k)}">${esc(k)}</span><div class="bar"><i style="width:calc(${v/mx} * (100% - 120px));background:${color||"var(--teal)"}"></i><em><b>${fmt(v)}</b>${ex?" "+ex:""}</em></div></div>`).join("")}
+async function loadPublic(){
+  renderCal();
+  let d;try{const j=DEMO?await demo("publico"):await apiGet({action:"publico"});if(!j.ok)throw new Error(j.error);d=j.datos;$("#syncState").textContent=DEMO?"Modo demostración (sin base de datos)":"Datos en línea"}catch(e){$("#syncState").textContent="Sin conexión con la base de datos";$("#pubMunis").innerHTML='<div class="empty">No fue posible cargar el consolidado. Intente recargar la página.</div>';return}
+  const M=d.municipios,c=e=>M.filter(m=>m.estado===e).length;
+  $("#pubCorte").textContent="Corte: "+fdt(d.corte);
+  $("#pubKpis").innerHTML=[[`${M.length-c("sin iniciar")} de 27`,"municipios con reporte iniciado",""],[c("enviado")+c("validado"),"reportes enviados a la Gobernación","b"],[c("validado"),"reportes validados (Cartera Única)","v"],[fmt(M.reduce((a,m)=>a+m.proyectos,0)),"proyectos reportados","g"]].map(([b,s,k])=>`<div class="stat ${k}"><b class="num">${b}</b><span>${s}</span></div>`).join("");
+  $("#pubMunis").innerHTML=[...M].sort((a,b)=>a.municipio.localeCompare(b.municipio,"es")).map(m=>`<div class="mcard"><div style="display:flex;justify-content:space-between;gap:6px;align-items:center"><b>${esc(m.municipio)}</b>${chip(m.estado)}</div><span class="meta">${esc(m.subregion)}</span><span class="meta num">${m.necesidades} N · ${m.intervenciones} I · ${m.proyectos} P${m.costoIntervenciones?` · ${moneyM(m.costoIntervenciones)}`:""}</span></div>`).join("");
+  const sin=M.filter(m=>m.dane!=="17001"),man=M.find(m=>m.dane==="17001")||{porLinea:{}};
+  const rep=id=>sin.reduce((a,m)=>a+(m.porLinea[id]||0),0);
+  cmpBars($("#cmpE1"),LIN.filter(l=>l.eje==="1").map(l=>({id:l.id,nombre:l.nombre,nec:l.nec,rep:rep(l.id)})));
+  cmpBars($("#cmpE2"),LIN.filter(l=>l.eje==="2").map(l=>({id:l.id,nombre:l.nombre,nec:l.nec,rep:rep(l.id)})));
+  const tot26=sin.reduce((a,m)=>a+m.costoIntervenciones,0),totMan=man.costoIntervenciones||0,conf=M.reduce((a,m)=>a+m.confirmado,0),cp=M.reduce((a,m)=>a+m.costoProyectos,0);
+  $("#pubTot").innerHTML=`<div class="stat"><small>26 municipios</small><b class="num">${moneyM(tot26)}</b><span>en intervenciones reportadas, frente a $2.227.050 M de necesidad estimada en el PAE</span></div><div class="stat b"><small>Manizales (aparte)</small><b class="num">${moneyM(totMan)}</b><span>en intervenciones reportadas por la capital</span></div><div class="stat g"><small>27 municipios</small><b class="num">${moneyM(conf)}</b><span>en recursos confirmados de ${moneyM(cp)} en proyectos (brecha ${moneyM(Math.max(0,cp-conf))})</span></div>`;
+  const viv=M.filter(m=>m.dane!=="17001"&&m.lineaBase&&m.lineaBase.viviendasAfectadas!=null).map(m=>[m.municipio,num(m.lineaBase.viviendasAfectadas)]).sort((a,b)=>b[1]-a[1]);
+  hbars($("#pubViv"),viv);
+  hbars($("#pubSub"),[["Centro Sur",13984,"· 59,5 %"],["Bajo Occidente",3996,"· 17,0 %"],["Alto Occidente",2310,"· 9,8 %"],["Norte",1977,"· 8,4 %"],["Alto Oriente",685,"· 2,9 %"],["Magdalena Caldense",540,"· 2,3 %"]],"var(--gold)");
+  renderAcciones(d.acciones||[],$("#pubAcc"));
+}
+
+/* ================= LOGIN ================= */
+function initLogin(){
+  const s=$("#lgUser");if(!s.options.length)s.innerHTML=`<option value="">Seleccione…</option><option value="gobernacion">Gobernación de Caldas · equipo coordinador</option><optgroup label="Municipios">${[...MUN].sort((a,b)=>a.nombre.localeCompare(b.nombre,"es")).map(m=>`<option value="${m.dane}">${esc(m.nombre)} (${m.dane})</option>`).join("")}</optgroup>`;
+  $("#demoHint").hidden=!DEMO;
+}
+$("#loginForm").addEventListener("submit",async e=>{
+  e.preventDefault();const u=$("#lgUser").value,p=$("#lgPass").value,msg=$("#lgMsg"),b=$("#lgBtn");
+  if(!u||!p){msg.hidden=false;msg.textContent="Seleccione su usuario y escriba la contraseña.";return}
+  b.disabled=true;b.textContent="Verificando…";msg.hidden=true;
+  try{const j=await call("login",{usuario:u,clave:p});if(!j.ok)throw new Error(j.error);
+    SES={token:j.token,usuario:j.usuario,rol:j.rol,municipio:j.municipio};lsSet("pae.sesion",SES);$("#lgPass").value="";
+    location.hash=j.rol==="gobernacion"?"#gobernacion":"#municipio";
+  }catch(err){msg.hidden=false;msg.textContent=err.message||"No fue posible ingresar"}
+  finally{b.disabled=false;b.textContent="Ingresar"}
+});
+function logout(expired){SES=null;lsSet("pae.sesion",null);W=null;G=null;if(expired)toast("Su sesión expiró. Ingrese de nuevo.",true);location.hash="#ingresar";route()}
+
+/* ================= ESPACIO DEL MUNICIPIO ================= */
+let W=null;          // {dane, data:{...}, rep, version, estado, paso, dirty, saving, ro}
+const STEPS=[["Identificación","1"],["Necesidades","2"],["Intervenciones","3"],["Proyectos","4"],["Revisión y envío","5"],["Observaciones","✉"],["Mi cuenta","⚙"]];
+async function openMunicipio(){
+  if(W&&W.dane===SES.usuario){renderWS();return}
+  $("#wsBody").innerHTML='<div class="empty">Cargando su reporte…</div>';
+  try{const j=await call("mi");if(!j.ok)throw new Error(j.error);loadW(j.reporte)}catch(e){$("#wsBody").innerHTML=`<div class="note crit">${esc(e.message)}</div>`}
+}
+function loadW(r){
+  const local=lsGet("pae.borrador."+r.dane);
+  W={dane:r.dane,data:r,rep:Object.assign(emptyRep(),r.reporte||{}),version:r.version,estado:r.estado,paso:W&&W.dane===r.dane?W.paso:0,dirty:false};
+  if(local&&local.version===r.version&&JSON.stringify(local.rep)!==JSON.stringify(W.rep)){W.rep=local.rep;W.dirty=true;toast("Se recuperaron cambios que no alcanzaron a guardarse");schedule(500)}
+  renderWS();
+}
+function setSave(cls,txt){const b=$("#saveBar");b.className="savebar "+cls;$("#saveTxt").textContent=txt}
+let saveT=null;
+function schedule(ms){clearTimeout(saveT);saveT=setTimeout(saveNow,ms==null?1800:ms)}
+function touch(){W.dirty=true;lsSet("pae.borrador."+W.dane,{version:W.version,rep:W.rep});setSave("saving","Cambios sin guardar…");schedule()}
+async function saveNow(){
+  if(!W||!W.dirty||W.saving)return;W.saving=true;setSave("saving","Guardando…");
+  const snap=JSON.stringify(W.rep);
+  W.rep.intervenciones.forEach(x=>{x.eje=(LINEA[x.linea]||{}).eje||""});
+  try{const j=await call("guardar",{reporte:W.rep,version:W.version,dane:W.dane});
+    if(!j.ok){if(j.error==="conflicto"){toast(j.mensaje,true);lsSet("pae.borrador."+W.dane,null);W.saving=false;loadW(j.reporte);return}throw new Error(j.error)}
+    W.version=j.version;const prev=W.estado;W.estado=j.estado;W.data.actualizado=j.actualizado;
+    if(JSON.stringify(W.rep)===snap){W.dirty=false;lsSet("pae.borrador."+W.dane,null)}else{lsSet("pae.borrador."+W.dane,{version:W.version,rep:W.rep});schedule()}
+    setSave("","Guardado "+new Date().toLocaleTimeString("es-CO",{hour:"2-digit",minute:"2-digit"}));
+    if(prev!==W.estado){renderHead();if(prev==="validado")toast("Editó un reporte validado: vuelve a «enviado» para una nueva revisión")}
+  }catch(e){setSave("err","No se pudo guardar · se reintentará");schedule(8000)}
+  finally{W.saving=false}
+}
+addEventListener("beforeunload",e=>{if(W&&W.dirty){saveNow();e.preventDefault();e.returnValue=""}});
+document.addEventListener("visibilitychange",()=>{if(document.hidden&&W&&W.dirty)saveNow()});
+
+function renderHead(){
+  const m=MUNI[W.dane];$("#wsTitle").textContent=m.nombre;$("#wsEyebrow").textContent=`Reporte municipal · DANE ${m.dane} · ${m.subregion}`;
+  $("#wsMeta").textContent=[W.data.actualizado&&("Última actualización: "+fdt(W.data.actualizado)),W.data.enviado&&("Enviado: "+fdate(W.data.enviado)),W.data.validado&&W.estado==="validado"&&("Validado: "+fdate(W.data.validado))].filter(Boolean).join(" · ");
+  $("#wsEstado").innerHTML=chip(W.estado);
+  if(!W.dirty)setSave("",W.data.actualizado?"Guardado":"Sin cambios");
+}
+function renderSteps(){
+  const A=alertas(W.rep),crit=p=>A.some(a=>a.n==="crit"&&a.paso===p);
+  const cnt=[null,W.rep.necesidades.length,W.rep.intervenciones.length,W.rep.proyectos.length,A.filter(a=>a.n==="crit").length||null,(W.data.observaciones||[]).length||null,null];
+  const nav=$("#stepsNav");
+  if(nav.children.length!==STEPS.length)nav.innerHTML=STEPS.map(([t,n],i)=>`<button type="button" data-step="${i}"><i>${n}</i>${t} <span class="cnt"></span><span class="al" title="Tiene alertas críticas"></span></button>`).join("");
+  // se actualiza sin reemplazar los botones (evita perder clics mientras se escribe)
+  [...nav.children].forEach((btn,i)=>{
+    if(i===W.paso)btn.setAttribute("aria-current","step");else btn.removeAttribute("aria-current");
+    const c=btn.querySelector(".cnt");c.textContent=cnt[i]!=null?cnt[i]:"";c.hidden=cnt[i]==null;
+    btn.querySelector(".al").hidden=!(crit(i)&&i<4);
+  });
+}
+$("#stepsNav").addEventListener("click",e=>{const b=e.target.closest("[data-step]");if(!b)return;W.paso=+b.dataset.step;renderWS();$("#v-municipio").scrollIntoView()});
+function renderWS(){renderHead();renderSteps();const fn=[stepIdent,()=>stepList("nec"),()=>stepList("int"),()=>stepList("pro"),stepReview,stepObs,stepCuenta][W.paso];$("#wsBody").innerHTML="";fn();bindWS()}
+
+/* --- campos --- */
+function fieldHTML(f,obj,ctx,ro){
+  const v=obj[f.k]??"",id=`${ctx}__${f.k}`,dis=ro?" disabled":"";
+  const miss=f.req&&!String(v).trim()?" miss":"";
+  const lab=`<span>${esc(f.l)}${f.req?' <span class="req">*</span>':""}</span>`;
+  const hint=f.hint?`<small>${esc(f.hint)}</small>`:"";
+  if(f.type==="derived"){
+    if(f.k==="_eje"){const e=(LINEA[obj.linea]||{}).eje;return `<label class="f ${f.cls||""}">${lab}<input type="text" value="${e?esc(EJES.find(x=>x.id===e).nombre):"—"}" disabled></label>`}
+    if(f.k==="_brecha"){const b=num(obj.costo)?num(obj.costo)-num(obj.confirmado):0;return `<label class="f ${f.cls||""}">${lab}<input type="text" value="${num(obj.costo)?money(b):"—"}" disabled></label>`}
+  }
+  if(f.type==="check")return `<label class="chk ${f.cls||""}" style="align-self:end;padding-bottom:8px"><input type="checkbox" data-f="${f.k}"${v?" checked":""}${dis}><span>${esc(f.l)}</span></label>`;
+  let input;
+  if(f.type==="textarea")input=`<textarea id="${id}" data-f="${f.k}" class="${miss}"${dis}>${esc(v)}</textarea>`;
+  else if(f.type==="select")input=`<select id="${id}" data-f="${f.k}" class="${miss}"${dis}><option value="">Seleccione…</option>${f.o.map(([a,b])=>`<option value="${esc(a)}"${a===v?" selected":""}>${esc(b)}</option>`).join("")}</select>`;
+  else if(f.type==="ref"){const list=W.rep[KEY[f.ref]]||[];const ok=list.some(x=>x.id===v);
+    input=`<select id="${id}" data-f="${f.k}" class="${!ok?"miss":""}"${dis}><option value="">Seleccione…</option>${list.map(x=>`<option value="${esc(x.id)}"${x.id===v?" selected":""}>${esc(x.id)} · ${esc((f.ref==="nec"?x.descripcion||x.ubicacion:x.nombre)||"(sin nombre)").slice(0,90)}</option>`).join("")}${v&&!ok?`<option value="${esc(v)}" selected>${esc(v)} (no existe)</option>`:""}</select>`}
+  else if(f.type==="tax"){let g="",h="";TAX.forEach(t=>{const gr=t.c.split("-")[0];if(gr!==g){if(g)h+="</optgroup>";g=gr;h+=`<optgroup label="${gr==="RT"?"Fase I · Rehabilitación y transición":gr.startsWith("LI")?"Fase II · "+gr:"Transversal · "+gr}">`}h+=`<option value="${t.c}"${t.c===v?" selected":""}>${t.c} · ${esc(t.i).slice(0,110)}</option>`});h+="</optgroup>";
+    input=`<select id="${id}" data-f="${f.k}"${dis}><option value="">Sin código todavía</option>${h}<option value="OTRA"${v==="OTRA"?" selected":""}>Otra (no encaja en la taxonomía)</option></select>`}
+  else if(f.type==="money")input=`<input type="text" inputmode="numeric" id="${id}" data-f="${f.k}" data-money value="${v!==""?fmt(num(v)):""}" placeholder="0"${dis}>`;
+  else input=`<input type="${f.type==="number"?"number":f.type||"text"}" ${f.type==="number"?'min="0" step="1"':""} id="${id}" data-f="${f.k}" class="${miss}" value="${esc(v)}"${dis}>`;
+  return `<label class="f ${f.cls||""}" for="${id}">${lab}${input}${hint}</label>`;
+}
+const RO=()=>false;   // el municipio siempre puede editar (si edita un validado vuelve a «enviado»)
+
+function stepIdent(){
+  const m=MUNI[W.dane],I=W.rep.ident;
+  $("#wsBody").innerHTML=`
+   <div class="listhead"><h2>1 · Identificación</h2><button class="btn ghost small" type="button" data-act="xlsx-down">Descargar Excel</button><label class="btn ghost small" style="cursor:pointer">Cargar Excel<input type="file" accept=".xlsx" data-act="xlsx-up" hidden></label></div>
+   <p class="muted">Quién reporta y con qué corte. Quien diligencia responde por la calidad de la información.</p>
+   <div class="card"><div class="fields" data-obj="ident">
+     <label class="f">Municipio<input type="text" value="${esc(m.nombre)}" disabled></label><label class="f">Código DANE<input type="text" value="${m.dane}" disabled></label><label class="f">Subregión<input type="text" value="${esc(m.subregion)}" disabled></label>
+     ${F.ident.map(f=>fieldHTML(f,I,"ident")).join("")}
+   </div></div>
+   ${lineaBaseHTML(W.data.lineaBase)}
+   <div class="note info"><b class="t">Cómo funciona</b>Cada necesidad recibe un código N-001, N-002…; cada intervención (I-) apunta a una necesidad y cada proyecto (P-) a una intervención. La plataforma guarda sola mientras usted trabaja; puede volver cuantas veces quiera.</div>
+   <div class="example"><b>Ejemplo real · Pensilvania.</b> Registra N-001 «Daño estructural escuela» en la vereda San Pedro (230 personas, urgencia alta); la vincula a I-001 «Mejoramiento de infraestructura educativa» (Eje 2, FAR3, $1.450 millones) y a P-001 en etapa de perfil, con $500 millones confirmados y una brecha de $950 millones.</div>
+   <div style="display:flex;justify-content:flex-end"><button class="btn" type="button" data-go="1">Siguiente: necesidades →</button></div>`;
+}
+function lineaBaseHTML(lb){
+  lb=lb||{};const ks=Object.keys(lb).filter(k=>k!=="fuente"&&k!=="notas");
+  if(!ks.length)return "";
+  const N={viviendasAfectadas:"Viviendas afectadas",viviendasAveriadas:"Viviendas averiadas",viviendasDestruidas:"Viviendas destruidas",familiasRUD:"Familias en el RUD",personasRUD:"Personas en el RUD",sedesEducativas:"Sedes educativas afectadas",danosValorados:"Daños valorados (pesos)"};
+  return `<div class="card"><h3>Línea base del municipio</h3><p class="sub">Cifras de referencia registradas por la Gobernación${lb.fuente?" · "+esc(lb.fuente):""}. Sus necesidades deben ser coherentes con ellas.</p><div class="grid4" style="margin-top:12px">${ks.map(k=>`<div class="stat"><b class="num">${typeof lb[k]==="number"||/^\d/.test(lb[k])?fmt(num(lb[k])):esc(lb[k])}</b><span>${esc(N[k]||k)}</span></div>`).join("")}</div>${lb.notas?`<p class="muted" style="margin-top:10px;font-size:13.5px">${esc(lb.notas)}</p>`:""}</div>`;
+}
+const STEPINFO={
+ nec:["2 · Necesidades","Una ficha por daño o carencia, por vereda o barrio, con su soporte. No invente cifras: un dato pendiente se deja vacío.","Agregar necesidad","Siguiente: intervenciones →"],
+ int:["3 · Intervenciones","Una ficha por acción del PAE. Cada intervención apunta a una necesidad y se clasifica en una línea del PAE departamental (FR1–FR7, FAR1–FAR10). Una necesidad puede tener varias intervenciones.","Agregar intervención","Siguiente: proyectos →"],
+ pro:["4 · Proyectos","Una ficha por intervención con avance técnico o financiero. Una intervención no es automáticamente un proyecto viable. Registre como confirmados solo los recursos con soporte (CDP, convenio o acto de asignación).","Agregar proyecto","Siguiente: revisión y envío →"]};
+function summary(t,x){
+  if(t==="nec")return `<span class="tt">${esc(x.descripcion||"(sin descripción)")}<small>${esc([x.ubicacion,x.sector,x.urgencia&&("Urgencia "+x.urgencia.toLowerCase()),x.personas&&(fmt(num(x.personas))+" personas")].filter(Boolean).join(" · "))}</small></span>`;
+  if(t==="int")return `<span class="tt">${esc(x.nombre||"(sin nombre)")}<small>${esc([x.necesidad&&("→ "+x.necesidad),x.linea,x.horizonte,num(x.costo)?money(num(x.costo)):""].filter(Boolean).join(" · "))}</small></span>`;
+  return `<span class="tt">${esc(x.nombre||"(sin nombre)")}<small>${esc([x.intervencion&&("→ "+x.intervencion),x.etapa,num(x.costo)?money(num(x.costo)):"",num(x.confirmado)?("confirmado "+money(num(x.confirmado))):""].filter(Boolean).join(" · "))}</small></span>`;
+}
+function itemAlerts(id){const A=alertas(W.rep).filter(a=>a.id===id);return A.length?`<ul class="alerts">${A.map(a=>`<li><span class="tag ${a.n}">${a.n==="crit"?"Crítica":"Advertencia"}</span>${esc(a.t.replace(id+": ",""))}</li>`).join("")}</ul>`:""}
+function stepList(t){
+  const [title,desc,add,next]=STEPINFO[t],list=W.rep[KEY[t]];
+  const pre=t==="int"&&!W.rep.necesidades.length?'<div class="note">Registre primero al menos una necesidad: cada intervención debe apuntar a una.</div>':t==="pro"&&!W.rep.intervenciones.length?'<div class="note">Registre primero al menos una intervención: cada proyecto debe apuntar a una.</div>':"";
+  $("#wsBody").innerHTML=`<div class="listhead"><h2>${title}</h2><span class="muted">${list.length} registro(s)</span><button class="btn gold small" type="button" data-add="${t}">+ ${add}</button></div><p class="muted">${desc}</p>${pre}
+   <div style="display:grid;gap:10px" id="list-${t}">${list.length?list.map((x,i)=>itemHTML(t,x,i,W.openId===x.id)).join(""):`<div class="empty">Aún no hay registros.<button class="btn gold small" type="button" data-add="${t}">+ ${add}</button></div>`}</div>
+   ${list.length?`<div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><button class="btn ghost small" type="button" data-add="${t}">+ ${add}</button><button class="btn" type="button" data-go="${{nec:2,int:3,pro:4}[t]}">${next}</button></div>`:""}`;
+  W.openId=null;
+}
+function itemHTML(t,x,i,open){
+  return `<details class="item" data-t="${t}" data-i="${i}"${open?" open":""}><summary><span class="code">${esc(x.id)}</span>${summary(t,x)}</summary>
+   <div class="body"><div class="fields" data-obj="${t}:${i}">${F[t].map(f=>fieldHTML(f,x,t+i)).join("")}</div>${itemAlerts(x.id)}
+   <div class="actions"><button class="btn ghost xs" type="button" data-dup="${t}:${i}">Duplicar</button><button class="btn danger xs" type="button" data-del="${t}:${i}">Eliminar ${esc(x.id)}</button></div></div></details>`;
+}
+function stepReview(){
+  const A=alertas(W.rep),cr=A.filter(a=>a.n==="crit"),wa=A.filter(a=>a.n==="warn"),R=W.rep;
+  const ci=R.intervenciones.reduce((a,x)=>a+num(x.costo),0),cp=R.proyectos.reduce((a,x)=>a+num(x.costo),0),cf=R.proyectos.reduce((a,x)=>a+num(x.confirmado),0);
+  const porL={};R.intervenciones.forEach(x=>{if(x.linea)porL[x.linea]=(porL[x.linea]||0)+num(x.costo)});
+  const st=W.estado;
+  $("#wsBody").innerHTML=`<div class="listhead"><h2>5 · Revisión y envío</h2><button class="btn ghost small" type="button" data-act="xlsx-down">Descargar Excel</button></div>
+   <div class="grid4"><div class="stat"><b class="num">${R.necesidades.length}</b><span>necesidades</span></div><div class="stat b"><b class="num">${R.intervenciones.length}</b><span>intervenciones · ${money(ci)}</span></div><div class="stat g"><b class="num">${R.proyectos.length}</b><span>proyectos · ${money(cp)}</span></div><div class="stat v"><b class="num">${money(cf)}</b><span>recursos confirmados · brecha ${money(Math.max(0,cp-cf))}</span></div></div>
+   ${Object.keys(porL).length?`<div class="card"><h3>Costo de intervenciones por línea del PAE</h3><div class="hb" style="margin-top:12px;--lw:70px">${Object.entries(porL).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<div class="r"><span title="${esc((LINEA[k]||{}).nombre)}"><b>${k}</b></span><div class="bar"><i style="width:calc(${v/Math.max(...Object.values(porL),1)} * (100% - 170px))"></i><em><b>${money(v)}</b> ${esc((LINEA[k]||{}).nombre||"").slice(0,40)}</em></div></div>`).join("")}</div></div>`:""}
+   <div class="card"><h3>Control automático de calidad</h3><p class="sub">${cr.length?`${cr.length} alerta(s) crítica(s): puede enviar, pero el reporte no debería validarse hasta corregirlas.`:"Sin alertas críticas."} ${wa.length?wa.length+" advertencia(s).":""}</p>
+     ${A.length?`<ul class="alerts" style="margin-top:12px">${A.map(a=>`<li><span class="tag ${a.n}">${a.n==="crit"?"Crítica":"Advertencia"}</span><span>${esc(a.t)}</span><button class="btn ghost xs" type="button" data-fix="${a.paso}|${esc(a.id||"")}">Ir</button></li>`).join("")}</ul>`:'<div class="note ok" style="margin-top:12px">Todo en orden.</div>'}</div>
+   <div class="card" style="display:grid;gap:12px"><h3>Enviar a la Gobernación</h3>
+     ${st==="enviado"?'<div class="note info">Su reporte está <strong>enviado</strong> y en revisión. Puede seguir corrigiendo: la Gobernación verá la versión más reciente.</div>':st==="validado"?'<div class="note ok">Su reporte está <strong>validado</strong> y forma parte de la Cartera Única. Si lo edita, vuelve a «enviado» para una nueva revisión.</div>':'<p>Al enviar, la Gobernación revisa y valida o devuelve con observaciones escritas que usted verá en la pestaña «Observaciones».</p>'}
+     <label class="chk"><input type="checkbox" id="confirmSend"> <span>Confirmo que la información es veraz, tiene soporte y no incluye cifras inventadas.</span></label>
+     <div><button class="btn green" type="button" data-act="enviar"${st==="validado"?" disabled":""}>${st==="enviado"?"Reenviar a la Gobernación":"Enviar a la Gobernación"}</button></div></div>`;
+}
+function stepObs(){
+  const O=W.data.observaciones||[];
+  $("#wsBody").innerHTML=`<div class="listhead"><h2>Observaciones de la Gobernación</h2></div><p class="muted">Solo la Gobernación escribe observaciones; usted las lee y ajusta su reporte.</p>
+   ${O.length?`<div class="obs">${[...O].reverse().map(o=>`<div class="o ${o.tipo==="devolución"?"dev":""}"><small>${fdt(o.fecha)} · ${esc(o.tipo==="devolución"?"Devolución":"Observación")}</small>${esc(o.texto).replace(/\n/g,"<br>")}</div>`).join("")}</div>`:'<div class="empty">No hay observaciones.</div>'}`;
+}
+function stepCuenta(){
+  $("#wsBody").innerHTML=`<div class="listhead"><h2>Mi cuenta</h2></div>
+   <form class="panel" id="pwForm" style="max-width:480px"><h3>Cambiar contraseña</h3>
+   <label class="f">Contraseña actual<input type="password" id="pwA" autocomplete="current-password" required></label>
+   <label class="f">Nueva contraseña <small>Mínimo 10 caracteres</small><input type="password" id="pwN" autocomplete="new-password" minlength="10" required></label>
+   <label class="f">Repita la nueva contraseña<input type="password" id="pwN2" autocomplete="new-password" minlength="10" required></label>
+   <div id="pwMsg" hidden></div><div><button class="btn" type="submit">Cambiar contraseña</button></div></form>`;
+  $("#pwForm").addEventListener("submit",async e=>{e.preventDefault();const m=$("#pwMsg");m.hidden=false;
+    if($("#pwN").value!==$("#pwN2").value){m.className="note crit";m.textContent="Las contraseñas nuevas no coinciden.";return}
+    try{const j=await call("cambiarClave",{actual:$("#pwA").value,nueva:$("#pwN").value});if(!j.ok)throw new Error(j.error);SES.token=j.token;lsSet("pae.sesion",SES);m.className="note ok";m.textContent="Contraseña actualizada.";e.target.reset()}catch(err){m.className="note crit";m.textContent=err.message}});
+}
+
+/* --- eventos del espacio --- */
+function readField(el){if(el.type==="checkbox")return el.checked;if(el.dataset.money!==undefined){const n=num(el.value);return el.value.trim()===""?"":n}return el.value}
+function bindWS(){
+  const B=$("#wsBody");
+  B.oninput=e=>{const el=e.target;if(!el.dataset.f)return;const box=el.closest("[data-obj]");if(!box)return;const [t,i]=box.dataset.obj.split(":");
+    const obj=t==="ident"?W.rep.ident:W.rep[KEY[t]][+i];obj[el.dataset.f]=readField(el);
+    if(el.classList.contains("miss")&&String(el.value).trim())el.classList.remove("miss");
+    touch();
+    if(t!=="ident"){const d=el.closest("details");const s=d&&d.querySelector("summary .tt");if(s)s.outerHTML=summary(t,obj)}
+  };
+  B.onchange=e=>{const el=e.target;
+    if(el.dataset.act==="xlsx-up"&&el.files[0]){importXlsx(el.files[0]);el.value="";return}
+    if(!el.dataset.f)return;const box=el.closest("[data-obj]");if(!box)return;const [t,i]=box.dataset.obj.split(":");
+    if(el.dataset.money!==undefined&&el.value.trim())el.value=fmt(num(el.value));
+    if(t!=="ident"&&["linea","costo","confirmado","necesidad","intervencion","cp","mp"].includes(el.dataset.f)){const obj=W.rep[KEY[t]][+i];const d=el.closest("details");d.querySelector(".fields").innerHTML=F[t].map(f=>fieldHTML(f,obj,t+i)).join("");const al=d.querySelector(".body .alerts");if(al)al.remove();d.querySelector(".actions").insertAdjacentHTML("beforebegin",itemAlerts(obj.id));}
+    renderSteps();
+  };
+  B.onclick=async e=>{const b=e.target.closest("button,[data-go]");if(!b)return;
+    if(b.dataset.go){W.paso=+b.dataset.go;renderWS();scrollTo({top:$("#v-municipio").offsetTop,behavior:"smooth"});return}
+    if(b.dataset.add){const t=b.dataset.add,list=W.rep[KEY[t]],x={id:nextId(list,PREF[t])};
+      if(t==="int"&&W.rep.necesidades.length===1)x.necesidad=W.rep.necesidades[0].id;
+      if(t==="pro"&&W.rep.intervenciones.length===1)x.intervencion=W.rep.intervenciones[0].id;
+      list.push(x);W.openId=x.id;touch();renderWS();const el=$(`details[data-i="${list.length-1}"]`);if(el){el.scrollIntoView({behavior:"smooth",block:"start"});setTimeout(()=>{const f=el.querySelector("input,select,textarea");f&&f.focus({preventScroll:true})},350)}return}
+    if(b.dataset.dup){const [t,i]=b.dataset.dup.split(":"),list=W.rep[KEY[t]],x=Object.assign({},list[+i],{id:nextId(list,PREF[t])});list.push(x);W.openId=x.id;touch();renderWS();toast(`Se creó ${x.id} como copia`);return}
+    if(b.dataset.del){const [t,i]=b.dataset.del.split(":"),x=W.rep[KEY[t]][+i];
+      if(b.dataset.confirm!=="1"){b.dataset.confirm="1";b.textContent=`¿Eliminar ${x.id}? Confirmar`;setTimeout(()=>{if(b.isConnected){b.dataset.confirm="";b.textContent=`Eliminar ${x.id}`}},4000);return}
+      W.rep[KEY[t]].splice(+i,1);touch();renderWS();toast(`${x.id} eliminado. Revise las alertas de los registros que lo usaban.`);return}
+    if(b.dataset.fix){const [p,id]=b.dataset.fix.split("|");W.paso=+p;W.openId=id||null;renderWS();if(id){const d=[...$$("#wsBody details")].find(d=>d.querySelector(".code").textContent===id);if(d)d.scrollIntoView({behavior:"smooth",block:"start"})}return}
+    if(b.dataset.act==="xlsx-down"){exportMuni(W.dane,W.rep);return}
+    if(b.dataset.act==="enviar"){if(!$("#confirmSend").checked){toast("Marque la confirmación antes de enviar",true);return}
+      b.disabled=true;await saveNow();if(W.dirty){toast("No se pudo guardar; intente de nuevo",true);b.disabled=false;return}
+      try{const j=await call("enviar");if(!j.ok)throw new Error(j.error);W.estado=j.estado;W.data.enviado=new Date().toISOString();toast("Reporte enviado a la Gobernación");renderWS()}catch(err){toast(err.message,true);b.disabled=false}}
+  };
+}
+
+/* ================= EXCEL ================= */
+const XC={
+ ident:[["responsable","Responsable",28],["cargo","Cargo",22],["dependencia","Dependencia",24],["correo","Correo",28],["telefono","Teléfono",16],["fechaCorte","Fecha de corte (AAAA-MM-DD)",20]],
+ nec:[["id","ID",9],["ubicacion","Vereda o barrio",22],["sector","Sector",20],["descripcion","Descripción del daño o carencia",44],["fuente","Fuente",12],["urgencia","Urgencia",10],["personas","Personas afectadas",12],["unidades","Unidades afectadas",12],["unidadMedida","Unidad de medida",14],["tipologia","Tipología de respuesta",22],["soporte","Soporte",20],["enlace","Enlace",24],["obs","Observaciones",30]],
+ int:[["id","ID",9],["necesidad","Necesidad (ID)",12],["linea","Línea PAE",10],["nombre","Intervención",40],["responsable","Responsable",22],["horizonte","Horizonte",22],["estado","Estado",12],["resultado","Resultado esperado",34],["poblacion","Población",12],["costo","Costo estimado (pesos)",18],["precision","Precisión del costo",22],["cp","Corto plazo 2026–2027 (pesos)",18],["mp","Mediano plazo 2028–2030 (pesos)",18],["riesgo","Medidas de reducción del riesgo (Eje 3) Sí/No",16],["taxonomia","Código taxonomía nacional",16]],
+ pro:[["id","ID",9],["intervencion","Intervención (ID)",12],["nombre","Nombre del proyecto",40],["problema","Problema",34],["objetivo","Objetivo",34],["etapa","Etapa",18],["responsable","Responsable",22],["producto","Producto",22],["localizacion","Localización",20],["beneficiarios","Beneficiarios",12],["costo","Costo total (pesos)",18],["confirmado","Recursos confirmados (pesos)",18],["fuente","Fuente de recursos confirmados",24],["via","Vía de financiación",20],["estudios","Estudios",10],["predio","Predio",10],["presupuesto","Presupuesto",12],["proximoPaso","Próximo paso",30]]};
+const SHEETS={nec:"Necesidades",int:"Intervenciones",pro:"Proyectos"};
+const cellOut=(k,v)=>k==="riesgo"?(v?"Sí":"No"):(["personas","unidades","poblacion","costo","cp","mp","beneficiarios","confirmado"].includes(k)&&v!==""&&v!=null?num(v):(v??""));
+function exportMuni(dane,rep){
+  const m=MUNI[dane],I=rep.ident||{};
+  const listas=[["Línea PAE","Nombre","Eje"]].concat(LIN.map(l=>[l.id,l.nombre,"Eje "+l.eje]));
+  XLSX.escribir([
+    {nombre:"Identificación",columnas:[{t:"Campo",w:30},{t:"Valor",w:50}],filas:[["Municipio",m.nombre],["Código DANE",m.dane],["Subregión",m.subregion]].concat(XC.ident.map(([k,t])=>[t,I[k]||""]))},
+    ...["nec","int","pro"].map(t=>({nombre:SHEETS[t],columnas:XC[t].map(([,tt,w])=>({t:tt,w})),filas:(rep[KEY[t]]||[]).map(x=>XC[t].map(([k])=>cellOut(k,x[k])))})),
+    {nombre:"Listas",columnas:[{t:"Línea PAE",w:10},{t:"Nombre",w:70},{t:"Eje",w:10}],filas:listas.slice(1).concat([[""],["Sector"]],L.sectores.map(s=>["",s]),[[""],["Urgencia"]],L.urgencia.map(s=>["",s]),[[""],["Tipología"]],L.tipologia.map(s=>["",s]),[[""],["Horizonte"]],L.horizonte.map(s=>["",s]),[[""],["Etapa"]],L.etapa.map(s=>["",s]))},
+    {nombre:"Instrucciones",columnas:[{t:"Cómo usar este archivo",w:120}],filas:[["Este archivo es el Formato Municipal PAE → Proyectos de la plataforma departamental."],["Puede diligenciarlo sin conexión y luego subirlo en la plataforma con «Cargar Excel» (paso 1). Al cargarlo, reemplaza el reporte del municipio."],["No cambie los nombres de las hojas ni los títulos de la fila 1."],["Cada intervención debe tener en «Necesidad (ID)» un ID existente (N-001…) y cada proyecto en «Intervención (ID)» un ID existente (I-001…)."],["Los valores en pesos van sin puntos ni signos. Si no hay estimación de costo, deje la celda vacía: no invente cifras."],["Use los valores exactos de la hoja «Listas» para línea PAE, sector, urgencia, tipología, horizonte y etapa."]]}
+  ],`PAE_${m.nombre.replace(/\s+/g,"_")}_${new Date().toISOString().slice(0,10)}.xlsx`);
+}
+async function importXlsx(file){
+  try{
+    const wb=await XLSX.leer(file),rep=emptyRep();
+    const idS=wb["Identificación"];if(!idS)throw new Error("El archivo no tiene la hoja «Identificación». Use el Excel descargado de la plataforma.");
+    const idMap=Object.fromEntries(XC.ident.map(([k,t])=>[t,k]));
+    idS.slice(1).forEach(r=>{const k=idMap[String(r[0]||"").trim()];if(k)rep.ident[k]=String(r[1]??"").trim()});
+    if(rep.ident.fechaCorte&&/^\d{5}$/.test(rep.ident.fechaCorte)){const d=new Date(Date.UTC(1899,11,30)+Number(rep.ident.fechaCorte)*864e5);rep.ident.fechaCorte=d.toISOString().slice(0,10)}
+    for(const t of ["nec","int","pro"]){const s=wb[SHEETS[t]];if(!s)throw new Error(`Falta la hoja «${SHEETS[t]}».`);
+      const head=(s[0]||[]).map(h=>String(h).trim()),cols=XC[t].map(([k,tt])=>[k,head.indexOf(tt)]);
+      if(cols.some(([,i])=>i<0))throw new Error(`La hoja «${SHEETS[t]}» no tiene los títulos esperados en la fila 1.`);
+      s.slice(1).forEach(r=>{if(!r||r.every(v=>String(v).trim()===""))return;const x={};cols.forEach(([k,i])=>{let v=r[i];v=v==null?"":v;if(k==="riesgo")x[k]=/^s[ií]/i.test(String(v));else if(["costo","cp","mp","confirmado"].includes(k))x[k]=String(v).trim()===""?"":num(v);else x[k]=String(v).trim()});
+        if(!x.id)x.id=nextId(rep[KEY[t]],PREF[t]);rep[KEY[t]].push(x)});
+    }
+    const p=$("#wsBody");const box=document.createElement("div");box.className="panel";box.innerHTML=`<h3>Cargar «${esc(file.name)}»</h3><p>El archivo trae ${rep.necesidades.length} necesidades, ${rep.intervenciones.length} intervenciones y ${rep.proyectos.length} proyectos. <strong>Reemplazará</strong> el reporte actual (${W.rep.necesidades.length} N · ${W.rep.intervenciones.length} I · ${W.rep.proyectos.length} P).</p><div style="display:flex;gap:8px"><button class="btn" type="button" id="impOk">Reemplazar mi reporte</button><button class="btn ghost" type="button" id="impNo">Cancelar</button></div>`;
+    p.prepend(box);box.scrollIntoView({behavior:"smooth"});
+    $("#impNo").onclick=()=>box.remove();
+    $("#impOk").onclick=()=>{W.rep=rep;touch();W.paso=4;renderWS();toast("Excel cargado. Revise las alertas antes de enviar.")};
+  }catch(err){toast(err.message||"No se pudo leer el archivo",true)}
+}
+
+/* ================= PANEL DE LA GOBERNACIÓN ================= */
+let G=null;   // {reportes, acciones, tab, sel}
+const GT=[["Municipios","municipios"],["Cartera Única","cartera"],["Cartera frente al PAE","pae"],["Equivalencia PAE Nacional","nacional"],["Acciones","acciones"],["Bitácora","bitacora"]];
+async function openGob(force){
+  if(G&&!force){renderG();return}
+  $("#gBody").innerHTML='<div class="empty">Cargando los 27 reportes…</div>';
+  try{const j=await call("todos");if(!j.ok)throw new Error(j.error);G=Object.assign(G||{tab:"municipios",sel:null},{reportes:j.reportes,acciones:j.acciones||[]});renderG()}catch(e){$("#gBody").innerHTML=`<div class="note crit">${esc(e.message)}</div>`}
+}
+$("#gReload").addEventListener("click",()=>openGob(true));
+function renderG(){
+  $("#gTabs").innerHTML=GT.map(([t,k])=>`<button type="button" data-g="${k}"${G.tab===k?' aria-current="step"':""}>${t}</button>`).join("");
+  $("#gMeta").textContent=`${G.reportes.filter(r=>r.estado==="validado").length} validados · ${G.reportes.filter(r=>r.estado==="enviado").length} por revisar · ${G.reportes.filter(r=>r.estado==="sin iniciar").length} sin iniciar`;
+  ({municipios:G.sel?gMuni:gList,cartera:gCartera,pae:gPAE,nacional:gNacional,acciones:gAcciones,bitacora:gBitacora})[G.tab]();
+}
+$("#gTabs").addEventListener("click",e=>{const b=e.target.closest("[data-g]");if(!b)return;G.tab=b.dataset.g;G.sel=null;renderG()});
+const repOf=r=>Object.assign(emptyRep(),r.reporte||{});
+function gList(){
+  const order={enviado:0,diligenciamiento:1,validado:2,"sin iniciar":3};
+  const rows=[...G.reportes].sort((a,b)=>(order[a.estado]-order[b.estado])||a.municipio.localeCompare(b.municipio,"es"));
+  $("#gBody").innerHTML=`<div class="listhead"><h2>Reportes municipales</h2><button class="btn small" type="button" data-x="cartera-xlsx">Descargar Cartera Única (Excel)</button></div>
+  <div class="scroll"><table class="t"><thead><tr><th>Municipio</th><th>Subregión</th><th>Estado</th><th class="r">N</th><th class="r">I</th><th class="r">P</th><th class="r">Costo intervenciones</th><th class="r">Alertas</th><th>Actualizado</th><th></th></tr></thead><tbody>
+  ${rows.map(r=>{const A=alertas(repOf(r)),c=A.filter(a=>a.n==="crit").length,w=A.length-c,R=repOf(r);return `<tr><td><strong>${esc(r.municipio)}</strong></td><td>${esc(r.subregion)}</td><td>${chip(r.estado)}</td><td class="r num">${R.necesidades.length}</td><td class="r num">${R.intervenciones.length}</td><td class="r num">${R.proyectos.length}</td><td class="r num">${money(R.intervenciones.reduce((a,x)=>a+num(x.costo),0))}</td><td class="r">${r.estado==="sin iniciar"?"—":`${c?`<span class="tag crit">${c} críticas</span>`:""} ${w?`<span class="tag warn">${w}</span>`:""}${!c&&!w?'<span class="tag">OK</span>':""}`}</td><td>${fdt(r.actualizado)}</td><td><button class="btn small${r.estado==="enviado"?" gold":" ghost"}" type="button" data-open="${r.dane}">${r.estado==="enviado"?"Revisar":"Abrir"}</button></td></tr>`}).join("")}
+  </tbody></table></div>`;
+}
+function roTable(t,list){
+  const cols=XC[t].filter(([k])=>!["enlace","obs","cp","mp"].includes(k));
+  return list.length?`<div class="scroll"><table class="t"><thead><tr>${cols.map(([,tt])=>`<th>${esc(tt)}</th>`).join("")}</tr></thead><tbody>${list.map(x=>`<tr>${cols.map(([k])=>{const v=x[k];return `<td${["costo","confirmado","personas","poblacion","beneficiarios","unidades"].includes(k)?' class="r num"':""}>${["costo","confirmado"].includes(k)?money(num(v)):k==="riesgo"?(v?"Sí":"No"):esc(v)}</td>`}).join("")}</tr>`).join("")}</tbody></table></div>`:'<p class="muted">Sin registros.</p>';
+}
+function gMuni(){
+  const r=G.reportes.find(x=>x.dane===G.sel),R=repOf(r),A=alertas(R),cr=A.filter(a=>a.n==="crit"),I=R.ident||{},lb=r.lineaBase||{};
+  $("#gBody").innerHTML=`<div class="listhead"><button class="btn ghost small" type="button" data-back>← Todos los municipios</button><h2 style="margin-left:6px">${esc(r.municipio)}</h2>${chip(r.estado)}<button class="btn ghost small" type="button" data-x="muni-xlsx">Descargar su Excel</button></div>
+   <p class="muted">${esc(r.subregion)} · DANE ${r.dane} · Responsable: ${esc([I.responsable||"—",I.cargo,I.dependencia,I.correo,I.telefono].filter(Boolean).join(" · "))} · Corte: ${esc(I.fechaCorte||"—")} · Actualizado ${fdt(r.actualizado)}</p>
+   <div class="grid2" style="align-items:start">
+    <div class="panel"><h3>Decisión</h3>
+      <p class="sub">Criterios: coherencia con EDAN y RUD; clasificación correcta en el PAE sin doble imputación; costos con precisión y sin duplicar obra; recursos confirmados con soporte; proyectos con responsable y próximo paso.</p>
+      ${cr.length?`<div class="note crit">Tiene ${cr.length} alerta(s) crítica(s): no debería validarse.</div>`:""}
+      <label class="f">Observación (qué código y qué ajuste)<textarea id="gObs" rows="4" placeholder="Ej.: I-003: reclasificar de FR6 a FAR8; P-002: los $500 M sin CDP no pueden ir como confirmados."></textarea></label>
+      <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn green small" type="button" data-x="validar"${r.estado==="sin iniciar"?" disabled":""}>Validar</button><button class="btn danger small" type="button" data-x="devolver">Devolver con observaciones</button><button class="btn ghost small" type="button" data-x="observar">Solo dejar observación</button></div>
+    </div>
+    <div class="panel"><h3>Alertas automáticas (${A.length})</h3>${A.length?`<ul class="alerts">${A.map(a=>`<li><span class="tag ${a.n}">${a.n==="crit"?"Crítica":"Advertencia"}</span>${esc(a.t)}</li>`).join("")}</ul>`:'<div class="note ok">Sin alertas.</div>'}</div>
+   </div>
+   ${(r.observaciones||[]).length?`<div class="panel"><h3>Historial de observaciones</h3><div class="obs">${[...r.observaciones].reverse().map(o=>`<div class="o ${o.tipo==="devolución"?"dev":""}"><small>${fdt(o.fecha)} · ${esc(o.tipo)}</small>${esc(o.texto).replace(/\n/g,"<br>")}</div>`).join("")}</div></div>`:""}
+   <div class="panel"><h3>Necesidades (${R.necesidades.length})</h3>${roTable("nec",R.necesidades)}</div>
+   <div class="panel"><h3>Intervenciones (${R.intervenciones.length})</h3>${roTable("int",R.intervenciones)}</div>
+   <div class="panel"><h3>Proyectos (${R.proyectos.length})</h3>${roTable("pro",R.proyectos)}</div>
+   <div class="grid2" style="align-items:start">
+    <div class="panel" id="lbBox"><h3>Línea base del municipio</h3><p class="sub">La ve el municipio y alimenta el consolidado público.</p>
+      <div class="fields" style="grid-template-columns:repeat(2,minmax(0,1fr))">${[["viviendasAfectadas","Viviendas afectadas (EDAN)"],["viviendasAveriadas","Viviendas averiadas"],["viviendasDestruidas","Viviendas destruidas"],["familiasRUD","Familias en el RUD"],["personasRUD","Personas en el RUD"],["sedesEducativas","Sedes educativas afectadas"]].map(([k,t])=>`<label class="f">${t}<input type="number" min="0" data-lb="${k}" value="${esc(lb[k]??"")}"></label>`).join("")}
+      <label class="f full" style="grid-column:1/-1">Fuente y corte<input type="text" data-lb="fuente" value="${esc(lb.fuente||"")}"></label><label class="f" style="grid-column:1/-1">Notas<textarea data-lb="notas">${esc(lb.notas||"")}</textarea></label></div>
+      <div><button class="btn small" type="button" data-x="lb">Guardar línea base</button></div></div>
+    <div class="panel" style="border:2px solid var(--crit-bg)"><h3>Información reservada 🔒</h3><p class="sub">Uso exclusivo de la Gobernación: no aparece en vistas públicas, en el espacio del municipio ni en enlaces compartidos.</p>
+      <label class="f">Dictamen técnico<textarea id="gDict" rows="3">${esc(r.dictamen||"")}</textarea></label>
+      <label class="f">Índice de priorización / notas<input type="text" id="gPrio" value="${esc(r.prioridad||"")}"></label>
+      <label class="f">Pendientes del Fondo Milagro<textarea id="gFM" rows="3">${esc(r.fondoMilagro||"")}</textarea></label>
+      <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn small" type="button" data-x="reservado">Guardar</button><button class="btn ghost small" type="button" data-x="reset">Restablecer contraseña del municipio</button></div><div id="resetOut"></div></div>
+   </div>`;
+}
+$("#gBody").addEventListener("click",async e=>{
+  const b=e.target.closest("button");if(!b)return;
+  if(b.dataset.open){G.sel=b.dataset.open;renderG();scrollTo(0,0);return}
+  if(b.dataset.back!==undefined){G.sel=null;renderG();return}
+  const x=b.dataset.x;if(!x)return;
+  const r=G.sel&&G.reportes.find(z=>z.dane===G.sel);
+  try{
+    if(x==="cartera-xlsx"){exportCartera();return}
+    if(x==="nacional-xlsx"){exportNacional();return}
+    if(x==="pae-xlsx"){exportPAE();return}
+    if(x==="muni-xlsx"){exportMuni(r.dane,repOf(r));return}
+    if(x==="validar"){const A=alertas(repOf(r)).filter(a=>a.n==="crit");if(A.length&&b.dataset.confirm!=="1"){b.dataset.confirm="1";b.textContent="Tiene alertas críticas · ¿validar igual?";return}
+      b.disabled=true;const j=await call("validar",{dane:r.dane});if(!j.ok)throw new Error(j.error);r.estado="validado";r.validado=new Date().toISOString();toast(`${r.municipio}: reporte validado`);renderG();return}
+    if(x==="devolver"||x==="observar"){const t=$("#gObs").value.trim();if(!t){toast("Escriba la observación: qué código y qué ajuste",true);$("#gObs").focus();return}
+      b.disabled=true;const j=await call(x,{dane:r.dane,texto:t});if(!j.ok)throw new Error(j.error);r.observaciones=(r.observaciones||[]).concat([{fecha:new Date().toISOString(),texto:t,tipo:x==="devolver"?"devolución":"observación"}]);r.estado=j.estado;toast(x==="devolver"?"Reporte devuelto al municipio":"Observación registrada");renderG();return}
+    if(x==="lb"){const lb={};$$("#lbBox [data-lb]").forEach(i=>{const v=i.value.trim();if(v!=="")lb[i.dataset.lb]=i.type==="number"?Number(v):v});const j=await call("admin",{dane:r.dane,datos:{lineaBase:lb}});if(!j.ok)throw new Error(j.error);r.lineaBase=lb;toast("Línea base guardada");return}
+    if(x==="reservado"){const d={dictamen:$("#gDict").value,prioridad:$("#gPrio").value,fondoMilagro:$("#gFM").value};const j=await call("admin",{dane:r.dane,datos:d});if(!j.ok)throw new Error(j.error);Object.assign(r,d);toast("Información reservada guardada");return}
+    if(x==="reset"){if(b.dataset.confirm!=="1"){b.dataset.confirm="1";b.textContent="¿Confirmar? La contraseña actual dejará de servir";return}
+      const j=await call("resetClave",{dane:r.dane});if(!j.ok)throw new Error(j.error);$("#resetOut").innerHTML=`<div class="note ok" style="margin-top:8px">Nueva contraseña de ${esc(r.municipio)}: <strong style="font-family:monospace;font-size:16px">${esc(j.clave)}</strong><br><small>Entréguela de forma privada; el municipio puede cambiarla en «Mi cuenta». No se volverá a mostrar.</small></div>`;b.textContent="Restablecida";b.disabled=true;return}
+    if(x==="acc-save"){const j=await call("acciones",{acciones:G.acciones});if(!j.ok)throw new Error(j.error);toast("Acciones publicadas");return}
+  }catch(err){toast(err.message,true);b.disabled=false}
+});
+
+/* --- productos --- */
+function allRows(onlyValid){const out={nec:[],int:[],pro:[]};G.reportes.forEach(r=>{if(onlyValid&&r.estado!=="validado")return;const R=repOf(r),base={municipio:r.municipio,dane:r.dane,subregion:r.subregion,estadoR:r.estado},iv=Object.fromEntries(R.intervenciones.map(x=>[x.id,x]));
+  R.necesidades.forEach(x=>out.nec.push(Object.assign({},base,x)));R.intervenciones.forEach(x=>out.int.push(Object.assign({},base,x)));R.proyectos.forEach(x=>out.pro.push(Object.assign({},base,x,{_linea:(iv[x.intervencion]||{}).linea||"",_tax:(iv[x.intervencion]||{}).taxonomia||""})))});return out}
+function gCartera(){
+  const onlyV=G.onlyValid!==false,D=allRows(onlyV);
+  $("#gBody").innerHTML=`<div class="listhead"><h2>Cartera Única</h2><label class="chk"><input type="checkbox" id="onlyV"${onlyV?" checked":""}> Solo reportes validados</label><button class="btn small" type="button" data-x="cartera-xlsx">Descargar Excel</button></div>
+   <p class="muted">Todos los proyectos con municipio, línea PAE, código de taxonomía, costo, fuente y madurez. Instrumento operativo del PAE e insumo para el reporte a la UNGRD.</p>
+   <div class="grid4"><div class="stat"><b class="num">${D.pro.length}</b><span>proyectos</span></div><div class="stat b"><b class="num">${money(D.pro.reduce((a,x)=>a+num(x.costo),0))}</b><span>costo total</span></div><div class="stat v"><b class="num">${money(D.pro.reduce((a,x)=>a+num(x.confirmado),0))}</b><span>recursos confirmados</span></div><div class="stat g"><b class="num">${money(D.pro.reduce((a,x)=>a+Math.max(0,num(x.costo)-num(x.confirmado)),0))}</b><span>brecha por gestionar</span></div></div>
+   <div class="scroll" style="max-height:620px"><table class="t"><thead><tr><th>Municipio</th><th>ID</th><th>Proyecto</th><th>Línea</th><th>Taxonomía</th><th>Etapa</th><th class="r">Costo</th><th class="r">Confirmado</th><th class="r">Brecha</th><th>Vía</th><th>Próximo paso</th></tr></thead><tbody>
+   ${D.pro.map(x=>`<tr><td>${esc(x.municipio)}</td><td>${esc(x.id)}</td><td>${esc(x.nombre)}</td><td>${esc(x._linea)}</td><td>${esc(x._tax)}</td><td>${esc(x.etapa)}</td><td class="r num">${money(num(x.costo))}</td><td class="r num">${money(num(x.confirmado))}</td><td class="r num">${num(x.costo)?money(num(x.costo)-num(x.confirmado)):"—"}</td><td>${esc(x.via)}</td><td>${esc(x.proximoPaso)}</td></tr>`).join("")||'<tr><td colspan="11" class="muted">Sin proyectos en este filtro.</td></tr>'}
+   </tbody></table></div>`;
+  $("#onlyV").onchange=e=>{G.onlyValid=e.target.checked;gCartera()};
+}
+function exportCartera(){
+  const onlyV=G.tab==="cartera"?G.onlyValid!==false:false,D=allRows(onlyV),b=[["municipio","Municipio",16],["dane","DANE",8],["subregion","Subregión",16],["estadoR","Estado del reporte",14]];
+  const sh=(n,t,extra)=>({nombre:n,columnas:b.map(([,tt,w])=>({t:tt,w})).concat(XC[t].map(([,tt,w])=>({t:tt,w})),(extra||[]).map(([,tt,w])=>({t:tt,w}))),filas:D[t].map(x=>b.map(([k])=>x[k]).concat(XC[t].map(([k])=>cellOut(k,x[k])),(extra||[]).map(([k])=>k==="_brecha"?(num(x.costo)?num(x.costo)-num(x.confirmado):""):x[k])))});
+  const res=G.reportes.map(r=>{const R=repOf(r);return[r.municipio,r.dane,r.subregion,ESTADO[r.estado][1],R.necesidades.length,R.intervenciones.length,R.proyectos.length,R.intervenciones.reduce((a,x)=>a+num(x.costo),0),R.proyectos.reduce((a,x)=>a+num(x.costo),0),R.proyectos.reduce((a,x)=>a+num(x.confirmado),0),r.estado==="sin iniciar"?"":alertas(R).filter(a=>a.n==="crit").length,r.actualizado?fdt(r.actualizado):""]});
+  XLSX.escribir([
+    {nombre:"Resumen por municipio",columnas:["Municipio","DANE","Subregión","Estado","Necesidades","Intervenciones","Proyectos","Costo intervenciones","Costo proyectos","Confirmado","Alertas críticas","Actualizado"].map(t=>({t,w:16})),filas:res},
+    sh("Proyectos (Cartera Única)","pro",[["_linea","Línea PAE",10],["_tax","Taxonomía",14],["_brecha","Brecha (pesos)",16]]),sh("Intervenciones","int"),sh("Necesidades","nec")
+  ],`Cartera_Unica_PAE_Caldas_${onlyV?"validados_":""}${new Date().toISOString().slice(0,10)}.xlsx`);
+}
+function paeRows(){
+  const sin=G.reportes.filter(r=>r.dane!=="17001"),man=G.reportes.find(r=>r.dane==="17001");
+  const sum=(rs,id,k)=>rs.reduce((a,r)=>a+repOf(r).intervenciones.filter(x=>x.linea===id).reduce((s,x)=>s+num(x[k]),0),0);
+  return LIN.map(l=>({l,rep:sum(sin,l.id,"costo"),man:sum([man],l.id,"costo"),nI:sin.reduce((a,r)=>a+repOf(r).intervenciones.filter(x=>x.linea===l.id).length,0),munis:sin.filter(r=>repOf(r).intervenciones.some(x=>x.linea===l.id)).length}));
+}
+function gPAE(){
+  const rows=paeRows();
+  $("#gBody").innerHTML=`<div class="listhead"><h2>Cartera frente al PAE</h2><button class="btn small" type="button" data-x="pae-xlsx">Descargar Excel</button></div>
+   <p class="muted">Lo reportado por los 26 municipios distintos de Manizales frente a la necesidad estimada por línea en el PAE departamental (millones de pesos). Sirve para detectar líneas sin proyectos y brechas de financiación. Incluye todos los estados de reporte.</p>
+   <div class="scroll"><table class="t"><thead><tr><th>Línea</th><th>Nombre</th><th class="r">Necesidad estimada PAE</th><th class="r">Programación Departamento</th><th class="r">Reportado 26 mun.</th><th class="r">% de la necesidad</th><th class="r">Intervenciones</th><th class="r">Municipios</th><th class="r">Manizales (aparte)</th></tr></thead><tbody>
+   ${rows.map(({l,rep,man,nI,munis})=>`<tr><td><strong>${l.id}</strong></td><td>${esc(l.nombre)}</td><td class="r num">${fmt(l.nec)}</td><td class="r num">${fmt(l.prog)}</td><td class="r num">${fmtM(rep)}</td><td class="r num">${l.nec?(rep/(l.nec*1e6)*100).toFixed(1)+" %":"—"}</td><td class="r num">${nI}</td><td class="r num">${munis}${!nI?' <span class="tag warn">sin proyectos</span>':""}</td><td class="r num">${fmtM(man)}</td></tr>`).join("")}
+   <tr><td colspan="2"><strong>Total</strong></td><td class="r num"><strong>${fmt(LIN.reduce((a,l)=>a+l.nec,0))}</strong></td><td class="r num"><strong>${fmt(LIN.reduce((a,l)=>a+l.prog,0))}</strong></td><td class="r num"><strong>${fmtM(rows.reduce((a,r)=>a+r.rep,0))}</strong></td><td></td><td class="r num">${rows.reduce((a,r)=>a+r.nI,0)}</td><td></td><td class="r num">${fmtM(rows.reduce((a,r)=>a+r.man,0))}</td></tr></tbody></table></div>`;
+}
+function exportPAE(){const rows=paeRows();XLSX.escribir([{nombre:"Cartera frente al PAE",columnas:["Línea","Nombre","Eje","Necesidad estimada PAE (M$)","Programación Departamento (M$)","Concurrencia por gestionar (M$)","Reportado 26 municipios (M$)","% de la necesidad","Intervenciones","Municipios","Manizales (M$)"].map((t,i)=>({t,w:i===1?60:16})),filas:rows.map(({l,rep,man,nI,munis})=>[l.id,l.nombre,"Eje "+l.eje,l.nec,l.prog,l.conc,Math.round(rep/1e6),l.nec?Math.round(rep/(l.nec*1e6)*1000)/10:"",nI,munis,Math.round(man/1e6)])}],`Cartera_frente_al_PAE_${new Date().toISOString().slice(0,10)}.xlsx`)}
+function natRows(onlyV){
+  const m={},sinCod=[];
+  G.reportes.forEach(r=>{if(onlyV&&r.estado!=="validado")return;repOf(r).intervenciones.forEach(x=>{const c=x.taxonomia;if(!c||c==="OTRA"){sinCod.push(Object.assign({municipio:r.municipio},x));if(!c)return}
+    const o=m[c]||(m[c]={c,n:0,costo:0,cp:0,mp:0,munis:new Set(),lineas:new Set()});o.n++;o.costo+=num(x.costo);o.cp+=num(x.cp);o.mp+=num(x.mp);o.munis.add(r.municipio);if(x.linea)o.lineas.add(x.linea)})});
+  return{rows:Object.values(m).sort((a,b)=>a.c==="OTRA"?1:b.c==="OTRA"?-1:a.c.localeCompare(b.c,"es",{numeric:true})),sinCod};
+}
+function gNacional(){
+  const onlyV=G.natValid!==false,{rows,sinCod}=natRows(onlyV);
+  $("#gBody").innerHTML=`<div class="listhead"><h2>Equivalencia con el PAE Nacional</h2><label class="chk"><input type="checkbox" id="natV"${onlyV?" checked":""}> Solo reportes validados</label><button class="btn small" type="button" data-x="nacional-xlsx">Descargar Excel (miles de pesos)</button></div>
+   <p class="muted">Cada intervención traducida a su clasificador nacional (RT, LI o LT) de la taxonomía del PAE Nacional, para reportar a la UNGRD en el formato FR-1703-SMD-11 sin reclasificar a mano. Recursos en miles de pesos; corto plazo 2026–2027 y mediano plazo 2028–2030.</p>
+   ${sinCod.length?`<div class="note"><b class="t">${sinCod.length} intervención(es) sin código o en «Otra»</b>${sinCod.slice(0,12).map(x=>`${esc(x.municipio)} ${esc(x.id)}`).join(" · ")}${sinCod.length>12?" …":""}</div>`:""}
+   <div class="scroll"><table class="t"><thead><tr><th>Clasificador</th><th>Programa</th><th>Intervención</th><th>Unidades</th><th>Líneas PAE Caldas</th><th class="r">Interv.</th><th class="r">Recursos (miles $)</th><th class="r">CP 2026–2027</th><th class="r">MP 2028–2030</th><th>Municipios</th></tr></thead><tbody>
+   ${rows.map(o=>{const t=TAXI[o.c]||{p:"Otra",i:"No encaja en la taxonomía",u:""};return `<tr><td><strong>${esc(o.c)}</strong></td><td>${esc(t.p)}</td><td>${esc(t.i)}</td><td>${esc(t.u)}</td><td>${[...o.lineas].join(", ")}</td><td class="r num">${o.n}</td><td class="r num">${fmt(o.costo/1000)}</td><td class="r num">${fmt(o.cp/1000)}</td><td class="r num">${fmt(o.mp/1000)}</td><td>${esc([...o.munis].join(", "))}</td></tr>`}).join("")||'<tr><td colspan="10" class="muted">Aún no hay intervenciones con código de taxonomía en este filtro.</td></tr>'}
+   </tbody></table></div>`;
+  $("#natV").onchange=e=>{G.natValid=e.target.checked;gNacional()};
+}
+function exportNacional(){
+  const onlyV=G.natValid!==false,{rows,sinCod}=natRows(onlyV);
+  XLSX.escribir([{nombre:"Equivalencia PAE Nacional",columnas:[["Clasificador",14],["Nombre del Programa",40],["Nombre de las Intervenciones",60],["Tipo de unidades",18],["Departamento",12],["Líneas PAE Caldas",16],["N.º intervenciones",12],["Recursos económicos requeridos (miles $)",20],["Corto plazo 2026–2027 (miles $)",18],["Mediano plazo 2028–2030 (miles $)",18],["Municipios",50]].map(([t,w])=>({t,w})),
+    filas:rows.map(o=>{const t=TAXI[o.c]||{p:"Otra",i:"No encaja en la taxonomía",u:""};return[o.c,t.p,t.i,t.u,"Caldas",[...o.lineas].join(", "),o.n,Math.round(o.costo/1000),Math.round(o.cp/1000),Math.round(o.mp/1000),[...o.munis].join(", ")]})},
+    {nombre:"Sin código u Otra",columnas:[["Municipio",16],["ID",8],["Intervención",50],["Línea PAE",10],["Código",10],["Costo (pesos)",16]].map(([t,w])=>({t,w})),filas:sinCod.map(x=>[x.municipio,x.id,x.nombre,x.linea,x.taxonomia||"",num(x.costo)||""])}],
+    `Equivalencia_PAE_Nacional_Caldas_${new Date().toISOString().slice(0,10)}.xlsx`);
+}
+function gAcciones(){
+  const A=G.acciones;
+  $("#gBody").innerHTML=`<div class="listhead"><h2>Bitácora de acciones de la Gobernación</h2><button class="btn gold small" type="button" id="accAdd">+ Agregar acción</button><button class="btn small" type="button" data-x="acc-save">Publicar cambios</button></div>
+   <p class="muted">Cronología fechada y con fuente desde el 10 de agosto. Se publica en la página de consolidado. Pendiente: actos administrativos (decretos, resoluciones y convenios) con su número y avance de contratos de estudios y diseños.</p>
+   <div style="display:grid;gap:10px" id="accList">${[...A].map((a,i)=>({a,i})).sort((x,y)=>String(y.a.fecha).localeCompare(String(x.a.fecha))).map(({a,i})=>`<div class="panel" data-ai="${i}"><div class="fields"><label class="f">Fecha<input type="date" data-a="fecha" value="${esc(a.fecha)}"></label><label class="f two">Título<input type="text" data-a="titulo" value="${esc(a.titulo)}"></label><label class="f full">Descripción<textarea data-a="texto" rows="2">${esc(a.texto)}</textarea></label><label class="f two">Fuente<input type="text" data-a="fuente" value="${esc(a.fuente||"")}"></label><div style="align-self:end;text-align:right"><button class="btn danger xs" type="button" data-adel="${i}">Quitar</button></div></div></div>`).join("")}</div>`;
+  $("#accList").oninput=e=>{const p=e.target.closest("[data-ai]");if(p&&e.target.dataset.a)A[+p.dataset.ai][e.target.dataset.a]=e.target.value};
+  $("#accList").onclick=e=>{const b=e.target.closest("[data-adel]");if(b){A.splice(+b.dataset.adel,1);gAcciones()}};
+  $("#accAdd").onclick=()=>{A.push({fecha:new Date().toISOString().slice(0,10),titulo:"",texto:"",fuente:""});gAcciones()};
+}
+async function gBitacora(){
+  $("#gBody").innerHTML='<div class="empty">Cargando bitácora…</div>';
+  try{const j=await call("bitacora",{});if(!j.ok)throw new Error(j.error);
+    $("#gBody").innerHTML=`<div class="listhead"><h2>Bitácora</h2><span class="muted">Últimas ${j.bitacora.length} acciones clave</span></div><div class="scroll" style="max-height:640px"><table class="t"><thead><tr><th>Fecha</th><th>Usuario</th><th>Municipio</th><th>Acción</th><th>Detalle</th></tr></thead><tbody>${j.bitacora.map(b=>`<tr><td>${fdt(b.fecha)}</td><td>${esc(b.usuario)}</td><td>${esc(b.municipio)}</td><td>${esc(b.accion)}</td><td>${esc(b.detalle)}</td></tr>`).join("")||'<tr><td colspan="5" class="muted">Sin registros.</td></tr>'}</tbody></table></div>`;
+  }catch(e){$("#gBody").innerHTML=`<div class="note crit">${esc(e.message)}</div>`}
+}
+
+/* ================= INICIO ================= */
+route();
+</script>
+</body>
+</html>
