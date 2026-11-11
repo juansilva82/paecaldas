@@ -328,7 +328,7 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
     </div>
   </section>
 
-  <section class="band cream" aria-labelledby="h-acc">
+  <section class="band cream" id="acciones" aria-labelledby="h-acc" style="scroll-margin-top:90px">
     <div class="wrap grid2" style="align-items:start">
       <div>
         <div class="shead"><span class="n">04</span><div><h2 id="h-acc">Acciones de la Gobernación</h2><p>Del día cero a hoy. El equipo coordinador mantiene esta cronología al día.</p></div></div>
@@ -512,7 +512,7 @@ function alertas(rep){
 /* ================= NAV / ROUTER ================= */
 function renderNav(){
   const v=(location.hash||"#inicio").slice(1);
-  let h=`<a href="#inicio">Consolidado</a>`;
+  let h=`<a href="#inicio">Consolidado</a><a href="#acciones">Acciones de la Gobernación</a>`;
   if(SES&&SES.rol==="municipio")h+=`<a href="#municipio">Mi reporte</a>`;
   if(SES&&SES.rol==="gobernacion")h+=`<a href="#gobernacion">Panel Gobernación</a>`;
   h+=`<a href="instructivo-pae-caldas.pdf" target="_blank" rel="noopener">Instructivo</a>`;
@@ -525,19 +525,20 @@ function renderNav(){
 const VIEWS=["inicio","ingresar","municipio","gobernacion"];
 function route(){
   let v=(location.hash||"#inicio").slice(1);
-  if(v==="consolidado"){v="inicio";setTimeout(()=>$("#consolidado").scrollIntoView(),30)}
+  const anc=["consolidado","acciones"].includes(v)?v:null;
+  if(anc){v="inicio";setTimeout(()=>$("#"+anc).scrollIntoView({behavior:"smooth"}),60)}
   if(!VIEWS.includes(v))v="inicio";
   if(v==="municipio"&&!(SES&&SES.rol==="municipio"))v=SES?"gobernacion":"ingresar";
   if(v==="gobernacion"&&!(SES&&SES.rol==="gobernacion"))v=SES?"municipio":"ingresar";
   if(v==="ingresar"&&SES)v=SES.rol==="gobernacion"?"gobernacion":"municipio";
-  if(("#"+v)!==location.hash&&location.hash!=="#consolidado")history.replaceState(null,"","#"+v);
+  if(!anc&&("#"+v)!==location.hash)history.replaceState(null,"","#"+v);
   $$("[data-view]").forEach(el=>el.hidden=el.id!=="v-"+v);
   renderNav();
   if(v==="inicio")loadPublic();
   if(v==="ingresar")initLogin();
   if(v==="municipio")openMunicipio();
   if(v==="gobernacion")openGob();
-  if(location.hash!=="#consolidado")scrollTo(0,0);
+  if(!anc)scrollTo(0,0);
 }
 addEventListener("hashchange",route);
 
