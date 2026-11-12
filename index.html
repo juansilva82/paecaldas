@@ -842,7 +842,9 @@ async function saveNow(){
     if(JSON.stringify(W.rep)===snap){W.dirty=false;lsSet("pae.borrador."+W.dane,null)}else{lsSet("pae.borrador."+W.dane,{version:W.version,rep:W.rep});schedule()}
     setSave("","Guardado "+new Date().toLocaleTimeString("es-CO",{hour:"2-digit",minute:"2-digit"}));
     if(prev!==W.estado){renderHead();if(prev==="validado")toast("Editó un reporte validado: vuelve a «enviado» para una nueva revisión")}
-  }catch(e){setSave("err","No se pudo guardar · se reintentará");schedule(8000)}
+  }catch(e){const m=String(e&&e.message||e);
+    W.lastErr=/50000|50\.000/.test(m)?"el reporte supera el tamaño que admite una celda de Google Sheets: la Gobernación debe instalar la versión 3 del código del servidor":/fetch|network|Failed|tiempo|timeout/i.test(m)?"no hubo conexión con el servidor; revise internet e intente de nuevo":m;
+    setSave("err","No se pudo guardar · se reintentará");schedule(8000)}
   finally{W.saving=false}
 }
 addEventListener("beforeunload",e=>{if(W&&W.dirty){saveNow();e.preventDefault();e.returnValue=""}});
@@ -998,7 +1000,7 @@ function bindWS(){
     if(b.dataset.fix){const [p,id]=b.dataset.fix.split("|");W.paso=+p;W.openId=id||null;renderWS();if(id){const d=[...$$("#wsBody details")].find(d=>d.querySelector(".code").textContent===id);if(d)d.scrollIntoView({behavior:"smooth",block:"start"})}return}
     if(b.dataset.act==="xlsx-down"){exportMuni(W.dane,W.rep);return}
     if(b.dataset.act==="enviar"){if(!$("#confirmSend").checked){toast("Marque la confirmación antes de enviar",true);return}
-      b.disabled=true;await saveNow();if(W.dirty){toast("No se pudo guardar; intente de nuevo",true);b.disabled=false;return}
+      b.disabled=true;await saveNow();if(W.dirty){toast("No se pudo guardar"+(W.lastErr?": "+W.lastErr:"; intente de nuevo"),true);b.disabled=false;return}
       try{const j=await call("enviar");if(!j.ok)throw new Error(j.error);W.estado=j.estado;W.data.enviado=new Date().toISOString();toast("Reporte enviado a la Gobernación");renderWS()}catch(err){toast(err.message,true);b.disabled=false}}
   };
 }
