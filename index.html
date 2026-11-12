@@ -834,8 +834,8 @@ function schedule(ms){clearTimeout(saveT);saveT=setTimeout(saveNow,ms==null?1800
 function touch(){W.dirty=true;lsSet("pae.borrador."+W.dane,{version:W.version,rep:W.rep});setSave("saving","Cambios sin guardar…");schedule()}
 async function saveNow(){
   if(!W||!W.dirty||W.saving)return;W.saving=true;setSave("saving","Guardando…");
-  const snap=JSON.stringify(W.rep);
   W.rep.intervenciones.forEach(x=>{x.eje=(LINEA[x.linea]||{}).eje||""});
+  const snap=JSON.stringify(W.rep);
   try{const j=await call("guardar",{reporte:W.rep,version:W.version,dane:W.dane});
     if(!j.ok){if(j.error==="conflicto"){toast(j.mensaje,true);lsSet("pae.borrador."+W.dane,null);W.saving=false;loadW(j.reporte);return}throw new Error(j.error)}
     W.version=j.version;const prev=W.estado;W.estado=j.estado;W.data.actualizado=j.actualizado;
@@ -1000,7 +1000,12 @@ function bindWS(){
     if(b.dataset.fix){const [p,id]=b.dataset.fix.split("|");W.paso=+p;W.openId=id||null;renderWS();if(id){const d=[...$$("#wsBody details")].find(d=>d.querySelector(".code").textContent===id);if(d)d.scrollIntoView({behavior:"smooth",block:"start"})}return}
     if(b.dataset.act==="xlsx-down"){exportMuni(W.dane,W.rep);return}
     if(b.dataset.act==="enviar"){if(!$("#confirmSend").checked){toast("Marque la confirmación antes de enviar",true);return}
-      b.disabled=true;await saveNow();if(W.dirty){toast("No se pudo guardar"+(W.lastErr?": "+W.lastErr:"; intente de nuevo"),true);b.disabled=false;return}
+      b.disabled=true;const txt0=b.textContent;b.textContent="Guardando…";
+      // Si hay un guardado en curso (reportes grandes tardan), esperarlo antes de intentar de nuevo.
+      for(let k=0;k<120&&W.saving;k++)await new Promise(r=>setTimeout(r,500));
+      W.lastErr="";clearTimeout(saveT);await saveNow();b.textContent=txt0;
+      if(W.saving){toast("El guardado está tardando más de lo normal. Espere a que arriba diga «Guardado» y vuelva a enviar.",true);b.disabled=false;return}
+      if(W.dirty){toast("No se pudo guardar"+(W.lastErr?": "+W.lastErr:"; intente de nuevo"),true);b.disabled=false;return}
       try{const j=await call("enviar");if(!j.ok)throw new Error(j.error);W.estado=j.estado;W.data.enviado=new Date().toISOString();toast("Reporte enviado a la Gobernación");renderWS()}catch(err){toast(err.message,true);b.disabled=false}}
   };
 }
