@@ -102,6 +102,30 @@ p{margin:0}
 .hero.photo{background:linear-gradient(100deg,rgba(8,34,36,.94) 0%,rgba(11,52,53,.84) 42%,rgba(11,52,53,.35) 100%),var(--img) center/cover no-repeat}
 .hero.photo::before{display:none}
 @media (max-width:900px){.hero.photo{background:linear-gradient(180deg,rgba(8,34,36,.9),rgba(11,52,53,.82)),var(--img) center/cover no-repeat}}
+.dash{margin-top:34px;padding-top:28px;border-top:1px solid var(--line)}
+.dash-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+.dash-head h3{font-size:22px}.sub{color:var(--muted);font-size:13.5px;margin:4px 0 0}
+.dash-sel{display:flex;flex-direction:column;gap:4px;font:600 12.5px var(--body);color:var(--muted)}
+.dash-sel select{font:600 15px var(--body);padding:10px 12px;border:1px solid #cfcabd;border-radius:10px;background:#fff;color:var(--ink);min-width:300px}
+.donutbox{display:grid;grid-template-columns:200px 1fr;gap:18px;align-items:center;margin-top:12px;position:relative}
+.donutbox svg{width:200px;height:200px;display:block}
+.donutbox path{cursor:default;transition:opacity .15s}.donutbox svg:hover path{opacity:.55}.donutbox svg path:hover{opacity:1}
+.donutbox .ctr{font:800 19px var(--head);fill:var(--dark)}.donutbox .ctr2{font:600 11px var(--body);fill:var(--muted)}
+.lg{list-style:none;margin:0;padding:0;display:grid;gap:7px;font-size:13.5px}
+.lg li{display:grid;grid-template-columns:12px 1fr auto;gap:8px;align-items:baseline}
+.lg i{width:12px;height:12px;border-radius:3px;display:inline-block;transform:translateY(1px)}
+.lg b{font-weight:700;color:var(--ink);white-space:nowrap}.lg small{color:var(--muted);margin-left:4px;font-size:12px}
+.dbars{display:grid;gap:9px;margin-top:12px}
+.dbars .r{display:grid;grid-template-columns:minmax(0,190px) 1fr;gap:10px;align-items:center;font-size:13px}
+.dbars .r>span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ink)}
+.dbars .bar{display:flex;align-items:center;gap:8px;min-width:0}
+.dbars .bar i{display:block;height:14px;border-radius:0 4px 4px 0;background:var(--teal);min-width:2px}
+.dbars .bar em{font-style:normal;font-weight:700;font-size:12.5px;white-space:nowrap;color:var(--ink)}
+.stack{display:flex;height:22px;border-radius:6px;overflow:hidden;gap:2px;margin:12px 0 8px;background:#fff}
+.stack i{display:block;height:100%}
+.dbtip{position:fixed;pointer-events:none;z-index:50;background:var(--dark);color:#fff;font:600 12.5px/1.35 var(--body);padding:7px 10px;border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,.18);max-width:280px;display:none}
+.mcard.pick{cursor:pointer}.mcard.pick:hover{outline:2px solid var(--gold-2)}
+@media (max-width:700px){.donutbox{grid-template-columns:1fr;justify-items:center}.dash-sel select{min-width:0;width:100%}.dash-sel{width:100%}.dbars .r{grid-template-columns:minmax(0,120px) 1fr}}
 .photos{display:grid;grid-template-columns:1.35fr 1fr 1fr;gap:14px}
 .photos figure{margin:0;position:relative;border-radius:16px;overflow:hidden;background:#0b2b2e;min-height:230px}
 .photos img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s}
@@ -312,6 +336,22 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
       <div class="grid4" id="pubKpis"></div>
       <div style="display:flex;gap:10px;flex-wrap:wrap;margin:20px 0 12px;align-items:center"><span class="chip sin">Sin iniciar</span><span class="chip dil">En diligenciamiento</span><span class="chip env">Enviado</span><span class="chip val">Validado</span><span class="muted" id="pubCorte" style="margin-left:auto;font-size:13px"></span></div>
       <div class="mgrid" id="pubMunis"></div>
+
+      <div class="dash" id="tablero" aria-labelledby="h-dash">
+        <div class="dash-head">
+          <div><h3 id="h-dash">Tablero por municipio</h3><p class="sub">Elija un municipio o vea el agregado de todos los que ya reportaron. También puede hacer clic en la tarjeta de un municipio.</p></div>
+          <label class="dash-sel">Municipio<select id="dbMun"><option value="">Todos los municipios con reporte</option></select></label>
+        </div>
+        <div class="grid4" id="dbKpis"></div>
+        <div class="grid2" style="margin-top:18px">
+          <div class="card"><h3>Costo de las intervenciones por eje</h3><p class="sub" id="dbEjeSub">Millones de pesos · el centro muestra el total</p><div class="donutbox" id="dbEje"></div></div>
+          <div class="card"><h3>Necesidades por sector</h3><p class="sub">Número de necesidades reportadas</p><div class="donutbox" id="dbSec"></div></div>
+        </div>
+        <div class="grid2" style="margin-top:20px">
+          <div class="card"><h3>Costo por línea del PAE</h3><p class="sub">Millones de pesos · intervenciones con línea asignada</p><div class="dbars" id="dbLin"></div></div>
+          <div class="card"><h3 id="dbDTit">Costo por municipio</h3><p class="sub" id="dbDSub">Millones de pesos · intervenciones reportadas</p><div class="dbars" id="dbD"></div></div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -472,6 +512,7 @@ function lsGet(k){try{return JSON.parse(localStorage.getItem(k)||"null")}catch(e
 function lsSet(k,v){try{v==null?localStorage.removeItem(k):localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
 function toast(t,err){const d=document.createElement("div");d.className="toast"+(err?" err":"");d.setAttribute("role","status");d.textContent=t;document.body.appendChild(d);setTimeout(()=>d.remove(),err?6000:3200)}
 const ESTADO={"sin iniciar":["sin","Sin iniciar"],"diligenciamiento":["dil","En diligenciamiento"],"enviado":["env","Enviado"],"validado":["val","Validado"]};
+const chipTxt=e=>(ESTADO[e]||ESTADO["sin iniciar"])[1];
 const chip=e=>{const x=ESTADO[e]||ESTADO["sin iniciar"];return `<span class="chip ${x[0]}">${x[1]}</span>`};
 
 /* ================= API (o demo local) ================= */
@@ -658,7 +699,67 @@ async function loadPublic(){
   hbars($("#pubViv"),viv);
   hbars($("#pubSub"),[["Centro Sur",13984,"· 59,5 %"],["Bajo Occidente",3996,"· 17,0 %"],["Alto Occidente",2310,"· 9,8 %"],["Norte",1977,"· 8,4 %"],["Alto Oriente",685,"· 2,9 %"],["Magdalena Caldense",540,"· 2,3 %"]],"var(--gold)");
   renderAcciones(d.acciones||[],$("#pubAcc"));
+  initTablero(M);
 }
+
+/* ================= TABLERO POR MUNICIPIO ================= */
+// Paleta categórica validada (orden fijo, nunca cíclica); gris para «Otros» y «Sin línea».
+const PAL=["#1baf7a","#eda100","#2a78d6","#eb6834","#8a5cb8","#e87ba4"],GRIS="#b9b3a6";
+let DB=null;
+function dbTip(){let t=$("#dbTip");if(!t){t=document.createElement("div");t.id="dbTip";t.className="dbtip";document.body.appendChild(t)}return t}
+function donut(el,items,centro,centro2,fmtV){
+  const tot=items.reduce((a,x)=>a+x.v,0);
+  if(!tot){el.innerHTML='<p class="muted" style="grid-column:1/-1">Sin datos para mostrar todavía.</p>';return}
+  const R=92,r=58,cx=100,cy=100;let a0=-Math.PI/2,paths="";
+  items.forEach(x=>{const f=x.v/tot;if(!f)return;const a1=a0+f*2*Math.PI,big=f>.5?1:0,gap=items.filter(y=>y.v).length>1?.012:0;
+    const p=(ang,rad)=>`${(cx+rad*Math.cos(ang)).toFixed(2)},${(cy+rad*Math.sin(ang)).toFixed(2)}`,s=a0+gap/2,e=a1-gap/2;
+    const d=f>=.9999?`M${cx},${cy-R}A${R},${R} 0 1 1 ${cx-.01},${cy-R}L${cx-.01},${cy-r}A${r},${r} 0 1 0 ${cx},${cy-r}Z`:`M${p(s,R)}A${R},${R} 0 ${big} 1 ${p(e,R)}L${p(e,r)}A${r},${r} 0 ${big} 0 ${p(s,r)}Z`;
+    paths+=`<path d="${d}" fill="${x.c}" data-t="${esc(x.k)}: ${esc(fmtV(x.v))} · ${(f*100).toLocaleString("es-CO",{maximumFractionDigits:1})} %"></path>`;a0=a1});
+  el.innerHTML=`<svg viewBox="0 0 200 200" role="img" aria-label="${esc(items.map(x=>x.k+" "+fmtV(x.v)).join("; "))}">${paths}<text class="ctr" x="100" y="100" text-anchor="middle">${esc(centro)}</text><text class="ctr2" x="100" y="118" text-anchor="middle">${esc(centro2)}</text></svg>
+  <ul class="lg">${items.filter(x=>x.v).map(x=>`<li><i style="background:${x.c}"></i><span>${esc(x.k)}</span><b>${esc(fmtV(x.v))}<small>${(x.v/tot*100).toLocaleString("es-CO",{maximumFractionDigits:1})} %</small></b></li>`).join("")}</ul>`;
+  const tip=dbTip();el.querySelectorAll("path").forEach(pth=>{pth.addEventListener("mousemove",ev=>{tip.textContent=pth.dataset.t;tip.style.display="block";tip.style.left=(ev.clientX+14)+"px";tip.style.top=(ev.clientY+12)+"px"});pth.addEventListener("mouseleave",()=>tip.style.display="none")});
+}
+function dbars(el,rows,fmtV,color){
+  if(!rows.length){el.innerHTML='<p class="muted">Sin datos para mostrar todavía.</p>';return}
+  const mx=Math.max(...rows.map(r=>r.v));
+  el.innerHTML=rows.map(r=>`<div class="r" title="${esc(r.t||r.k)}: ${esc(fmtV(r.v))}"><span>${esc(r.k)}</span><div class="bar"><i style="width:calc(${r.v/mx} * (100% - 110px));background:${color||"var(--teal)"}"></i><em>${esc(fmtV(r.v))}</em></div></div>`).join("");
+}
+function initTablero(M){
+  DB=M;const sel=$("#dbMun"),cur=sel.value,con=M.filter(m=>m.estado!=="sin iniciar"&&(m.necesidades||m.intervenciones||m.proyectos));
+  sel.innerHTML='<option value="">Todos los municipios con reporte ('+con.length+')</option>'+[...M].sort((a,b)=>a.municipio.localeCompare(b.municipio,"es")).map(m=>{const ok=con.includes(m);return`<option value="${m.dane}"${ok?"":" disabled"}>${esc(m.municipio)}${ok?"":" · sin reporte"}</option>`}).join("");
+  sel.value=con.some(m=>m.dane===cur)?cur:"";
+  $("#pubMunis").querySelectorAll(".mcard").forEach((c,i)=>{const m=[...M].sort((a,b)=>a.municipio.localeCompare(b.municipio,"es"))[i];if(m&&con.includes(m)){c.classList.add("pick");c.tabIndex=0;c.setAttribute("role","button");c.setAttribute("aria-label","Ver "+m.municipio+" en el tablero");
+    const go=()=>{sel.value=m.dane;renderTablero();$("#tablero").scrollIntoView({behavior:"smooth",block:"start"})};c.onclick=go;c.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();go()}}}});
+  renderTablero();
+}
+function renderTablero(){
+  if(!DB)return;const d=$("#dbMun").value,con=DB.filter(m=>m.estado!=="sin iniciar"&&(m.necesidades||m.intervenciones||m.proyectos)),S=d?DB.filter(m=>m.dane===d):con;
+  const sum=k=>S.reduce((a,m)=>a+num(m[k]),0),merge=k=>{const o={};S.forEach(m=>Object.entries(m[k]||{}).forEach(([x,v])=>o[x]=(o[x]||0)+num(v)));return o};
+  const costoI=sum("costoIntervenciones"),costoP=sum("costoProyectos"),conf=sum("confirmado"),pl=merge("porLinea"),ps=merge("porSector");
+  $("#dbKpis").innerHTML=[
+    [d?S[0].municipio:`${S.length} municipios`,fmt(sum("necesidades"))+" necesidades · "+fmt(sum("urgenciaAlta"))+" de urgencia alta",""],
+    [moneyM(costoI),fmt(sum("intervenciones"))+" intervenciones","b"],
+    [moneyM(costoP),fmt(sum("proyectos"))+" proyectos","v"],
+    [moneyM(Math.max(0,costoP-conf)),"brecha de los proyectos · confirmado "+moneyM(conf),"g"]
+  ].map(([b,t,k],i)=>`<div class="stat ${k}">${i===0?"<small>"+(d?esc(chipTxt(S[0].estado)):"agregado")+"</small>":""}<b class="num"${i===0&&d?' style="font-size:24px"':""}>${esc(b)}</b><span>${esc(t)}</span></div>`).join("");
+  // Donut por eje
+  const e1=LIN.filter(l=>l.eje==="1").reduce((a,l)=>a+(pl[l.id]||0),0),e2=LIN.filter(l=>l.eje==="2").reduce((a,l)=>a+(pl[l.id]||0),0),sl=Math.max(0,costoI-e1-e2);
+  donut($("#dbEje"),[{k:"Eje 1 · Rehabilitación",v:e1,c:PAL[0]},{k:"Eje 2 · Reconstrucción resiliente",v:e2,c:PAL[2]},{k:"Sin línea del PAE asignada",v:sl,c:GRIS}],moneyM(costoI).replace(" M",""),"millones",moneyM);
+  // Donut por sector: 5 mayores + Otros
+  const sec=Object.entries(ps).filter(x=>x[0]!=="Otro").sort((a,b)=>b[1]-a[1]),top=sec.slice(0,5),resto=sec.slice(5).reduce((a,x)=>a+x[1],0)+(ps["Otro"]||0);
+  const items=top.map(([k,v],i)=>({k,v,c:PAL[i]}));if(resto)items.push({k:"Otros sectores",v:resto,c:GRIS});
+  donut($("#dbSec"),items,fmt(sum("necesidades")),"necesidades",v=>fmt(v));
+  // Barras por línea
+  dbars($("#dbLin"),LIN.filter(l=>pl[l.id]).map(l=>({k:l.id+" · "+l.nombre,t:l.id+" · "+l.nombre,v:pl[l.id]})).sort((a,b)=>b.v-a.v),moneyM);
+  // Cuarto panel
+  if(!d){$("#dbD").className="dbars";$("#dbDTit").textContent="Costo por municipio";$("#dbDSub").textContent="Millones de pesos · intervenciones reportadas";
+    dbars($("#dbD"),S.map(m=>({k:m.municipio,v:num(m.costoIntervenciones)})).filter(x=>x.v).sort((a,b)=>b.v-a.v),moneyM,"var(--blue)")}
+  else{$("#dbD").className="";const m=S[0],lb=m.lineaBase||{},br=Math.max(0,costoP-conf);$("#dbDTit").textContent="Financiación y línea base";$("#dbDSub").textContent="Proyectos: recursos confirmados frente a la brecha";
+    $("#dbD").innerHTML=(costoP?`<div class="stack" role="img" aria-label="Confirmado ${moneyM(conf)}, brecha ${moneyM(br)}"><i style="flex:${conf||0};background:${PAL[0]}"></i><i style="flex:${br||0};background:${GRIS}"></i></div>
+      <ul class="lg"><li><i style="background:${PAL[0]}"></i><span>Recursos confirmados</span><b>${moneyM(conf)}<small>${(conf/costoP*100).toLocaleString("es-CO",{maximumFractionDigits:1})} %</small></b></li><li><i style="background:${GRIS}"></i><span>Brecha por financiar</span><b>${moneyM(br)}<small>${(br/costoP*100).toLocaleString("es-CO",{maximumFractionDigits:1})} %</small></b></li></ul>`:'<p class="muted">El municipio aún no registra proyectos con costo.</p>')+
+      `<div style="margin-top:18px;border-top:1px solid var(--line);padding-top:12px"><p class="sub" style="margin:0 0 8px">Línea base del municipio</p><ul class="lg">${[["Viviendas afectadas (EDAN)",lb.viviendasAfectadas],["Personas en necesidades reportadas",m.personas||""],["Necesidades de urgencia alta",m.urgenciaAlta]].map(([k,v])=>`<li><i style="background:transparent"></i><span>${k}</span><b>${v===""||v==null?"—":fmt(num(v))}</b></li>`).join("")}</ul></div>`}
+}
+$("#dbMun").addEventListener("change",renderTablero);
 
 /* ================= PROYECTOS FASE III ================= */
 let F3=null;
