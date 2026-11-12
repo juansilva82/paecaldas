@@ -1034,6 +1034,7 @@ function exportMuni(dane,rep){
    Convierte sus listas a las de la plataforma y deja anotado en observaciones lo que no tiene equivalente exacto. */
 function importFormato(wb){
   const rep=emptyRep(),notas=[],norm=v=>String(v??"").trim(),low=v=>norm(v).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+  const nv=v=>/\d/.test(norm(v))?numX(v):"";
   const fecha=v=>{v=norm(v);if(/^\d{5}(\.\d+)?$/.test(v))return new Date(Date.UTC(1899,11,30)+Math.floor(Number(v))*864e5).toISOString().slice(0,10);const m=v.match(/(\d{4})-(\d{2})-(\d{2})/);return m?m[0]:v};
   const tabla=(nombre,clave)=>{const s=wb[nombre]||[];const h=s.findIndex(r=>r&&low(r[0]).startsWith(clave));if(h<0)throw new Error(`La hoja «${nombre}» no tiene la fila de títulos esperada.`);
     const head=s[h].map(low);return s.slice(h+1).filter(r=>r&&norm(r[0])).map(r=>{const o={};head.forEach((t,i)=>{if(t)o[t]=r[i]});return o})};
@@ -1054,7 +1055,7 @@ function importFormato(wb){
     const fRaw=norm(g(o,"fuente"));let fuente=fRaw.length>30?null:pick(fRaw,L.fuentes,[[/^edanpri/,"EDANPRI"],[/^edan/,"EDAN"],[/^rud/,"RUD"],[/visita/,"Visita técnica"],[/sectorial/,"Informe sectorial"]]);
     const soporte=[];if(fuente===null){fuente=fRaw?"Otra":"";soporte.push(fRaw)}
     rep.necesidades.push({id:norm(g(o,"id necesidad")),ubicacion:norm(g(o,"vereda","ubicacion")),sector,descripcion:norm(g(o,"descripcion")),fuente,urgencia:pick(g(o,"urgencia"),L.urgencia,[])||"",
-      personas:norm(g(o,"personas"))===""?"":numX(g(o,"personas")),unidades:norm(g(o,"unidades afectadas"))===""?"":numX(g(o,"unidades afectadas")),unidadMedida:norm(g(o,"unidad de medida")),tipologia:"",
+      personas:nv(g(o,"personas")),unidades:nv(g(o,"unidades afectadas")),unidadMedida:norm(g(o,"unidad de medida")),tipologia:"",
       soporte:soporte.join(" "),enlace:norm(g(o,"soporte")),obs:obs.filter(Boolean).join(" · ")})});
   // Intervenciones
   tabla("INTERVENCIONES","id intervencion").forEach(o=>{
@@ -1068,7 +1069,7 @@ function importFormato(wb){
     if(eRawS&&estado==="Por iniciar")obs.push("Estado en el formato: "+norm(g(o,"estado")));
     const c=norm(g(o,"costo"));
     rep.intervenciones.push({id:norm(g(o,"id intervencion")),necesidad:norm(g(o,"id necesidad")),linea:lin?lin.id:"",nombre:norm(g(o,"intervencion propuesta","intervencion")),responsable:norm(g(o,"responsable")),horizonte,
-      estado,resultado:norm(g(o,"resultado")),poblacion:/\d/.test(norm(g(o,"poblacion")))?numX(g(o,"poblacion")):"",costo:c===""?"":numX(c),precision:"",cp:"",mp:"",riesgo,taxonomia:"",obs:obs.concat(/\d/.test(norm(g(o,"poblacion")))&&!/^\d+$/.test(norm(g(o,"poblacion")))||(!/\d/.test(norm(g(o,"poblacion")))&&norm(g(o,"poblacion")))?["Población en el formato: "+norm(g(o,"poblacion"))]:[]).filter(Boolean).join(" · ")})});
+      estado,resultado:norm(g(o,"resultado")),poblacion:/\d/.test(norm(g(o,"poblacion")))?numX(g(o,"poblacion")):"",costo:nv(c),precision:"",cp:"",mp:"",riesgo,taxonomia:"",obs:obs.concat(/\d/.test(norm(g(o,"poblacion")))&&!/^\d+$/.test(norm(g(o,"poblacion")))||(!/\d/.test(norm(g(o,"poblacion")))&&norm(g(o,"poblacion")))?["Población en el formato: "+norm(g(o,"poblacion"))]:[]).filter(Boolean).join(" · ")})});
   // Proyectos
   const sn=v=>{const t=low(v);return!t?"":/^(si|completo|aprobad)/.test(t)?"Sí":/^(parcial|en tramite|tramite)/.test(t)?"En trámite":/^(no aplica|n\/a)/.test(t)?"":"No"};
   tabla("PROYECTOS","id proyecto").forEach(o=>{
@@ -1077,7 +1078,7 @@ function importFormato(wb){
     const etapa=pick(g(o,"etapa"),L.etapa,[[/^idea/,"Idea"],[/factibilidad|disen/,"Factibilidad y diseños"],[/gestion de recursos|financiac/,"Para gestión de recursos"],[/ejecucion/,"En ejecución"],[/cerrad|terminad/,"Cerrado"]])||"";
     const c=norm(g(o,"costo")),cf=norm(g(o,"recursos confirmados"));
     rep.proyectos.push({id:norm(g(o,"id proyecto")),intervencion:norm(g(o,"id intervencion")),nombre:norm(g(o,"nombre")),problema:norm(g(o,"problema")),objetivo:norm(g(o,"objetivo")),etapa,responsable:norm(g(o,"responsable")),
-      producto:norm(g(o,"producto")),localizacion:norm(g(o,"localizacion")),beneficiarios:norm(g(o,"beneficiarios"))===""?"":numX(g(o,"beneficiarios")),costo:c===""?"":numX(c),confirmado:cf===""?"":numX(cf),fuente:"",via:"",
+      producto:norm(g(o,"producto")),localizacion:norm(g(o,"localizacion")),beneficiarios:nv(g(o,"beneficiarios")),costo:nv(c),confirmado:nv(cf),fuente:"",via:"",
       estudios:sn(g(o,"estudios")),predio:sn(g(o,"predio")),presupuesto:sn(g(o,"presupuesto")),proximoPaso:prox.filter(Boolean).join(" · ")})});
   const sinLinea=rep.intervenciones.filter(x=>!x.linea).map(x=>x.id);
   if(sinLinea.length)notas.push(`${sinLinea.join(", ")}: el formato no trae una línea del PAE departamental (p. ej. «Eje 3 – Reducción del riesgo»). Quedaron marcadas como medidas de reducción del riesgo; elija su línea antes de enviar.`);
