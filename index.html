@@ -1042,7 +1042,9 @@ function importFormato(wb){
   // Identificación (hoja INICIO: etiqueta en col. A, valor en col. B)
   const ini={};(wb["INICIO"]||[]).forEach(r=>{if(r&&norm(r[0]))ini[low(r[0])]=r[1]});
   const iv=k=>{const f=Object.keys(ini).find(t=>t.startsWith(k));return f?norm(ini[f]):""};
-  const dane=iv("codigo dane");if(dane&&dane!==W.dane)throw new Error(`El archivo es del municipio con código DANE ${dane} (${iv("municipio")}), no de ${MUNI[W.dane].nombre}.`);
+  const dane=iv("codigo dane"),munArch=iv("municipio"),mismoNombre=munArch&&low(munArch)===low(MUNI[W.dane].nombre);
+  if(dane&&dane!==W.dane){if(!mismoNombre)throw new Error(`El archivo es del municipio con código DANE ${dane} (${munArch||"sin nombre"}), no de ${MUNI[W.dane].nombre}.`);
+    notas.push(`El archivo dice código DANE ${dane}, pero el municipio es ${munArch}: el código correcto de ${MUNI[W.dane].nombre} es ${W.dane}. Se cargó igual; corrija el código en su Excel.`)}
   Object.assign(rep.ident,W.rep.ident||{},{responsable:iv("responsable")||(W.rep.ident||{}).responsable||"",dependencia:iv("dependencia")||(W.rep.ident||{}).dependencia||"",fechaCorte:fecha(iv("fecha de corte"))||(W.rep.ident||{}).fechaCorte||""});
   // Necesidades
   tabla("NECESIDADES","id necesidad").forEach(o=>{
