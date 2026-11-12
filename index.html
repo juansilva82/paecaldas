@@ -974,11 +974,57 @@ function importFormato(wb){
   return{rep,notas};
 }
 
+/* Formato oficial UNGRD FR-1703-SMD-11 (PAE municipal): hojas FASES_LINEAS_GENERALES_PAE y PRESUPUESTO_PAE.
+   Cada línea de intervención del PAE municipal se carga como una necesidad y una intervención; no trae proyectos. */
+function importFR1703(wb){
+  const rep=emptyRep(),notas=[],norm=v=>String(v??"").replace(/\s+/g," ").trim(),low=v=>norm(v).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+  const tabla=nombre=>{const s=wb[nombre]||[];const h=s.findIndex(r=>r&&r.some(c=>low(c)==="id"));if(h<0)return null;const head=s[h].map(low);
+    const filas=[];let fase="";for(const r of s.slice(h+1)){if(!r)continue;const c0=low(r[0]);if(/^total|firma|^nota/.test(c0))break;const o={};head.forEach((t,i)=>{if(t&&o[t]===undefined)o[t]=r[i]});
+      if(norm(r[0]))fase=norm(r[0]);const id=norm(o["id"]);if(!id&&!norm(o["actividades"]))continue;o._fase=fase;filas.push(o)}return filas};
+  const g=(o,...ks)=>{for(const k of ks){const f=Object.keys(o).find(t=>t.startsWith(k));if(f!==undefined&&norm(o[f])!=="")return o[f]}return""};
+  const pres=tabla("PRESUPUESTO_PAE"),fases=tabla("FASES_LINEAS_GENERALES_PAE")||[];
+  if(!pres||!pres.length)throw new Error("No se encontró la tabla de la hoja «PRESUPUESTO_PAE».");
+  // Encabezado: municipio y fecha de actualización (fila bajo los títulos)
+  const s0=wb["PRESUPUESTO_PAE"]||[];const hr=s0.findIndex(r=>r&&r.some(c=>low(c).startsWith("municipio")));
+  if(hr>=0){const r=s0[hr+1]||[],ci=s0[hr].findIndex(c=>low(c).startsWith("municipio")),cf=s0[hr].findIndex(c=>low(c).startsWith("fecha actualizacion"));
+    const mun=low(r[ci]);if(mun&&mun!==low(MUNI[W.dane].nombre))throw new Error(`El archivo es del PAE de ${norm(r[ci])}, no de ${MUNI[W.dane].nombre}.`);
+    var fAct=norm(r[cf]);if(/^\d{5}(\.\d+)?$/.test(fAct))fAct=new Date(Date.UTC(1899,11,30)+Math.floor(Number(fAct))*864e5).toISOString().slice(0,10);else fAct=(fAct.match(/\d{4}-\d{2}-\d{2}/)||[""])[0]}
+  Object.assign(rep.ident,W.rep.ident||{});if(!rep.ident.fechaCorte&&fAct)rep.ident.fechaCorte=fAct;
+  const sectorDe=t=>{t=low(String(t).split("/")[0]);return/vivienda/.test(t)?"Vivienda":/comercio|industria|turismo|trabajo/.test(t)?"Comercio, industria y empleo":/educacion|salud|cultura|deporte|inclusion|social/.test(t)?(/^salud/.test(t)&&!/,/.test(t)?"Salud":"Equipamiento institucional"):/infraestructura/.test(t)?"Equipamiento institucional":/ambiente|ladera/.test(t)?"Ambiente y laderas":/agua|acueducto/.test(t)?"Agua potable y saneamiento":/via|transporte/.test(t)?"Vías y transporte":"Otro"};
+  const FUENTES=[["municipal","Municipal"],["departamental","Departamental"],["nacional","Nacional"],["sector privado","Sector privado"],["cooperacion","Cooperación"]];
+  let difs=[],multi=[],sinCod=[];
+  pres.forEach((o,k)=>{
+    const id=String(k+1).padStart(3,"0"),cod=norm(o["id"]).toUpperCase(),linea=norm(g(o,"servicios basicos","linea")),sec=norm(g(o,"sector"));
+    const f=fases.find(x=>norm(x["id"]).toUpperCase()===cod&&low(g(x,"servicios basicos")).slice(0,25)===low(linea).slice(0,25))||fases[k]||{};
+    const partes=FUENTES.map(([kk,t])=>[t,num(g(o,kk))]).filter(([,v])=>v>0),suma=partes.reduce((a,[,v])=>a+v,0),total=num(g(o,"total"));
+    if(total&&suma&&total!==suma)difs.push(`${cod} (${linea.slice(0,40)}…): total ${money(total)} frente a ${money(suma)} por fuentes`);
+    const codes=cod.split(/[-–,\/\s]+/).filter(Boolean),one=codes.length===1&&LIN.find(l=>l.id===codes[0]);
+    if(codes.length>1)multi.push(`I-${id} (${cod})`);else if(!one)sinCod.push(`I-${id} (${cod})`);
+    const reh=/rehabilitacion|transicion/.test(low(o._fase));
+    const terr=sec.split("/").slice(1).join("/").trim();
+    const obsN=[`PAE municipal FR-1703, línea ${cod}: ${linea}.`,sec?`Sector / territorio en el PAE: ${sec}.`:""];
+    rep.necesidades.push({id:"N-"+id,ubicacion:terr||sec,sector:sectorDe(sec),descripcion:linea,fuente:"Otra",urgencia:"",personas:"",unidades:"",unidadMedida:"",tipologia:"",soporte:"PAE municipal (formato UNGRD FR-1703)"+(fAct?` actualizado ${fAct}`:""),enlace:"",obs:obsN.filter(Boolean).join(" ")});
+    const obsI=[`Código en el PAE municipal: ${cod}.`+(codes.length>1?" Abarca varias líneas: elija la principal o divida la intervención.":!one?" No es una línea del PAE departamental: elija la equivalente.":""),
+      partes.length?"Fuentes propuestas en el PAE municipal (no confirmadas): "+partes.map(([t,v])=>`${t} ${money(v)}`).join("; ")+".":"",
+      total&&suma&&total!==suma?`El TOTAL del PAE municipal dice ${money(total)}; se cargó la suma de las fuentes (${money(suma)}), que coincide con el RESUMEN_PAE.`:"",
+      "Horizonte asignado según la fase del PAE municipal ("+(reh?"rehabilitación":"reconstrucción")+"); verifíquelo.",
+      norm(g(o,"actividades"))?"Actividades: "+norm(g(o,"actividades")):""];
+    rep.intervenciones.push({id:"I-"+id,necesidad:"N-"+id,linea:one?one.id:"",nombre:linea,responsable:norm(g(o,"entidades responsables")),horizonte:reh?"Corto plazo (2026–2027)":"Corto y mediano plazo",estado:"",
+      resultado:norm(g(f,"resultados")),poblacion:"",costo:suma||total||"",precision:(suma||total)?"Estimación preliminar":"",cp:"",mp:"",riesgo:/gestion del riesgo de desastres|reduccion del riesgo/.test(low(linea+" "+sec.split("/").slice(1).join(" "))),taxonomia:"",obs:obsI.filter(Boolean).join(" ")});
+  });
+  notas.push(`Se cargan ${pres.length} líneas del PAE municipal, cada una como una necesidad y una intervención. El formato UNGRD no trae proyectos: regístrelos en el paso 4 cuando estén definidos.`);
+  if(sinCod.length)notas.push(`${sinCod.join(", ")}: el código es del formato UNGRD (FRT…), no del PAE departamental. Elija la línea equivalente.`);
+  if(multi.length)notas.push(`${multi.join(", ")}: el PAE municipal las asigna a varias líneas. Elija la principal o divida la intervención.`);
+  if(difs.length)notas.push("Diferencias en PRESUPUESTO_PAE entre la columna TOTAL y la suma de las fuentes; se usó la suma, que coincide con RESUMEN_PAE: "+difs.join(" · "));
+  notas.push("Quedan por completar la urgencia de cada necesidad y el estado de cada intervención. Las fuentes por nivel de gobierno quedaron en Observaciones como propuestas, no como recursos confirmados.");
+  return{rep,notas};
+}
+
 async function importXlsx(file){
   try{
     const wb=await XLSX.leer(file);let rep=emptyRep(),notas=[];
-    if(wb["NECESIDADES"]&&wb["INTERVENCIONES"]&&wb["PROYECTOS"]&&!wb["Identificación"]){({rep,notas}=importFormato(wb))}else{
-    const idS=wb["Identificación"];if(!idS)throw new Error("El archivo no tiene la hoja «Identificación». Use el Excel descargado de la plataforma.");
+    if(wb["NECESIDADES"]&&wb["INTERVENCIONES"]&&wb["PROYECTOS"]&&!wb["Identificación"]){({rep,notas}=importFormato(wb))}else if(wb["PRESUPUESTO_PAE"]&&!wb["Identificación"]){({rep,notas}=importFR1703(wb))}else{
+    const idS=wb["Identificación"];if(!idS)throw new Error("No se reconoce el archivo. La plataforma lee: el Excel descargado de ella misma, el Formato Municipal «Ruta PAE → Proyectos» y el PAE municipal en formato UNGRD FR-1703.");
     const idMap=Object.fromEntries(XC.ident.map(([k,t])=>[t,k]));
     idS.slice(1).forEach(r=>{const k=idMap[String(r[0]||"").trim()];if(k)rep.ident[k]=String(r[1]??"").trim()});
     if(rep.ident.fechaCorte&&/^\d{5}$/.test(rep.ident.fechaCorte)){const d=new Date(Date.UTC(1899,11,30)+Number(rep.ident.fechaCorte)*864e5);rep.ident.fechaCorte=d.toISOString().slice(0,10)}
