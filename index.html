@@ -117,6 +117,7 @@ p{margin:0}
 .lg b{font-weight:700;color:var(--ink);white-space:nowrap}.lg small{color:var(--muted);margin-left:4px;font-size:12px}
 .dbars{display:grid;gap:9px;margin-top:12px}
 .dbars .r{display:grid;grid-template-columns:minmax(0,190px) 1fr;gap:10px;align-items:center;font-size:13px}
+.dbars.wide .r{grid-template-columns:minmax(0,330px) 1fr}
 .dbars .r>span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ink)}
 .dbars .bar{display:flex;align-items:center;gap:8px;min-width:0}
 .dbars .bar i{display:block;height:14px;border-radius:0 4px 4px 0;background:var(--teal);min-width:2px}
@@ -126,6 +127,20 @@ p{margin:0}
 .dbtip{position:fixed;pointer-events:none;z-index:50;background:var(--dark);color:#fff;font:600 12.5px/1.35 var(--body);padding:7px 10px;border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,.18);max-width:280px;display:none}
 .mcard.pick{cursor:pointer}.mcard.pick:hover{outline:2px solid var(--gold-2)}
 @media (max-width:700px){.donutbox{grid-template-columns:1fr;justify-items:center}.dash-sel select{min-width:0;width:100%}.dash-sel{width:100%}.dbars .r{grid-template-columns:minmax(0,120px) 1fr}}
+.gkpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.gk{background:var(--cream);border-radius:14px;padding:14px 16px;border-top:4px solid var(--teal);display:grid;gap:2px}
+.gk:nth-child(4n+2){border-top-color:var(--gold)}.gk:nth-child(4n+3){border-top-color:var(--green)}.gk:nth-child(4n+4){border-top-color:var(--blue)}
+.gk b{font:800 26px/1.1 var(--head);color:var(--dark)}.gk span{font-size:13.5px;color:var(--ink)}.gk small{font-size:11.5px;color:var(--muted)}
+.lchart svg{width:100%;height:auto;display:block;margin-top:8px;overflow:visible}
+.lchart .ax{stroke:#d8d2c3;stroke-width:1}.lchart .gl{stroke:#efe9db;stroke-width:1}
+.lchart .ln{fill:none;stroke:var(--teal);stroke-width:2}.lchart .ar{fill:rgba(15,92,92,.08)}
+.lchart .pt{fill:var(--teal);stroke:#fff;stroke-width:2}.lchart .pt:hover{r:7}
+.lchart text{font:600 11.5px var(--body);fill:var(--muted)}.lchart text.v{font:800 13px var(--head);fill:var(--dark)}
+.donutbox.sm{grid-template-columns:150px 1fr;gap:12px}.donutbox.sm svg{width:150px;height:150px}
+.donutbox.sm .lg{font-size:12.5px}
+@media (max-width:1000px){.donutbox.sm{grid-template-columns:1fr;justify-items:center}}
+#cifT input,#cifT select{font:14px var(--body);padding:8px 9px;border:1px solid #d6d3c9;border-radius:8px;background:#fff;color:var(--ink)}
+#cifT select{max-width:260px}
 .photos{display:grid;grid-template-columns:1.35fr 1fr 1fr;gap:14px}
 .photos figure{margin:0;position:relative;border-radius:16px;overflow:hidden;background:#0b2b2e;min-height:230px}
 .photos img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s}
@@ -433,14 +448,31 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
     </div>
   </section>
 
-  <section class="band cream" id="acciones" aria-labelledby="h-acc" style="scroll-margin-top:90px">
+  <section class="band white" id="acciones" aria-labelledby="h-gob" style="scroll-margin-top:90px">
+    <div class="wrap">
+      <div class="shead"><span class="n">04</span><div><h2 id="h-gob">Tablero de la respuesta departamental</h2><p>Lo que ha hecho la Gobernación de Caldas desde el 10 de agosto, en cifras. Cada dato muestra su fecha de corte y su fuente; el equipo coordinador las actualiza desde su panel.</p><div class="bar4" style="margin-top:10px"></div></div></div>
+      <div class="gkpis" id="gobKpis"></div>
+      <div class="grid2" style="margin-top:20px">
+        <div class="card"><h3>Ayuda humanitaria entregada</h3><p class="sub">Unidades acumuladas en cada corte</p><div class="lchart" id="gobAhe"></div></div>
+        <div class="card"><h3>Subsidio departamental de arrendamiento</h3><p class="sub">Familias beneficiarias acumuladas · el valor girado acompaña cada corte</p><div class="lchart" id="gobArr"></div></div>
+      </div>
+      <div class="grid3" style="margin-top:20px">
+        <div class="card"><h3>Apoyo económico de la UNGRD</h3><p class="sub" id="gobGirSub">Giros acompañados por la Gobernación</p><div class="donutbox sm" id="gobGir"></div></div>
+        <div class="card"><h3>Giros pendientes por cobrar</h3><p class="sub" id="gobPenSub">Por municipio</p><div class="donutbox sm" id="gobPen"></div></div>
+        <div class="card"><h3>Portafolio inicial de reconstrucción</h3><p class="sub" id="gobPorSub">Proyectos por tipo</p><div class="donutbox sm" id="gobPor"></div></div>
+      </div>
+      <div class="card" style="margin-top:20px"><h3>Recursos de la emergencia</h3><p class="sub">Millones de pesos · montos de fuentes distintas: no se suman entre sí</p><div class="dbars wide" id="gobRec" style="margin-top:12px"></div><p class="sub" id="gobPlan" style="margin-top:10px"></p></div>
+    </div>
+  </section>
+
+  <section class="band cream" id="cronologia" aria-labelledby="h-acc" style="scroll-margin-top:90px">
     <div class="wrap grid2" style="align-items:start">
       <div>
-        <div class="shead"><span class="n">04</span><div><h2 id="h-acc">Acciones de la Gobernación</h2><p>Del día cero a hoy. El equipo coordinador mantiene esta cronología al día.</p></div></div>
+        <div class="shead"><span class="n">05</span><div><h2 id="h-acc">Acciones de la Gobernación</h2><p>Del día cero a hoy. El equipo coordinador mantiene esta cronología al día.</p></div></div>
         <div class="tl" id="pubAcc"></div>
       </div>
       <div>
-        <div class="shead"><span class="n">05</span><div><h2>Calendario y vencimientos</h2><p>Días restantes de cada hito. Ritmo de reporte: actualización municipal cada quince días y corte consolidado mensual.</p></div></div>
+        <div class="shead"><span class="n">06</span><div><h2>Calendario y vencimientos</h2><p>Días restantes de cada hito. Ritmo de reporte: actualización municipal cada quince días y corte consolidado mensual.</p></div></div>
         <div class="card"><div class="cal" id="pubCal"></div></div>
       </div>
     </div>
@@ -565,19 +597,20 @@ async function demo(a,b){
   const db=demoDB(),u=SES&&SES.usuario,adm=u==="gobernacion";
   const done=x=>{demoSave(db);return x};
   if(a==="login"){if(b.clave!=="demo")return{ok:false,error:"En modo demostración la contraseña es «demo»"};const m=MUNI[b.usuario];demoLog(db,b.usuario,m?b.usuario:"","Ingresó a la plataforma");return done({ok:true,token:"demo",usuario:b.usuario,rol:b.usuario==="gobernacion"?"gobernacion":"municipio",municipio:m||null})}
-  if(a==="publico"){return{ok:true,datos:{municipios:MUN.map(m=>{const r=demoRep(db,m.dane);return pubAgg(m,r.estado,r.actualizado,r.reporte,r.adm.lineaBase)}),fase3:MUN.flatMap(m=>{const r=demoRep(db,m.dane);return fase3Of(r.reporte,m,r.estado)}),acciones:db.acciones||window.PAE_ACCIONES||[],corte:new Date().toISOString()}}}
+  if(a==="publico"){return{ok:true,datos:{municipios:MUN.map(m=>{const r=demoRep(db,m.dane);return pubAgg(m,r.estado,r.actualizado,r.reporte,r.adm.lineaBase)}),fase3:MUN.flatMap(m=>{const r=demoRep(db,m.dane);return fase3Of(r.reporte,m,r.estado)}),acciones:db.acciones||window.PAE_ACCIONES||[],cifras:db.cifras||window.PAE_CIFRAS||[],corte:new Date().toISOString()}}}
   if(a==="mi")return done({ok:true,reporte:demoOut(u,demoRep(db,u),false)});
   if(a==="guardar"){const d=adm?b.dane:u,r=demoRep(db,d);if(Number(b.version)!==r.version)return{ok:false,error:"conflicto",mensaje:"Hay una versión más reciente.",reporte:demoOut(d,r,adm)};if(r.estado==="sin iniciar")r.estado="diligenciamiento";if(r.estado==="validado"&&!adm){r.estado="enviado";demoLog(db,u,d,"Editó un reporte validado: vuelve a «enviado»")}r.reporte=b.reporte;r.version++;r.actualizado=new Date().toISOString();return done({ok:true,version:r.version,estado:r.estado,actualizado:r.actualizado})}
   if(a==="enviar"){const r=demoRep(db,u);r.estado="enviado";r.enviado=new Date().toISOString();demoLog(db,u,u,"Envió el reporte a la Gobernación");return done({ok:true,estado:"enviado"})}
   if(a==="cambiarClave")return{ok:true,token:"demo"};
   if(!adm)return{ok:false,error:"Acción reservada a la Gobernación"};
-  if(a==="todos")return done({ok:true,reportes:MUN.map(m=>demoOut(m.dane,demoRep(db,m.dane),true)),acciones:db.acciones||window.PAE_ACCIONES||[]});
+  if(a==="todos")return done({ok:true,reportes:MUN.map(m=>demoOut(m.dane,demoRep(db,m.dane),true)),acciones:db.acciones||window.PAE_ACCIONES||[],cifras:db.cifras||window.PAE_CIFRAS||[]});
   if(a==="bitacora")return{ok:true,bitacora:b.dane?db.bitacora.filter(x=>x.municipio===MUNI[b.dane].nombre):db.bitacora};
   if(a==="observar"||a==="devolver"){const r=demoRep(db,b.dane);r.adm.observaciones=r.adm.observaciones||[];r.adm.observaciones.push({fecha:new Date().toISOString(),texto:b.texto,tipo:a==="devolver"?"devolución":"observación"});if(a==="devolver")r.estado="diligenciamiento";demoLog(db,u,b.dane,a==="devolver"?"Devolvió el reporte con observaciones":"Dejó una observación",b.texto.slice(0,200));return done({ok:true,estado:r.estado})}
   if(a==="validar"){const r=demoRep(db,b.dane);r.estado="validado";r.validado=new Date().toISOString();demoLog(db,u,b.dane,"Validó el reporte");return done({ok:true,estado:"validado"})}
   if(a==="resetClave")return{ok:true,clave:"demo"};
   if(a==="admin"){const r=demoRep(db,b.dane);Object.assign(r.adm,b.datos);demoLog(db,u,b.dane,"Actualizó datos de la Gobernación");return done({ok:true})}
   if(a==="acciones"){db.acciones=b.acciones;return done({ok:true})}
+  if(a==="cifras"){db.cifras=b.cifras;return done({ok:true})}
   return{ok:false,error:"Acción no válida"};
 }
 /* agregado público (igual al del servidor) */
@@ -753,7 +786,7 @@ async function loadPublic(){
   hbars($("#pubViv"),viv);
   hbars($("#pubSub"),[["Centro Sur",13984,"· 59,5 %"],["Bajo Occidente",3996,"· 17,0 %"],["Alto Occidente",2310,"· 9,8 %"],["Norte",1977,"· 8,4 %"],["Alto Oriente",685,"· 2,9 %"],["Magdalena Caldense",540,"· 2,3 %"]],"var(--gold)");
   renderAcciones(d.acciones||[],$("#pubAcc"));
-  initTablero(M);
+  initTablero(M);renderGob(d.cifras||[]);
 }
 
 /* ================= TABLERO POR MUNICIPIO ================= */
@@ -770,7 +803,7 @@ function donut(el,items,centro,centro2,fmtV){
     const d=f>=.9999?`M${cx},${cy-R}A${R},${R} 0 1 1 ${cx-.01},${cy-R}L${cx-.01},${cy-r}A${r},${r} 0 1 0 ${cx},${cy-r}Z`:`M${p(s,R)}A${R},${R} 0 ${big} 1 ${p(e,R)}L${p(e,r)}A${r},${r} 0 ${big} 0 ${p(s,r)}Z`;
     paths+=`<path d="${d}" fill="${x.c}" data-t="${esc(x.k)}: ${esc(fmtV(x.v))} · ${(f*100).toLocaleString("es-CO",{maximumFractionDigits:1})} %"></path>`;a0=a1});
   el.innerHTML=`<svg viewBox="0 0 200 200" role="img" aria-label="${esc(items.map(x=>x.k+" "+fmtV(x.v)).join("; "))}">${paths}<text class="ctr" x="100" y="100" text-anchor="middle">${esc(centro)}</text><text class="ctr2" x="100" y="118" text-anchor="middle">${esc(centro2)}</text></svg>
-  <ul class="lg">${items.filter(x=>x.v).map(x=>`<li><i style="background:${x.c}"></i><span>${esc(x.k)}</span><b>${esc(fmtV(x.v))}<small>${(x.v/tot*100).toLocaleString("es-CO",{maximumFractionDigits:1})} %</small></b></li>`).join("")}</ul>`;
+  <ul class="lg">${items.filter(x=>x.v).map(x=>`<li><i style="background:${x.c}"></i><span>${esc(x.k)}</span><b>${esc(fmtV(x.v))}${/%$/.test(fmtV(x.v))?"":`<small>${(x.v/tot*100).toLocaleString("es-CO",{maximumFractionDigits:1})} %</small>`}</b></li>`).join("")}</ul>`;
   const tip=dbTip();el.querySelectorAll("path").forEach(pth=>{pth.addEventListener("mousemove",ev=>{tip.textContent=pth.dataset.t;tip.style.display="block";tip.style.left=(ev.clientX+14)+"px";tip.style.top=(ev.clientY+12)+"px"});pth.addEventListener("mouseleave",()=>tip.style.display="none")});
 }
 function dbars(el,rows,fmtV,color){
@@ -814,6 +847,75 @@ function renderTablero(){
       `<div style="margin-top:18px;border-top:1px solid var(--line);padding-top:12px"><p class="sub" style="margin:0 0 8px">Línea base del municipio</p><ul class="lg">${[["Viviendas afectadas (EDAN)",lb.viviendasAfectadas],["Personas en necesidades reportadas",m.personas||""],["Necesidades de urgencia alta",m.urgenciaAlta]].map(([k,v])=>`<li><i style="background:transparent"></i><span>${k}</span><b>${v===""||v==null?"—":fmt(num(v))}</b></li>`).join("")}</ul></div>`}
 }
 $("#dbMun").addEventListener("change",renderTablero);
+
+/* ================= TABLERO DE LA RESPUESTA DEPARTAMENTAL ================= */
+// Catálogo de indicadores: la Gobernación registra cortes {ind, cat, valor, fecha, fuente, nota}.
+const CIF_IND={
+ ahe:{n:"Ayuda humanitaria entregada",u:"unidades",t:"n"},
+ arriendo_familias:{n:"Arriendo departamental: familias",u:"familias",t:"n"},
+ arriendo_monto:{n:"Arriendo departamental: valor girado",u:"pesos",t:"$"},
+ arriendo_municipios:{n:"Arriendo departamental: municipios",u:"municipios",t:"n"},
+ banco_viviendas:{n:"Banco de materiales: viviendas",u:"viviendas",t:"n"},
+ banco_municipios:{n:"Banco de materiales: municipios",u:"municipios",t:"n"},
+ banco_contrato:{n:"Banco de materiales: valor del contrato",u:"pesos",t:"$"},
+ ungrd_giros:{n:"Giros UNGRD acompañados",u:"pesos",t:"$"},
+ ungrd_cobrado_pct:{n:"Giros UNGRD cobrados",u:"%",t:"%"},
+ ungrd_pendientes:{n:"Giros UNGRD pendientes por cobrar (por municipio)",u:"giros",t:"n",cat:1},
+ contratos_n:{n:"Contratos de emergencia",u:"contratos",t:"n"},
+ contratos_monto:{n:"Contratos de emergencia: valor",u:"pesos",t:"$"},
+ portafolio_monto:{n:"Portafolio de reconstrucción: valor",u:"pesos",t:"$"},
+ portafolio_tipo:{n:"Portafolio de reconstrucción: proyectos por tipo",u:"proyectos",t:"n",cat:1},
+ plan_total:{n:"Plan financiero de la emergencia: total",u:"pesos",t:"$"},
+ plan_fuente:{n:"Plan financiero: valor por fuente",u:"pesos",t:"$",cat:1},
+ modificacion:{n:"Modificación presupuestal",u:"pesos",t:"$"},
+ animales_kg:{n:"Alimento para animales",u:"kg",t:"n"},
+ fondo_milagro_amb:{n:"Estimación ambiental para el Fondo Milagro",u:"pesos",t:"$"}
+};
+const cifFmt=(ind,v)=>{const t=(CIF_IND[ind]||{}).t;return t==="$"?moneyM(v):t==="%"?fmt(v)+" %":(v%1?v.toLocaleString("es-CO",{maximumFractionDigits:1}):fmt(v))};
+const cifSerie=(C,ind)=>C.filter(x=>x.ind===ind&&!x.cat).sort((a,b)=>String(a.fecha).localeCompare(String(b.fecha)));
+const cifUlt=(C,ind)=>{const s=cifSerie(C,ind);return s[s.length-1]};
+const cifCats=C=>ind=>{const r=C.filter(x=>x.ind===ind&&x.cat);if(!r.length)return[];const f=r.map(x=>x.fecha).sort().pop();return r.filter(x=>x.fecha===f)};
+const fcorte=f=>f?new Date(f+"T12:00:00").toLocaleDateString("es-CO",{day:"numeric",month:"short",year:"numeric"}):"";
+function lineChart(el,serie,fmtV,extra){
+  if(!serie.length){el.innerHTML='<p class="muted">Sin cortes registrados.</p>';return}
+  const W=520,H=210,L=14,R=14,T=26,B=34,t0=+new Date(serie[0].fecha),t1=+new Date(serie[serie.length-1].fecha),span=Math.max(1,t1-t0),mx=Math.max(...serie.map(x=>x.valor))*1.12;
+  const X=d=>serie.length===1?W/2:L+(+new Date(d)-t0)/span*(W-L-R),Y=v=>T+(1-v/mx)*(H-T-B);
+  const pts=serie.map(x=>[X(x.fecha),Y(x.valor),x]);
+  const path=pts.map((p,i)=>(i?"L":"M")+p[0].toFixed(1)+","+p[1].toFixed(1)).join("");
+  // Etiquetas de fecha: se omiten las que quedarían encimadas (siempre se muestran la primera y la última)
+  const showD=pts.map(()=>true);for(let i=pts.length-2;i>0;i--){const nx=pts.findIndex((q,j)=>j>i&&showD[j]);if(nx>=0&&pts[nx][0]-pts[i][0]<90)showD[i]=false}
+  for(let i=1;i<pts.length-1;i++){let pv=i-1;while(pv>0&&!showD[pv])pv--;if(showD[i]&&pts[i][0]-pts[pv][0]<90)showD[i]=false}
+  el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(serie.map(x=>fcorte(x.fecha)+": "+fmtV(x.valor)).join("; "))}">
+   ${[.25,.5,.75].map(f=>`<line class="gl" x1="${L}" x2="${W-R}" y1="${T+f*(H-T-B)}" y2="${T+f*(H-T-B)}"/>`).join("")}<line class="ax" x1="${L}" x2="${W-R}" y1="${H-B}" y2="${H-B}"/>
+   ${pts.length>1?`<path class="ar" d="${path}L${pts[pts.length-1][0]},${H-B}L${pts[0][0]},${H-B}Z"/><path class="ln" d="${path}"/>`:""}
+   ${pts.map(([x,y,d],i)=>`<circle class="pt" cx="${x}" cy="${y}" r="5" data-t="${esc(fcorte(d.fecha)+": "+fmtV(d.valor)+(extra?extra(d):"")+" · "+d.fuente)}"/><text class="v" x="${x}" y="${y-11}" text-anchor="${i===0&&pts.length>1?"start":i===pts.length-1&&pts.length>1?"end":"middle"}">${esc(fmtV(d.valor))}</text>${showD[i]?"":"<!--"}<text x="${x}" y="${H-B+18}" text-anchor="${i===0&&pts.length>1?"start":i===pts.length-1&&pts.length>1?"end":"middle"}">${esc(new Date(d.fecha+"T12:00:00").toLocaleDateString("es-CO",{day:"numeric",month:"short"}))}</text>${showD[i]?"":"-->"}`).join("")}</svg>
+   <p class="sub" style="margin:4px 0 0">Fuentes: ${esc([...new Set(serie.map(x=>x.fuente))].join(", "))}</p>`;
+  const tip=dbTip();el.querySelectorAll(".pt").forEach(c=>{c.addEventListener("mousemove",ev=>{tip.textContent=c.dataset.t;tip.style.display="block";tip.style.left=(ev.clientX+14)+"px";tip.style.top=(ev.clientY+12)+"px"});c.addEventListener("mouseleave",()=>tip.style.display="none")});
+}
+function renderGob(C){
+  if(!C||!C.length){$("#gobKpis").innerHTML='<p class="muted">El equipo coordinador aún no ha registrado cifras.</p>';return}
+  const u=k=>cifUlt(C,k),kp=[];
+  const add=(k,txt,sub)=>{const x=u(k);if(x)kp.push(`<div class="gk"><b class="num">${esc(cifFmt(k,x.valor))}</b><span>${txt(x)}</span><small>${esc(fcorte(x.fecha))} · ${esc(x.fuente)}${sub?" · "+sub(x):""}</small></div>`)};
+  add("ahe",()=>"unidades de ayuda humanitaria entregadas");
+  add("arriendo_familias",()=>{const m=u("arriendo_monto"),mu=u("arriendo_municipios");return`familias con subsidio departamental de arrendamiento${m?" · "+moneyM(m.valor)+" girados":""}${mu?" en "+fmt(mu.valor)+" municipios":""}`});
+  add("banco_viviendas",()=>{const mu=u("banco_municipios"),c=u("banco_contrato");return`viviendas con banco de materiales${mu?" en "+fmt(mu.valor)+" municipios":""}${c?" · contrato por "+moneyM(c.valor):""}`});
+  add("ungrd_giros",()=>{const p=u("ungrd_cobrado_pct");return`en giros de la UNGRD acompañados${p?" · "+fmt(p.valor)+" % cobrados":""}`});
+  add("contratos_n",()=>{const m=u("contratos_monto");return`contratos de emergencia de la Gobernación${m?" por "+moneyM(m.valor):""}`});
+  add("portafolio_monto",()=>{const n=cifCats(C)("portafolio_tipo").reduce((a,x)=>a+x.valor,0);return`en el portafolio inicial de reconstrucción${n?" · "+fmt(n)+" proyectos":""}`});
+  add("animales_kg",()=>"kilogramos de alimento para animales");
+  $("#gobKpis").innerHTML=kp.join("");
+  lineChart($("#gobAhe"),cifSerie(C,"ahe"),v=>fmt(v));
+  const am=cifSerie(C,"arriendo_monto");lineChart($("#gobArr"),cifSerie(C,"arriendo_familias"),v=>fmt(v)+" familias",d=>{const m=am.find(x=>x.fecha===d.fecha);return m?" · "+moneyM(m.valor):""});
+  // Torta: giros cobrados vs pendientes (por porcentaje)
+  const pc=u("ungrd_cobrado_pct");
+  if(pc){$("#gobGirSub").textContent=`Proporción de giros cobrados · ${fcorte(pc.fecha)} · ${pc.fuente}`;donut($("#gobGir"),[{k:"Cobrados",v:pc.valor,c:PAL[0]},{k:"Por cobrar",v:Math.max(0,100-pc.valor),c:GRIS}],fmt(pc.valor)+" %","cobrados",v=>fmt(v)+" %")}else $("#gobGir").innerHTML='<p class="muted">Sin datos.</p>';
+  const cat=cifCats(C),pen=cat("ungrd_pendientes"),por=cat("portafolio_tipo"),pf=cat("plan_fuente");
+  if(pen.length){const t=pen.reduce((a,x)=>a+x.valor,0);$("#gobPenSub").textContent=`${fmt(t)} giros pendientes · ${fcorte(pen[0].fecha)} · ${pen[0].fuente}`;donut($("#gobPen"),pen.sort((a,b)=>b.valor-a.valor).slice(0,6).map((x,i)=>({k:x.cat,v:x.valor,c:/otros/i.test(x.cat)?GRIS:PAL[i]})),fmt(t),"pendientes",v=>fmt(v))}else $("#gobPen").innerHTML='<p class="muted">Sin datos.</p>';
+  if(por.length){const t=por.reduce((a,x)=>a+x.valor,0),m=u("portafolio_monto");$("#gobPorSub").textContent=`${fmt(t)} proyectos${m?" por "+moneyM(m.valor):""} · ${fcorte(por[0].fecha)} · ${por[0].fuente}`;donut($("#gobPor"),por.sort((a,b)=>b.valor-a.valor).map((x,i)=>({k:x.cat+(x.nota?" ("+x.nota+")":""),v:x.valor,c:i<6?PAL[i]:GRIS})),fmt(t),"proyectos",v=>fmt(v))}else $("#gobPor").innerHTML='<p class="muted">Sin datos.</p>';
+  const rec=[["plan_total","Plan financiero de la emergencia (fuentes proyectadas)"],["fondo_milagro_amb","Estimación ambiental para el Fondo Milagro"],["portafolio_monto","Portafolio inicial de reconstrucción"],["modificacion","Modificación presupuestal"],["banco_contrato","Contrato del banco de materiales"],["contratos_monto","Contratos de emergencia"],["ungrd_giros","Giros UNGRD acompañados"],["arriendo_monto","Subsidio departamental de arrendamiento"]].map(([k,t])=>{const x=u(k);return x?{k:t,v:x.valor,t:t+" · "+fcorte(x.fecha)+" · "+x.fuente}:null}).filter(Boolean).sort((a,b)=>b.v-a.v);
+  dbars($("#gobRec"),rec,moneyM);
+  const pt=u("plan_total");$("#gobPlan").innerHTML=pf.length?"Plan financiero por fuente: "+pf.map(x=>`${esc(x.cat)} ${moneyM(x.valor)}`).join(" · "):pt?`Plan financiero: ${esc(pt.nota||"")}.`:"";
+}
 
 /* ================= PROYECTOS FASE III ================= */
 let F3=null;
@@ -1208,17 +1310,17 @@ async function importXlsx(file){
 
 /* ================= PANEL DE LA GOBERNACIÓN ================= */
 let G=null;   // {reportes, acciones, tab, sel}
-const GT=[["Municipios","municipios"],["Cartera Única","cartera"],["Cartera frente al PAE","pae"],["Equivalencia PAE Nacional","nacional"],["Acciones","acciones"],["Bitácora","bitacora"]];
+const GT=[["Municipios","municipios"],["Cartera Única","cartera"],["Cartera frente al PAE","pae"],["Equivalencia PAE Nacional","nacional"],["Acciones","acciones"],["Cifras de la respuesta","cifras"],["Bitácora","bitacora"]];
 async function openGob(force){
   if(G&&!force){renderG();return}
   $("#gBody").innerHTML='<div class="empty">Cargando los 27 reportes…</div>';
-  try{const j=await call("todos");if(!j.ok)throw new Error(j.error);G=Object.assign(G||{tab:"municipios",sel:null},{reportes:j.reportes,acciones:j.acciones||[]});renderG()}catch(e){$("#gBody").innerHTML=`<div class="note crit">${esc(e.message)}</div>`}
+  try{const j=await call("todos");if(!j.ok)throw new Error(j.error);G=Object.assign(G||{tab:"municipios",sel:null},{reportes:j.reportes,acciones:j.acciones||[],cifras:j.cifras||[]});renderG()}catch(e){$("#gBody").innerHTML=`<div class="note crit">${esc(e.message)}</div>`}
 }
 $("#gReload").addEventListener("click",()=>openGob(true));
 function renderG(){
   $("#gTabs").innerHTML=GT.map(([t,k])=>`<button type="button" data-g="${k}"${G.tab===k?' aria-current="step"':""}>${t}</button>`).join("");
   $("#gMeta").textContent=`${G.reportes.filter(r=>r.estado==="validado").length} validados · ${G.reportes.filter(r=>r.estado==="enviado").length} por revisar · ${G.reportes.filter(r=>r.estado==="sin iniciar").length} sin iniciar`;
-  ({municipios:G.sel?gMuni:gList,cartera:gCartera,pae:gPAE,nacional:gNacional,acciones:gAcciones,bitacora:gBitacora})[G.tab]();
+  ({municipios:G.sel?gMuni:gList,cartera:gCartera,pae:gPAE,nacional:gNacional,acciones:gAcciones,cifras:gCifras,bitacora:gBitacora})[G.tab]();
 }
 $("#gTabs").addEventListener("click",e=>{const b=e.target.closest("[data-g]");if(!b)return;G.tab=b.dataset.g;G.sel=null;renderG()});
 const repOf=r=>Object.assign(emptyRep(),r.reporte||{});
@@ -1282,6 +1384,8 @@ $("#gBody").addEventListener("click",async e=>{
     if(x==="reservado"){const d={dictamen:$("#gDict").value,prioridad:$("#gPrio").value,fondoMilagro:$("#gFM").value};const j=await call("admin",{dane:r.dane,datos:d});if(!j.ok)throw new Error(j.error);Object.assign(r,d);toast("Información reservada guardada");return}
     if(x==="reset"){if(b.dataset.confirm!=="1"){b.dataset.confirm="1";b.textContent="¿Confirmar? La contraseña actual dejará de servir";return}
       const j=await call("resetClave",{dane:r.dane});if(!j.ok)throw new Error(j.error);$("#resetOut").innerHTML=`<div class="note ok" style="margin-top:8px">Nueva contraseña de ${esc(r.municipio)}: <strong style="font-family:monospace;font-size:16px">${esc(j.clave)}</strong><br><small>Entréguela de forma privada; el municipio puede cambiarla en «Mi cuenta». No se volverá a mostrar.</small></div>`;b.textContent="Restablecida";b.disabled=true;return}
+    if(x==="cif-save"){const bad=G.cifras.find(c=>!c.ind||!c.fecha||c.valor===""||c.valor==null||(CIF_IND[c.ind]&&CIF_IND[c.ind].cat&&!c.cat));if(bad){toast("Cada cifra necesita indicador, fecha y valor (y categoría cuando el indicador la pide)",true);return}
+      const j=await call("cifras",{cifras:G.cifras.map(c=>Object.assign({},c,{valor:numX(c.valor)}))});if(!j.ok)throw new Error(j.error);toast("Cifras publicadas en el tablero");return}
     if(x==="acc-save"){const j=await call("acciones",{acciones:G.acciones});if(!j.ok)throw new Error(j.error);toast("Acciones publicadas");return}
   }catch(err){toast(err.message,true);b.disabled=false}
 });
@@ -1353,6 +1457,16 @@ function gAcciones(){
   $("#accList").oninput=e=>{const p=e.target.closest("[data-ai]");if(p&&e.target.dataset.a)A[+p.dataset.ai][e.target.dataset.a]=e.target.value};
   $("#accList").onclick=e=>{const b=e.target.closest("[data-adel]");if(b){A.splice(+b.dataset.adel,1);gAcciones()}};
   $("#accAdd").onclick=()=>{A.push({fecha:new Date().toISOString().slice(0,10),titulo:"",texto:"",fuente:""});gAcciones()};
+}
+function gCifras(){
+  const C=G.cifras,ops=k=>Object.entries(CIF_IND).map(([id,o])=>`<option value="${id}"${id===k?" selected":""}>${esc(o.n)}</option>`).join("");
+  $("#gBody").innerHTML=`<div class="listhead"><h2>Cifras de la respuesta departamental</h2><button class="btn gold small" type="button" id="cifAdd">+ Agregar cifra</button><button class="btn small" type="button" data-x="cif-save">Publicar cambios</button></div>
+   <p class="muted">Cada fila es un corte de un indicador: valor, fecha y fuente. El tablero público toma el corte más reciente de cada indicador y grafica la evolución de los que tienen varios cortes. Los montos van en pesos, sin puntos. Para «por municipio», «por tipo» y «por fuente», registre una fila por categoría con la misma fecha.</p>
+   <div class="scroll"><table class="t" id="cifT"><thead><tr><th>Indicador</th><th>Categoría</th><th>Valor</th><th>Fecha de corte</th><th>Fuente</th><th>Nota</th><th></th></tr></thead><tbody>${[...C].map((c,i)=>({c,i})).sort((a,b)=>String(a.c.ind).localeCompare(String(b.c.ind))||String(b.c.fecha).localeCompare(String(a.c.fecha))).map(({c,i})=>`<tr data-ci="${i}"><td><select data-c="ind">${ops(c.ind)}</select></td><td><input data-c="cat" value="${esc(c.cat||"")}" placeholder="${CIF_IND[c.ind]&&CIF_IND[c.ind].cat?"obligatoria":"—"}" style="width:150px"></td><td><input data-c="valor" value="${esc(c.valor)}" inputmode="decimal" style="width:130px"></td><td><input type="date" data-c="fecha" value="${esc(c.fecha||"")}"></td><td><input data-c="fuente" value="${esc(c.fuente||"")}" style="width:150px"></td><td><input data-c="nota" value="${esc(c.nota||"")}" style="width:200px"></td><td><button class="btn danger xs" type="button" data-cdel="${i}">Quitar</button></td></tr>`).join("")}</tbody></table></div>`;
+  $("#cifT").oninput=e=>{const r=e.target.closest("[data-ci]");if(r&&e.target.dataset.c)C[+r.dataset.ci][e.target.dataset.c]=e.target.value};
+  $("#cifT").onchange=e=>{if(e.target.dataset.c==="ind")gCifras()};
+  $("#cifT").onclick=e=>{const b=e.target.closest("[data-cdel]");if(b){C.splice(+b.dataset.cdel,1);gCifras()}};
+  $("#cifAdd").onclick=()=>{C.push({ind:"ahe",cat:"",valor:"",fecha:new Date().toISOString().slice(0,10),fuente:"",nota:""});gCifras()};
 }
 async function gBitacora(){
   $("#gBody").innerHTML='<div class="empty">Cargando bitácora…</div>';
