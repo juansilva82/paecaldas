@@ -355,7 +355,7 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
       <span class="eyebrow">Plan de Acción Específico · PAE departamental</span>
       <h1>Plataforma Departamental de Consolidación del PAE</h1>
       <p class="lead">Los 27 municipios de Caldas reportan aquí, con un mismo formato, qué se dañó, qué se va a hacer, cuánto cuesta y qué tan listo está cada proyecto. Con esa información la Gobernación construye la Cartera Única y la traduce a la taxonomía del PAE Nacional.</p>
-      <div class="ctas"><a class="btn gold" href="#ingresar">Ingresar a reportar</a><a class="btn ghost" href="#consolidado">Ver el consolidado</a><a class="btn ghost" href="guia-rapida-pae-caldas.pdf" target="_blank" rel="noopener">Guía rápida (PDF)</a></div>
+      <div class="ctas"><a class="btn gold" href="#ingresar">Ingresar a reportar</a><a class="btn ghost" href="#consolidado">Ver el consolidado</a><a class="btn ghost" href="instructivo-pae-caldas.pdf" target="_blank" rel="noopener">Instructivo (PDF)</a></div>
       <span class="pill">Sismo M 7,4 · 10 de agosto de 2026</span><span class="pill">Decreto 392 · calamidad pública</span>
     </div>
     <div class="onepage" aria-label="En una página">
@@ -550,7 +550,7 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
     <div class="logos"><img src="img/gobierno-caldas-blanco.png" alt="Gobierno de Caldas" width="250" height="38"><img src="img/reconstruir-blanco.png" alt="Caldas, Reconstruir es Avanzar" width="158" height="38"></div>
     <span>Secretaría de Medio Ambiente · Unidad Departamental de Gestión del Riesgo · Equipo Coordinador de la Reconstrucción.<br>Referencia nacional: <a href="https://portal.gestiondelriesgo.gov.co/pae" target="_blank" rel="noopener" style="color:#e2b04a">portal.gestiondelriesgo.gov.co/pae</a></span>
   </div>
-  <div style="text-align:right;display:grid;gap:6px;justify-items:end"><span id="syncState">—</span><a href="guia-rapida-pae-caldas.pdf" target="_blank" rel="noopener" style="color:#e2b04a">Guía rápida (PDF, 9 págs.)</a><a href="instructivo-pae-caldas.pdf" target="_blank" rel="noopener" style="color:#e2b04a">Instructivo completo (PDF)</a></div>
+  <div style="text-align:right;display:grid;gap:6px;justify-items:end"><span id="syncState">—</span><a href="instructivo-pae-caldas.pdf" target="_blank" rel="noopener" style="color:#e2b04a">Instructivo de la plataforma (PDF)</a></div>
 </div></footer>
 
 <script>
@@ -686,7 +686,7 @@ function renderNav(){
   let h=`<a href="#inicio">Consolidado</a><a href="#acciones">Acciones de la Gobernación</a><a href="#fase3">Proyectos Fase III</a>`;
   if(SES&&SES.rol==="municipio")h+=`<a href="#municipio">Mi reporte</a>`;
   if(SES&&SES.rol==="gobernacion")h+=`<a href="#gobernacion">Panel Gobernación</a>`;
-  h+=`<a href="guia-rapida-pae-caldas.pdf" target="_blank" rel="noopener">Guía rápida</a>`;
+  h+=`<a href="instructivo-pae-caldas.pdf" target="_blank" rel="noopener">Instructivo</a>`;
   if(SES)h+=`<span class="who">${esc(SES.rol==="gobernacion"?"Gobernación":(SES.municipio||{}).nombre)}</span><button type="button" id="logoutBtn">Salir</button>`;
   else h+=`<a href="#ingresar" class="cta">Ingresar</a>`;
   $("#nav").innerHTML=h;
