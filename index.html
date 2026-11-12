@@ -1071,10 +1071,10 @@ function importFormato(wb){
     rep.intervenciones.push({id:norm(g(o,"id intervencion")),necesidad:norm(g(o,"id necesidad")),linea:lin?lin.id:"",nombre:norm(g(o,"intervencion propuesta","intervencion")),responsable:norm(g(o,"responsable")),horizonte,
       estado,resultado:norm(g(o,"resultado")),poblacion:/\d/.test(norm(g(o,"poblacion")))?numX(g(o,"poblacion")):"",costo:nv(c),precision:"",cp:"",mp:"",riesgo,taxonomia:"",obs:obs.concat(/\d/.test(norm(g(o,"poblacion")))&&!/^\d+$/.test(norm(g(o,"poblacion")))||(!/\d/.test(norm(g(o,"poblacion")))&&norm(g(o,"poblacion")))?["Población en el formato: "+norm(g(o,"poblacion"))]:[]).filter(Boolean).join(" · ")})});
   // Proyectos
-  const sn=v=>{const t=low(v);return!t?"":/^(si|completo|aprobad)/.test(t)?"Sí":/^(parcial|en tramite|tramite)/.test(t)?"En trámite":/^(no aplica|n\/a)/.test(t)?"":"No"};
+  const sn=v=>{const t=low(v);return!t?"":/^(si|completo|aprobad)/.test(t)?"Sí":/^(parcial|en tramite|tramite)/.test(t)?"En trámite":/^(no aplica|no requiere|n\/a|na$)/.test(t)?"":"No"};
   tabla("PROYECTOS","id proyecto").forEach(o=>{
     const prox=[norm(g(o,"proximo paso"))],fp=norm(g(o,"fuente potencial","fuente"));if(fp)prox.push("Fuentes potenciales (no confirmadas): "+fp);
-    ["predio","estudios","presupuesto"].forEach(k=>{if(/no aplica/.test(low(g(o,k))))prox.push(k[0].toUpperCase()+k.slice(1)+": no aplica")});
+    ["predio","estudios","presupuesto"].forEach(k=>{if(/no aplica|no requiere|^n\/a$/.test(low(g(o,k))))prox.push(k[0].toUpperCase()+k.slice(1)+": no aplica")});
     const etapa=pick(g(o,"etapa"),L.etapa,[[/^idea/,"Idea"],[/factibilidad|disen/,"Factibilidad y diseños"],[/gestion de recursos|financiac/,"Para gestión de recursos"],[/ejecucion/,"En ejecución"],[/cerrad|terminad/,"Cerrado"]])||"";
     const c=norm(g(o,"costo")),cf=norm(g(o,"recursos confirmados"));
     rep.proyectos.push({id:norm(g(o,"id proyecto")),intervencion:norm(g(o,"id intervencion")),nombre:norm(g(o,"nombre")),problema:norm(g(o,"problema")),objetivo:norm(g(o,"objetivo")),etapa,responsable:norm(g(o,"responsable")),
