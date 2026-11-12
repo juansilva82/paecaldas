@@ -920,9 +920,64 @@ function exportMuni(dane,rep){
     {nombre:"Instrucciones",columnas:[{t:"Cómo usar este archivo",w:120}],filas:[["Este archivo es el Formato Municipal PAE → Proyectos de la plataforma departamental."],["Puede diligenciarlo sin conexión y luego subirlo en la plataforma con «Cargar Excel» (paso 1). Al cargarlo, reemplaza el reporte del municipio."],["No cambie los nombres de las hojas ni los títulos de la fila 1."],["Cada intervención debe tener en «Necesidad (ID)» un ID existente (N-001…) y cada proyecto en «Intervención (ID)» un ID existente (I-001…)."],["Los valores en pesos van sin puntos ni signos. Si no hay estimación de costo, deje la celda vacía: no invente cifras."],["Use los valores exactos de la hoja «Listas» para línea PAE, sector, urgencia, tipología, horizonte y etapa."]]}
   ],`PAE_${m.nombre.replace(/\s+/g,"_")}_${new Date().toISOString().slice(0,10)}.xlsx`);
 }
+/* Formato Municipal «Ruta municipal PAE → Proyectos» (FR-1703): hojas NECESIDADES, INTERVENCIONES y PROYECTOS con títulos en la fila 4.
+   Convierte sus listas a las de la plataforma y deja anotado en observaciones lo que no tiene equivalente exacto. */
+function importFormato(wb){
+  const rep=emptyRep(),notas=[],norm=v=>String(v??"").trim(),low=v=>norm(v).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+  const fecha=v=>{v=norm(v);if(/^\d{5}(\.\d+)?$/.test(v))return new Date(Date.UTC(1899,11,30)+Math.floor(Number(v))*864e5).toISOString().slice(0,10);const m=v.match(/(\d{4})-(\d{2})-(\d{2})/);return m?m[0]:v};
+  const tabla=(nombre,clave)=>{const s=wb[nombre]||[];const h=s.findIndex(r=>r&&low(r[0]).startsWith(clave));if(h<0)throw new Error(`La hoja «${nombre}» no tiene la fila de títulos esperada.`);
+    const head=s[h].map(low);return s.slice(h+1).filter(r=>r&&norm(r[0])).map(r=>{const o={};head.forEach((t,i)=>{if(t)o[t]=r[i]});return o})};
+  const g=(o,...ks)=>{for(const k of ks){const f=Object.keys(o).find(t=>t.startsWith(k));if(f!==undefined&&norm(o[f])!=="")return o[f]}return""};
+  const pick=(v,lista,mapa)=>{const t=low(v);if(!t)return"";const d=lista.find(x=>low(x)===t);if(d)return d;for(const[re,val]of mapa)if(re.test(t))return val;return null};
+  // Identificación (hoja INICIO: etiqueta en col. A, valor en col. B)
+  const ini={};(wb["INICIO"]||[]).forEach(r=>{if(r&&norm(r[0]))ini[low(r[0])]=r[1]});
+  const iv=k=>{const f=Object.keys(ini).find(t=>t.startsWith(k));return f?norm(ini[f]):""};
+  const dane=iv("codigo dane");if(dane&&dane!==W.dane)throw new Error(`El archivo es del municipio con código DANE ${dane} (${iv("municipio")}), no de ${MUNI[W.dane].nombre}.`);
+  Object.assign(rep.ident,W.rep.ident||{},{responsable:iv("responsable")||(W.rep.ident||{}).responsable||"",dependencia:iv("dependencia")||(W.rep.ident||{}).dependencia||"",fechaCorte:fecha(iv("fecha de corte"))||(W.rep.ident||{}).fechaCorte||""});
+  // Necesidades
+  tabla("NECESIDADES","id necesidad").forEach(o=>{
+    const obs=[norm(g(o,"observaciones"))];
+    let sector=pick(g(o,"sector"),L.sectores,[[/vias|transporte/,"Vías y transporte"],[/agua|saneamiento|acueducto/,"Agua potable y saneamiento"],[/social|humanitar/,"Protección social"],[/energ|gas/,"Energía y gas"],[/telecom|tic/,"Telecomunicaciones (TIC)"],[/cultur|patrimon/,"Cultura y patrimonio"],[/deporte|recrea/,"Deporte y recreación"],[/agro|rural/,"Agropecuario y rural"],[/comercio|industria|empleo|econom/,"Comercio, industria y empleo"],[/ambient|ladera/,"Ambiente y laderas"],[/institucional|equipamiento/,"Equipamiento institucional"]]);
+    if(sector===null){obs.push("Sector en el formato: "+norm(g(o,"sector")));sector="Otro"}
+    const fRaw=norm(g(o,"fuente"));let fuente=fRaw.length>30?null:pick(fRaw,L.fuentes,[[/^edanpri/,"EDANPRI"],[/^edan/,"EDAN"],[/^rud/,"RUD"],[/visita/,"Visita técnica"],[/sectorial/,"Informe sectorial"]]);
+    const soporte=[];if(fuente===null){fuente=fRaw?"Otra":"";soporte.push(fRaw)}
+    rep.necesidades.push({id:norm(g(o,"id necesidad")),ubicacion:norm(g(o,"vereda","ubicacion")),sector,descripcion:norm(g(o,"descripcion")),fuente,urgencia:pick(g(o,"urgencia"),L.urgencia,[])||"",
+      personas:norm(g(o,"personas"))===""?"":num(g(o,"personas")),unidades:norm(g(o,"unidades afectadas"))===""?"":num(g(o,"unidades afectadas")),unidadMedida:norm(g(o,"unidad de medida")),tipologia:"",
+      soporte:soporte.join(" "),enlace:norm(g(o,"soporte")),obs:obs.filter(Boolean).join(" · ")})});
+  // Intervenciones
+  tabla("INTERVENCIONES","id intervencion").forEach(o=>{
+    const obs=[norm(g(o,"observaciones"))],lRaw=norm(g(o,"linea")),eRaw=low(g(o,"eje"));
+    const code=(lRaw.match(/^\s*(FAR\d{1,2}|FR\d)\b/i)||[])[1];const lin=code&&LIN.find(l=>l.id===code.toUpperCase());
+    const riesgo=/eje\s*3|reduccion del riesgo/.test(eRaw)||/eje\s*3|reduccion del riesgo/.test(low(lRaw));
+    if(!lin&&lRaw)obs.push("Línea en el formato: "+lRaw+" (elija la línea del PAE departamental)");
+    const hRaw=low(g(o,"horizonte"));const horizonte=/corto.*mediano|mediano.*corto/.test(hRaw)?"Corto y mediano plazo":/inmediat|corto/.test(hRaw)?"Corto plazo (2026–2027)":/mediano|largo/.test(hRaw)?"Mediano plazo (2028–2030)":"";
+    if(/largo/.test(hRaw))obs.push("Horizonte en el formato: largo plazo");
+    const eRawS=low(g(o,"estado"));const estado=/termin|ejecutad|finaliz/.test(eRawS)?"Terminada":/curso|ejecucion/.test(eRawS)?"En curso":eRawS?"Por iniciar":"";
+    if(eRawS&&estado==="Por iniciar")obs.push("Estado en el formato: "+norm(g(o,"estado")));
+    const c=norm(g(o,"costo"));
+    rep.intervenciones.push({id:norm(g(o,"id intervencion")),necesidad:norm(g(o,"id necesidad")),linea:lin?lin.id:"",nombre:norm(g(o,"intervencion propuesta","intervencion")),responsable:norm(g(o,"responsable")),horizonte,
+      estado,resultado:norm(g(o,"resultado")),poblacion:norm(g(o,"poblacion"))===""?"":num(g(o,"poblacion")),costo:c===""?"":num(c),precision:"",cp:"",mp:"",riesgo,taxonomia:"",obs:obs.filter(Boolean).join(" · ")})});
+  // Proyectos
+  const sn=v=>{const t=low(v);return!t?"":/^(si|completo|aprobad)/.test(t)?"Sí":/^(parcial|en tramite|tramite)/.test(t)?"En trámite":/^(no aplica|n\/a)/.test(t)?"":"No"};
+  tabla("PROYECTOS","id proyecto").forEach(o=>{
+    const prox=[norm(g(o,"proximo paso"))],fp=norm(g(o,"fuente potencial","fuente"));if(fp)prox.push("Fuentes potenciales (no confirmadas): "+fp);
+    ["predio","estudios","presupuesto"].forEach(k=>{if(/no aplica/.test(low(g(o,k))))prox.push(k[0].toUpperCase()+k.slice(1)+": no aplica")});
+    const etapa=pick(g(o,"etapa"),L.etapa,[[/^idea/,"Idea"],[/factibilidad|disen/,"Factibilidad y diseños"],[/gestion de recursos|financiac/,"Para gestión de recursos"],[/ejecucion/,"En ejecución"],[/cerrad|terminad/,"Cerrado"]])||"";
+    const c=norm(g(o,"costo")),cf=norm(g(o,"recursos confirmados"));
+    rep.proyectos.push({id:norm(g(o,"id proyecto")),intervencion:norm(g(o,"id intervencion")),nombre:norm(g(o,"nombre")),problema:norm(g(o,"problema")),objetivo:norm(g(o,"objetivo")),etapa,responsable:norm(g(o,"responsable")),
+      producto:norm(g(o,"producto")),localizacion:norm(g(o,"localizacion")),beneficiarios:norm(g(o,"beneficiarios"))===""?"":num(g(o,"beneficiarios")),costo:c===""?"":num(c),confirmado:cf===""?"":num(cf),fuente:"",via:"",
+      estudios:sn(g(o,"estudios")),predio:sn(g(o,"predio")),presupuesto:sn(g(o,"presupuesto")),proximoPaso:prox.filter(Boolean).join(" · ")})});
+  const sinLinea=rep.intervenciones.filter(x=>!x.linea).map(x=>x.id);
+  if(sinLinea.length)notas.push(`${sinLinea.join(", ")}: el formato no trae una línea del PAE departamental (p. ej. «Eje 3 – Reducción del riesgo»). Quedaron marcadas como medidas de reducción del riesgo; elija su línea antes de enviar.`);
+  const otros=rep.necesidades.filter(x=>x.sector==="Otro").length;if(otros)notas.push(`${otros} necesidad(es) con un sector que no está en la lista quedaron como «Otro»; el sector original está en Observaciones.`);
+  notas.push("Las fuentes potenciales de cada proyecto quedaron en «Próximo paso»; los recursos confirmados se cargaron tal como vienen.");
+  return{rep,notas};
+}
+
 async function importXlsx(file){
   try{
-    const wb=await XLSX.leer(file),rep=emptyRep();
+    const wb=await XLSX.leer(file);let rep=emptyRep(),notas=[];
+    if(wb["NECESIDADES"]&&wb["INTERVENCIONES"]&&wb["PROYECTOS"]&&!wb["Identificación"]){({rep,notas}=importFormato(wb))}else{
     const idS=wb["Identificación"];if(!idS)throw new Error("El archivo no tiene la hoja «Identificación». Use el Excel descargado de la plataforma.");
     const idMap=Object.fromEntries(XC.ident.map(([k,t])=>[t,k]));
     idS.slice(1).forEach(r=>{const k=idMap[String(r[0]||"").trim()];if(k)rep.ident[k]=String(r[1]??"").trim()});
@@ -932,8 +987,8 @@ async function importXlsx(file){
       if(cols.some(([,i])=>i<0))throw new Error(`La hoja «${SHEETS[t]}» no tiene los títulos esperados en la fila 1.`);
       s.slice(1).forEach(r=>{if(!r||r.every(v=>String(v).trim()===""))return;const x={};cols.forEach(([k,i])=>{let v=r[i];v=v==null?"":v;if(k==="riesgo")x[k]=/^s[ií]/i.test(String(v));else if(["costo","cp","mp","confirmado"].includes(k))x[k]=String(v).trim()===""?"":num(v);else x[k]=String(v).trim()});
         if(!x.id)x.id=nextId(rep[KEY[t]],PREF[t]);rep[KEY[t]].push(x)});
-    }
-    const p=$("#wsBody");const box=document.createElement("div");box.className="panel";box.innerHTML=`<h3>Cargar «${esc(file.name)}»</h3><p>El archivo trae ${rep.necesidades.length} necesidades, ${rep.intervenciones.length} intervenciones y ${rep.proyectos.length} proyectos. <strong>Reemplazará</strong> el reporte actual (${W.rep.necesidades.length} N · ${W.rep.intervenciones.length} I · ${W.rep.proyectos.length} P).</p><div style="display:flex;gap:8px"><button class="btn" type="button" id="impOk">Reemplazar mi reporte</button><button class="btn ghost" type="button" id="impNo">Cancelar</button></div>`;
+    }}
+    const p=$("#wsBody");const box=document.createElement("div");box.className="panel";box.innerHTML=`<h3>Cargar «${esc(file.name)}»</h3><p>El archivo trae ${rep.necesidades.length} necesidades, ${rep.intervenciones.length} intervenciones y ${rep.proyectos.length} proyectos. <strong>Reemplazará</strong> el reporte actual (${W.rep.necesidades.length} N · ${W.rep.intervenciones.length} I · ${W.rep.proyectos.length} P).</p>${notas.length?`<ul class="alerts" style="margin:8px 0 12px">${notas.map(n=>`<li><span class="tag warn">Revisar</span>${esc(n)}</li>`).join("")}</ul>`:""}<div style="display:flex;gap:8px"><button class="btn" type="button" id="impOk">Reemplazar mi reporte</button><button class="btn ghost" type="button" id="impNo">Cancelar</button></div>`;
     p.prepend(box);box.scrollIntoView({behavior:"smooth"});
     $("#impNo").onclick=()=>box.remove();
     $("#impOk").onclick=()=>{W.rep=rep;touch();W.paso=4;renderWS();toast("Excel cargado. Revise las alertas antes de enviar.")};
