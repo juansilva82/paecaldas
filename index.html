@@ -127,6 +127,11 @@ p{margin:0}
 .dbtip{position:fixed;pointer-events:none;z-index:50;background:var(--dark);color:#fff;font:600 12.5px/1.35 var(--body);padding:7px 10px;border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,.18);max-width:280px;display:none}
 .mcard.pick{cursor:pointer}.mcard.pick:hover{outline:2px solid var(--gold-2)}
 @media (max-width:700px){.donutbox{grid-template-columns:1fr;justify-items:center}.dash-sel select{min-width:0;width:100%}.dash-sel{width:100%}.dbars .r{grid-template-columns:minmax(0,120px) 1fr}}
+.gobfoto{margin:0 0 22px;position:relative;border-radius:18px;overflow:hidden;background:#0b2b2e}
+.gobfoto img{display:block;width:100%;height:420px;object-fit:cover;object-position:center 62%}
+.gobfoto figcaption{position:absolute;inset:auto 0 0 0;padding:36px 18px 14px;background:linear-gradient(transparent,rgba(5,25,27,.85));color:#fff;font:600 14px/1.35 var(--body)}
+.gobfoto figcaption small{display:block;font-weight:500;font-size:12px;opacity:.75;margin-top:2px}
+@media (max-width:700px){.gobfoto img{height:240px}}
 .gkpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
 .gk{background:var(--cream);border-radius:14px;padding:14px 16px;border-top:4px solid var(--teal);display:grid;gap:2px}
 .gk:nth-child(4n+2){border-top-color:var(--gold)}.gk:nth-child(4n+3){border-top-color:var(--green)}.gk:nth-child(4n+4){border-top-color:var(--blue)}
@@ -451,6 +456,7 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
   <section class="band white" id="acciones" aria-labelledby="h-gob" style="scroll-margin-top:90px">
     <div class="wrap">
       <div class="shead"><span class="n">04</span><div><h2 id="h-gob">Tablero de la respuesta departamental</h2><p>Lo que ha hecho la Gobernación de Caldas desde el 10 de agosto, en cifras. Cada dato muestra su fecha de corte y su fuente; el equipo coordinador las actualiza desde su panel.</p><div class="bar4" style="margin-top:10px"></div></div></div>
+      <figure class="gobfoto"><img src="img/respuesta-equipo-sm.jpg" srcset="img/respuesta-equipo-sm.jpg 900w, img/respuesta-equipo.jpg 1800w" sizes="(max-width:1240px) 100vw, 1200px" alt="Integrantes de la Cruz Roja, bomberos, grupos de rescate, Ejército, Policía y funcionarios posan con reconocimientos en un salón" loading="lazy"><figcaption>Organismos de socorro, Fuerza Pública y equipo de la respuesta departamental<small>Ilustración</small></figcaption></figure>
       <div class="gkpis" id="gobKpis"></div>
       <div class="grid2" style="margin-top:20px">
         <div class="card"><h3>Ayuda humanitaria entregada</h3><p class="sub">Unidades acumuladas en cada corte</p><div class="lchart" id="gobAhe"></div></div>
