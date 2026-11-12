@@ -170,8 +170,30 @@ section.band.cream{background:var(--cream)}
 .hb .bar i{display:block;height:18px;border-radius:0 5px 5px 0;background:var(--teal);flex:none;min-width:2px}
 .hb .bar em{font-style:normal;white-space:nowrap;color:var(--muted)}
 .hb .bar em b{color:var(--ink)}
-.cmp{display:grid;gap:10px}
+.cmp{display:grid;gap:6px}
+.cov{background:var(--cream);border-radius:14px;padding:16px 18px;margin:0 0 14px;display:grid;gap:8px}
+.cov p{margin:0;font-size:15px}.cov b{color:var(--dark)}
+.covbar{height:10px;border-radius:5px;background:#e6dfcf;overflow:hidden;display:flex;gap:2px}.covbar i{display:block;height:100%;background:var(--gold)}
+.cmpctl{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:14px}
+.cmplg{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--ink)}.cmplg span{display:inline-flex;align-items:center;gap:6px}
+.sw{display:inline-block;width:14px;height:12px;border-radius:3px}.sw.rep{background:var(--teal)}.sw.esp{background:#d9cfb8;box-shadow:inset -2px 0 0 var(--gold)}.sw.pen{background:repeating-linear-gradient(135deg,#efe9db 0 3px,#e2d9c4 3px 6px)}
+.cmpopts{display:flex;gap:14px;align-items:center;font-size:13px;color:var(--muted);flex-wrap:wrap}.cmpopts select{font:600 13px var(--body);padding:6px 8px;border:1px solid #cfcabd;border-radius:8px;background:#fff;margin-left:6px}
+.cmpopts .chk{display:inline-flex;gap:6px;align-items:center;color:var(--ink)}
+.cmp details{border-bottom:1px solid #f0ebe0;padding:4px 0}
+.cmp summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:minmax(0,220px) minmax(0,1fr);gap:12px;align-items:center;font-size:13.5px;padding:4px 2px;border-radius:8px}
+.cmp summary::-webkit-details-marker{display:none}.cmp summary:hover{background:#faf6ec}
+.cmp .nm b.code{font:700 13px var(--head);color:var(--teal);margin-right:5px}
+.cmp .bx{display:grid;gap:4px;min-width:0}
+.cmp .tr{height:16px;border-radius:4px;position:relative;overflow:hidden;background:repeating-linear-gradient(135deg,#efe9db 0 3px,#e2d9c4 3px 6px)}
+.cmp .tr .esp{position:absolute;inset:0 auto 0 0;background:#d9cfb8;border-right:2px solid var(--gold)}
+.cmp .tr .rep{position:absolute;inset:3px auto 3px 0;background:var(--teal);border-radius:0 3px 3px 0}
+.cmp .tr .over{position:absolute;right:0;top:0;bottom:0;width:6px;background:var(--gold)}
+.cmp .lb{font-size:12.5px;color:var(--muted);line-height:1.35}.cmp .lb b{color:var(--ink);font-weight:700}
+.cmp .lb .ok{color:#22663a;font-weight:700}.cmp .lb .lo{color:#8a5a1d;font-weight:700}.cmp .lb .hi{color:#9b2c1f;font-weight:700}
+.cmp .det{padding:6px 2px 8px;font-size:12.5px;display:grid;gap:3px}
+.cmp .det div{display:flex;justify-content:space-between;gap:10px;border-bottom:1px dotted #e6e0d2;padding:2px 0}
 .cmp .r{display:grid;grid-template-columns:minmax(0,260px) minmax(0,1fr) 110px;gap:10px;align-items:center;font-size:13.5px}
+@media (max-width:760px){.cmp summary{grid-template-columns:1fr;gap:6px}.cmpctl{align-items:flex-start}}
 .cmp .track{height:18px;background:#efe9db;border-radius:5px;position:relative;overflow:hidden}
 .cmp .track i{position:absolute;inset:0 auto 0 0;background:var(--teal);border-radius:5px}
 .cmp .r b.code{font:700 13px var(--head);color:var(--teal);margin-right:5px}
@@ -369,10 +391,16 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
   <section class="band" aria-labelledby="h-pae">
     <div class="wrap">
       <div class="shead"><span class="n">02</span><div><h2 id="h-pae">Cartera reportada frente al PAE</h2><p>Costo de las intervenciones reportadas por los 26 municipios distintos de Manizales, comparado con la necesidad estimada por línea en el PAE departamental (19-oct-2026). Manizales se lee aparte porque el dimensionamiento departamental cubre a los otros 26.</p></div></div>
-      <div class="grid2">
-        <div class="card"><h3>Eje 1 · Rehabilitación</h3><p class="sub">Millones de pesos · barra = reportado / necesidad estimada</p><div class="cmp" id="cmpE1" style="margin-top:14px"></div></div>
-        <div class="card"><h3>Eje 2 · Reconstrucción resiliente</h3><p class="sub">Millones de pesos · barra = reportado / necesidad estimada</p><div class="cmp" id="cmpE2" style="margin-top:14px"></div></div>
+      <div class="cov" id="cmpCov"></div>
+      <div class="cmpctl">
+        <div class="cmplg" aria-hidden="true"><span><i class="sw rep"></i>Reportado</span><span><i class="sw esp"></i>Esperable de los municipios que ya reportaron</span><span><i class="sw pen"></i>Pendiente de los que no han reportado</span></div>
+        <div class="cmpopts"><label>Ordenar<select id="cmpOrd"><option value="pae">Orden del PAE</option><option value="brecha">Mayor brecha frente a lo esperable</option></select></label><label class="chk"><input type="checkbox" id="cmpMan"> Sumar Manizales</label></div>
       </div>
+      <div class="grid2">
+        <div class="card"><h3>Eje 1 · Rehabilitación</h3><p class="sub">Millones de pesos · haga clic en una línea para ver qué municipios aportan</p><div class="cmp" id="cmpE1" style="margin-top:14px"></div></div>
+        <div class="card"><h3>Eje 2 · Reconstrucción resiliente</h3><p class="sub">Millones de pesos · haga clic en una línea para ver qué municipios aportan</p><div class="cmp" id="cmpE2" style="margin-top:14px"></div></div>
+      </div>
+      <div class="card" id="cmpSinCard" style="margin-top:20px"><h3>Sin línea del PAE asignada</h3><p class="sub">Intervenciones reportadas que todavía no tienen línea FR/FAR: no suman en ninguna barra hasta que el municipio las clasifique.</p><div id="cmpSin" style="margin-top:10px"></div></div>
       <div class="grid3" style="margin-top:20px" id="pubTot"></div>
       <div class="note info" style="margin-top:18px"><b class="t">Eje 3 · Reducción del riesgo y reconstrucción segura</b>Es transversal: no tiene líneas ni valores propios. Sus medidas se registran dentro de las intervenciones de los ejes 1 y 2, marcando la casilla correspondiente.</div>
     </div>
@@ -680,6 +708,32 @@ function renderAcciones(list,el){
     h+=`<div class="it${hl?" hl":""}"><span class="d">${d.getDate()}<small>${M[d.getMonth()].slice(0,3)}</small></span><h4>${esc(a.titulo)}</h4><p>${esc(a.texto)}</p>${a.fuente?`<p class="src">Fuente: ${esc(a.fuente)}</p>`:""}</div>`});
   el.innerHTML=h||'<p class="muted">Sin acciones registradas.</p>';
 }
+/* ---- Cartera frente al PAE: cobertura y lo esperable ----
+   La necesidad del PAE departamental cubre a los 26 municipios distintos de Manizales.
+   «Esperable» = necesidad de la línea × participación de los municipios que ya reportaron en las viviendas afectadas (EDAN). */
+let CMP=null;
+const reporto=m=>m.estado!=="sin iniciar"&&(num(m.intervenciones)>0||num(m.costoIntervenciones)>0);
+function renderCartera(){
+  if(!CMP)return;const M=CMP,s26=M.filter(m=>m.dane!=="17001"),man=M.find(m=>m.dane==="17001");
+  const viv=m=>num((m.lineaBase||{}).viviendasAfectadas),vT=s26.reduce((a,m)=>a+viv(m),0),R=s26.filter(reporto),vR=R.reduce((a,m)=>a+viv(m),0),share=vT?vR/vT:R.length/26;
+  const conMan=$("#cmpMan").checked&&man&&reporto(man),src=conMan?R.concat([man]):R;
+  $("#cmpCov").innerHTML=`<p>Han reportado <b>${R.length} de 26 municipios</b> (sin contar Manizales), que concentran el <b>${(share*100).toLocaleString("es-CO",{maximumFractionDigits:1})} % de las viviendas afectadas</b> según el EDAN. La cartera está en construcción: compare cada línea con lo <b>esperable</b> para esos municipios, no con el total del departamento.</p>
+    <div class="covbar" role="img" aria-label="Cobertura: ${(share*100).toFixed(1)} % de las viviendas afectadas"><i style="width:${share*100}%"></i></div>
+    <p class="sub" style="margin:0">${R.length?"Ya reportaron: "+esc(R.map(m=>m.municipio).sort((a,b)=>a.localeCompare(b,"es")).join(", "))+"."+(man&&reporto(man)?" Manizales también reportó; su cartera se suma solo si marca «Sumar Manizales», porque la necesidad departamental no la incluye.":""):"Todavía ningún municipio ha reportado."}</p>`;
+  const filas=eje=>{let rows=LIN.filter(l=>l.eje===eje).map(l=>{const nec=l.nec*1e6,rep=src.reduce((a,m)=>a+num((m.porLinea||{})[l.id]),0),esp=nec*share;
+      return{l,nec,rep,esp,brecha:esp-rep,quien:src.map(m=>[m.municipio,num((m.porLinea||{})[l.id])]).filter(x=>x[1]>0).sort((a,b)=>b[1]-a[1])}});
+    if($("#cmpOrd").value==="brecha")rows.sort((a,b)=>b.brecha-a.brecha);return rows};
+  const pct=(a,b)=>b?(a/b*100).toLocaleString("es-CO",{maximumFractionDigits:a/b<.1?1:0})+" %":"—";
+  const draw=(el,rows)=>{el.innerHTML=rows.map(x=>{const w=v=>Math.min(100,x.nec?v/x.nec*100:0),pe=x.esp?x.rep/x.esp:0;
+      const cls=!x.rep?"lo":pe>1.5?"hi":pe>=.8?"ok":"lo",txt=!x.rep?"sin reportes":pe>1.5?"supera lo esperable, revisar":pe>=.8?"en rango":"por debajo";
+      return`<details><summary><span class="nm"><b class="code">${x.l.id}</b>${esc(x.l.nombre)}</span><span class="bx"><span class="tr" role="img" aria-label="${x.l.id}: reportado ${fmtM(x.rep)} millones; esperable ${fmtM(x.esp)}; necesidad total ${fmt(x.l.nec)} millones"><span class="esp" style="width:${w(x.esp)}%"></span><span class="rep" style="width:${w(x.rep)}%"></span>${x.rep>x.nec?'<span class="over" title="Supera la necesidad total del PAE"></span>':""}</span>
+        <span class="lb"><b>${fmtM(x.rep)} M</b> de ${fmtM(x.esp)} M esperables · <span class="${cls}">${pct(x.rep,x.esp)} · ${txt}</span><br>Necesidad total del PAE: ${fmt(x.l.nec)} M (reportado ${pct(x.rep,x.nec)})</span></span></summary>
+        <div class="det">${x.quien.length?x.quien.map(([k,v])=>`<div><span>${esc(k)}</span><b>${fmtM(v)} M · ${pct(v,x.rep)}</b></div>`).join(""):'<span class="muted">Ningún municipio ha reportado intervenciones en esta línea.</span>'}</div></details>`}).join("")};
+  draw($("#cmpE1"),filas("1"));draw($("#cmpE2"),filas("2"));
+  const sl=src.map(m=>[m.municipio,Math.max(0,num(m.costoIntervenciones)-Object.values(m.porLinea||{}).reduce((a,v)=>a+num(v),0))]).filter(x=>x[1]>0).sort((a,b)=>b[1]-a[1]),tsl=sl.reduce((a,x)=>a+x[1],0);
+  $("#cmpSin").innerHTML=tsl?`<p style="margin:0 0 8px"><b>${moneyM(tsl)}</b> en intervenciones sin línea.</p><div class="dbars">${sl.map(([k,v])=>`<div class="r"><span>${esc(k)}</span><div class="bar"><i style="width:calc(${v/sl[0][1]} * (100% - 110px));background:#b9b3a6"></i><em>${moneyM(v)}</em></div></div>`).join("")}</div>`:'<p class="muted" style="margin:0">Todas las intervenciones reportadas tienen línea asignada.</p>';
+}
+["#cmpOrd","#cmpMan"].forEach(id=>$(id).addEventListener("change",renderCartera));
 function cmpBars(el,rows){
   el.innerHTML=rows.map(r=>{const p=r.nec?Math.min(100,r.rep/(r.nec*1e6)*100):0;return `<div class="r"><span><b class="code">${r.id}</b>${esc(r.nombre)}</span><div class="track" role="img" aria-label="${r.id}: reportado ${fmtM(r.rep)} millones de ${fmt(r.nec)} millones"><i style="width:${p}%"></i></div><span class="v num">${fmtM(r.rep)} / ${fmt(r.nec)}</span></div>`}).join("");
 }
@@ -692,9 +746,7 @@ async function loadPublic(){
   $("#pubKpis").innerHTML=[[`${M.length-c("sin iniciar")} de 27`,"municipios con reporte iniciado",""],[c("enviado")+c("validado"),"reportes enviados a la Gobernación","b"],[c("validado"),"reportes validados (Cartera Única)","v"],[fmt(M.reduce((a,m)=>a+m.proyectos,0)),"proyectos reportados","g"]].map(([b,s,k])=>`<div class="stat ${k}"><b class="num">${b}</b><span>${s}</span></div>`).join("");
   $("#pubMunis").innerHTML=[...M].sort((a,b)=>a.municipio.localeCompare(b.municipio,"es")).map(m=>`<div class="mcard"><div style="display:flex;justify-content:space-between;gap:6px;align-items:center"><b>${esc(m.municipio)}</b>${chip(m.estado)}</div><span class="meta">${esc(m.subregion)}</span><span class="meta num">${m.necesidades} N · ${m.intervenciones} I · ${m.proyectos} P${m.costoIntervenciones?` · ${moneyM(m.costoIntervenciones)}`:""}</span></div>`).join("");
   const sin=M.filter(m=>m.dane!=="17001"),man=M.find(m=>m.dane==="17001")||{porLinea:{}};
-  const rep=id=>sin.reduce((a,m)=>a+(m.porLinea[id]||0),0);
-  cmpBars($("#cmpE1"),LIN.filter(l=>l.eje==="1").map(l=>({id:l.id,nombre:l.nombre,nec:l.nec,rep:rep(l.id)})));
-  cmpBars($("#cmpE2"),LIN.filter(l=>l.eje==="2").map(l=>({id:l.id,nombre:l.nombre,nec:l.nec,rep:rep(l.id)})));
+  CMP=M;renderCartera();
   const tot26=sin.reduce((a,m)=>a+m.costoIntervenciones,0),totMan=man.costoIntervenciones||0,conf=M.reduce((a,m)=>a+m.confirmado,0),cp=M.reduce((a,m)=>a+m.costoProyectos,0);
   $("#pubTot").innerHTML=`<div class="stat"><small>26 municipios</small><b class="num">${moneyM(tot26)}</b><span>en intervenciones reportadas, frente a $2.227.050 M de necesidad estimada en el PAE</span></div><div class="stat b"><small>Manizales (aparte)</small><b class="num">${moneyM(totMan)}</b><span>en intervenciones reportadas por la capital</span></div><div class="stat g"><small>27 municipios</small><b class="num">${moneyM(conf)}</b><span>en recursos confirmados de ${moneyM(cp)} en proyectos (brecha ${moneyM(Math.max(0,cp-conf))})</span></div>`;
   const viv=M.filter(m=>m.dane!=="17001"&&m.lineaBase&&m.lineaBase.viviendasAfectadas!=null).map(m=>[m.municipio,num(m.lineaBase.viviendasAfectadas)]).sort((a,b)=>b[1]-a[1]);
