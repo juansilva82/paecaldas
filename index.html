@@ -147,7 +147,7 @@ p{margin:0}
 @media (max-width:1000px){.donutbox.sm{grid-template-columns:1fr;justify-items:center}}
 #cifT input,#cifT select{font:14px var(--body);padding:8px 9px;border:1px solid #d6d3c9;border-radius:8px;background:#fff;color:var(--ink)}
 #cifT select{max-width:260px}
-.oxihero{display:grid;grid-template-columns:1fr 360px;gap:36px;align-items:center}
+.oxihero{display:grid;grid-template-columns:minmax(0,900px);gap:36px;align-items:center}
 .oxilogo{background:#fff;border-radius:18px;padding:10px;box-shadow:0 14px 34px rgba(0,0,0,.3)}.oxilogo img{display:block;width:100%;border-radius:10px}
 .oxikpi{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:20px}
 .oxikpi div{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:14px;padding:12px 14px;color:#fff}
@@ -191,6 +191,8 @@ p{margin:0}
 .oxigantt td.on{background:var(--teal);border:2px solid #fff;border-radius:6px}
 .oxicta{margin-top:26px;background:var(--dark);color:#fff;border-radius:20px;padding:26px 28px;display:grid;grid-template-columns:1.6fr 1fr;gap:24px;align-items:center}
 .oxicta h3{color:#fff;font-size:22px;margin:0 0 8px}.oxicta p{margin:0;color:#d9e3e2}
+.oxirol{display:block;font:700 11.5px var(--body);letter-spacing:.08em;text-transform:uppercase;color:#a9c7c5!important;margin-bottom:4px}
+.oxict{display:block;margin-top:8px;color:#fff;font:600 14.5px var(--body);text-decoration:none;word-break:break-all}.oxict:hover{text-decoration:underline}
 .oxictab{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:14px;padding:16px}.oxictab b{display:block;color:#f0c96a;font:800 16px var(--head)}.oxictab span{color:#d9e3e2;font-size:14px}
 @media (max-width:1000px){.oxihero{grid-template-columns:1fr}.oxilogo{max-width:340px}.oxigrid5{grid-template-columns:1fr 1fr}.oxisteps{grid-template-columns:1fr 1fr}.oxicta{grid-template-columns:1fr}.oxikpi{grid-template-columns:1fr 1fr}}
 @media (max-width:600px){.oxigrid5,.oxisteps{grid-template-columns:1fr}.oxicard .meta{grid-template-columns:1fr 1fr}}
@@ -569,9 +571,9 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
       <span class="eyebrow">Caldas Nos Mueve · Empresas que transforman territorios</span>
       <h1>Obras por Impuestos para la reconstrucción</h1>
       <p class="lead">Su impuesto de renta puede convertirse en hospitales, centros para la primera infancia y estaciones de bomberos en los municipios afectados por el sismo. Conozca la cartera de 9 proyectos de la Fase III y la ruta para vincular a su empresa.</p>
+      <p style="margin:14px 0 0"><a class="btn gold" href="#oxi-contacto" onclick="event.preventDefault();document.getElementById('oxi-contacto').scrollIntoView({behavior:'smooth'})">Hablar con el programa</a></p>
       <div class="oxikpi" id="oxiKpi"></div>
     </div>
-    <div class="oxilogo"><img src="img/oxi/caldas-nos-mueve.jpg" alt="Caldas nos mueve · Empresas que transforman territorios · Obras por Impuestos"></div>
   </div></section>
 
   <section class="band white"><div class="wrap">
@@ -607,9 +609,10 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
     <div class="oxiseq"><span>Conceptualizar</span><i>→</i><span>Priorizar</span><i>→</i><span>Empaquetar</span><i>→</i><span>Convocar</span><i>→</i><span>Conectar</span><i>→</i><span>Estructurar</span><i>→</i><span>Comprometer</span><i>→</i><span>Ejecutar</span><i>→</i><span>Mostrar resultados</span></div>
     <div class="oxisteps" id="oxiSteps"></div>
     <div class="card" style="margin-top:22px"><h3>Cronograma de implementación</h3><p class="sub">Las 8 etapas operativas en 6 semanas; la etapa 8 arranca en la semana 6 y sigue hasta que terminen las obras.</p><div class="scroll"><table class="t oxigantt" id="oxiGantt"></table></div></div>
-    <div class="oxicta">
+    <div class="oxicta" id="oxi-contacto" style="scroll-margin-top:100px">
       <div><h3>¿Su empresa quiere convertir su impuesto en reconstrucción?</h3><p>El equipo de la Gobernación de Caldas acompaña a cada empresa desde la manifestación de interés hasta la vinculación del proyecto al mecanismo: análisis del proyecto, estructuración técnica, financiera y jurídica, y seguimiento público de la obra.</p></div>
-      <div class="oxictab"><b>Secretaría de Desarrollo, Empleo e Innovación</b><span>Gobernación de Caldas</span></div>
+      <div class="oxictab"><span class="oxirol">Líder del programa Obras por Impuestos</span><b>Simón Ramírez Alzate</b><span>Gobernación de Caldas</span>
+        <a class="oxict" href="tel:+573206745086">📞 320 674 5086</a><a class="oxict" href="mailto:sramirezac@gobernaciondecaldas.gov.co">✉️ sramirezac@gobernaciondecaldas.gov.co</a></div>
     </div>
   </div></section>
 </div>
