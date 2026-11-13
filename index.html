@@ -50,6 +50,7 @@ p{margin:0}
 .brand img.rea{height:36px;width:auto}
 .nav{display:flex;gap:4px;flex-wrap:wrap;align-items:center}
 .nav a,.nav button{all:unset;cursor:pointer;font:600 13.5px/1 var(--head);color:var(--teal);padding:10px 13px;border-radius:999px}
+@media (max-width:1440px) and (min-width:901px){.nav{gap:0}.nav a,.nav button{font-size:12.8px;padding:9px 9px}}
 .nav a:hover,.nav button:hover{background:var(--soft)}
 .nav a[aria-current="page"]{background:var(--teal);color:#fff}
 .nav .who{font:600 12.5px var(--body);color:var(--muted);padding:0 6px}
@@ -146,6 +147,53 @@ p{margin:0}
 @media (max-width:1000px){.donutbox.sm{grid-template-columns:1fr;justify-items:center}}
 #cifT input,#cifT select{font:14px var(--body);padding:8px 9px;border:1px solid #d6d3c9;border-radius:8px;background:#fff;color:var(--ink)}
 #cifT select{max-width:260px}
+.oxihero{display:grid;grid-template-columns:1fr 360px;gap:36px;align-items:center}
+.oxilogo{background:#fff;border-radius:18px;padding:10px;box-shadow:0 14px 34px rgba(0,0,0,.3)}.oxilogo img{display:block;width:100%;border-radius:10px}
+.oxikpi{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:20px}
+.oxikpi div{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:14px;padding:12px 14px;color:#fff}
+.oxikpi b{display:block;font:800 24px/1.1 var(--head);color:#f0c96a}.oxikpi span{font-size:13px;opacity:.9}
+.oxih3{margin:18px 0 12px;font-size:19px}
+.oxigrid5{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.oxic{background:var(--cream);border-radius:14px;padding:14px;border-top:4px solid var(--gold);display:flex;flex-direction:column;gap:6px}
+.oxic b{font:800 16px/1.2 var(--head);color:var(--dark)}.oxic span{font-size:13.5px;color:var(--ink)}.oxic em{font-style:normal;font:700 11.5px var(--body);color:var(--teal);margin-top:auto}
+.oxichips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.oxichips span{background:var(--soft);color:var(--teal);font:600 13px var(--body);padding:6px 11px;border-radius:999px}
+.oxiinst{display:grid;gap:10px;margin-top:12px}.oxiinst div{display:grid;grid-template-columns:80px 1fr;gap:10px;align-items:baseline;border-bottom:1px solid var(--line);padding-bottom:8px}
+.oxiinst b{font:800 17px var(--head);color:var(--teal)}.oxiinst span{font-size:14px}
+.oxifil{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.oxifil button{font:600 14px var(--body);border:1.5px solid var(--teal);background:#fff;color:var(--teal);border-radius:999px;padding:8px 14px;cursor:pointer}
+.oxifil button[aria-pressed="true"]{background:var(--teal);color:#fff}
+.oxilist{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:18px}
+.oxicard{background:#fff;border-radius:18px;overflow:hidden;border:1px solid #e4e1d8;display:flex;flex-direction:column;box-shadow:0 6px 18px rgba(11,43,46,.06)}
+.oxicard .im{position:relative;aspect-ratio:16/9;background:#e9e5dc;overflow:hidden}
+.oxicard .im img{width:100%;height:100%;object-fit:cover;display:block;transition:opacity .3s}
+.oxicard .im .tag{position:absolute;top:12px;left:12px;background:var(--gold);color:#fff;font:700 11.5px var(--body);letter-spacing:.04em;text-transform:uppercase;padding:5px 10px;border-radius:999px}
+.oxicard .im .num{position:absolute;top:12px;right:12px;background:rgba(11,43,46,.85);color:#fff;font:700 12px var(--body);padding:5px 10px;border-radius:999px}
+.oxicard .im .oxisw{position:absolute;bottom:10px;left:10px;display:flex;gap:6px}
+.oxicard .im .oxisw button{font:700 12px var(--body);border:0;border-radius:999px;padding:6px 11px;background:rgba(255,255,255,.92);color:var(--dark);cursor:pointer}
+.oxicard .im .oxisw button[aria-pressed="true"]{background:var(--teal);color:#fff}
+.oxicard .bd{padding:16px 18px 18px;display:flex;flex-direction:column;gap:10px;flex:1}
+.oxicard h3{font:800 17px/1.25 var(--head);color:var(--dark);margin:0}
+.oxicard .mun{font:600 13.5px var(--body);color:var(--teal)}
+.oxicard p{font-size:14px;color:#3f4a49;margin:0}
+.oxicard .meta{display:grid;grid-template-columns:1.25fr 1.25fr .8fr;gap:8px;margin-top:auto;border-top:1px solid #eee;padding-top:12px}
+.oxicard .meta b{display:block;font:800 15px var(--head);color:var(--dark)}.oxicard .meta span{font-size:11.5px;color:var(--muted)}
+.est{display:inline-block;white-space:nowrap;font:700 11.5px var(--body);padding:3px 8px;border-radius:999px}
+.est.v{background:#dde9f5;color:#1f4f80}.est.t{background:#e3f1e7;color:#22663a}.est.d{background:#fbeccc;color:#8a5a1d}
+.oxiseq{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:4px 0 20px}
+.oxiseq span{background:var(--teal);color:#fff;font:700 12.5px var(--body);letter-spacing:.05em;text-transform:uppercase;padding:7px 11px;border-radius:8px}.oxiseq i{font-style:normal;color:var(--gold);font-weight:800}
+.oxisteps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.oxist{background:var(--cream);border-radius:16px;padding:16px;position:relative}
+.oxist .n{font:800 30px/1 var(--head);color:var(--gold)}
+.oxist b{display:block;font:800 15px/1.25 var(--head);color:var(--dark);margin:6px 0}
+.oxist p{font-size:13.5px;margin:0;color:var(--ink)}
+.oxist em{display:block;font-style:normal;margin-top:8px;font:700 12px var(--body);color:var(--teal)}
+.oxigantt th,.oxigantt td{text-align:center}.oxigantt td:first-child,.oxigantt th:first-child{text-align:left}
+.oxigantt td.on{background:var(--teal);border:2px solid #fff;border-radius:6px}
+.oxicta{margin-top:26px;background:var(--dark);color:#fff;border-radius:20px;padding:26px 28px;display:grid;grid-template-columns:1.6fr 1fr;gap:24px;align-items:center}
+.oxicta h3{color:#fff;font-size:22px;margin:0 0 8px}.oxicta p{margin:0;color:#d9e3e2}
+.oxictab{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:14px;padding:16px}.oxictab b{display:block;color:#f0c96a;font:800 16px var(--head)}.oxictab span{color:#d9e3e2;font-size:14px}
+@media (max-width:1000px){.oxihero{grid-template-columns:1fr}.oxilogo{max-width:340px}.oxigrid5{grid-template-columns:1fr 1fr}.oxisteps{grid-template-columns:1fr 1fr}.oxicta{grid-template-columns:1fr}.oxikpi{grid-template-columns:1fr 1fr}}
+@media (max-width:600px){.oxigrid5,.oxisteps{grid-template-columns:1fr}.oxicard .meta{grid-template-columns:1fr 1fr}}
 .photos{display:grid;grid-template-columns:1.35fr 1fr 1fr;gap:14px}
 .photos figure{margin:0;position:relative;border-radius:16px;overflow:hidden;background:#0b2b2e;min-height:230px}
 .photos img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s}
@@ -514,6 +562,58 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
   </div></section>
 </div>
 
+<!-- =================== OBRAS POR IMPUESTOS =================== -->
+<div id="v-oxi" data-view hidden>
+  <section class="hero photo" style="--img:url(img/oxi/p5-render.jpg)"><div class="wrap oxihero">
+    <div>
+      <span class="eyebrow">Caldas Nos Mueve · Empresas que transforman territorios</span>
+      <h1>Obras por Impuestos para la reconstrucción</h1>
+      <p class="lead">Su impuesto de renta puede convertirse en hospitales, centros para la primera infancia y estaciones de bomberos en los municipios afectados por el sismo. Conozca la cartera de 9 proyectos de la Fase III y la ruta para vincular a su empresa.</p>
+      <div class="oxikpi" id="oxiKpi"></div>
+    </div>
+    <div class="oxilogo"><img src="img/oxi/caldas-nos-mueve.jpg" alt="Caldas nos mueve · Empresas que transforman territorios · Obras por Impuestos"></div>
+  </div></section>
+
+  <section class="band white"><div class="wrap">
+    <div class="shead"><span class="n">01</span><div><h2>El marco: Decreto Legislativo 1389 de 2026</h2><p>Expedido el 9 de septiembre de 2026 en desarrollo del Estado de Emergencia Económica, Social y Ecológica (Decreto 1261, modificado por el 1348), crea una <b>modalidad especial y temporal de Obras por Impuestos</b> exclusiva para reconstruir los territorios afectados por el terremoto del 10 de agosto.</p></div></div>
+    <h3 class="oxih3">Qué destraba frente al régimen ordinario</h3>
+    <div class="oxigrid5">
+      <div class="oxic"><b>Todos los municipios afectados</b><span>Ya no solo ZOMAC o PDET: cualquier municipio o distrito afectado por el sismo, sin importar su clasificación.</span><em>Art. 2</em></div>
+      <div class="oxic"><b>Banco de proyectos propio</b><span>Administrado por la ART, con calendario independiente de los cortes ordinarios.</span><em>Art. 5</em></div>
+      <div class="oxic"><b>15 días hábiles</b><span>Plazo máximo para conceptuar la viabilidad de un proyecto desde su radicación completa.</span><em>Art. 5</em></div>
+      <div class="oxic"><b>Hasta el 50 % del impuesto</b><span>Ventanas extraordinarias de vinculación y aportes anticipados a la fiducia, hasta el 50 % del impuesto de renta del año gravable anterior.</span><em>Art. 7</em></div>
+      <div class="oxic"><b>35 % para municipios pequeños</b><span>Mínimo del cupo reservado para proyectos en municipios de categorías 5.ª y 6.ª afectados.</span><em>Art. 6, parágrafo</em></div>
+    </div>
+    <div class="grid2" style="margin-top:22px">
+      <div class="card"><h3>Líneas de inversión habilitadas</h3><p class="sub">Artículo 4</p><div class="oxichips"><span>Vivienda VIS/VIP</span><span>Educación pública</span><span>Salud pública</span><span>Agua potable y saneamiento básico</span><span>Energía y servicios públicos</span><span>Vías, puentes, aeropuertos y conectividad</span><span>TIC</span><span>Bienes públicos rurales e infraestructura productiva</span><span>Infraestructura deportiva</span><span>Gestión del riesgo de desastres</span></div></div>
+      <div class="card"><h3>Quién hace qué</h3><p class="sub">Institucionalidad del mecanismo</p><div class="oxiinst">
+        <div><b>ART</b><span>Administra el Banco de Proyectos de OxI para la Reconstrucción.</span></div>
+        <div><b>DNP</b><span>Emite el concepto de viabilidad definitiva.</span></div>
+        <div><b>CONFIS</b><span>Fija el cupo fiscal máximo anual y su distribución entre la modalidad ordinaria y la especial.</span></div>
+        <div><b>DIAN</b><span>Registra la extinción de la obligación tributaria cuando se certifica la entrega de la obra.</span></div></div>
+        <p class="sub" style="margin-top:10px">El decreto rige desde su publicación y mientras se mantengan los efectos del Estado de Emergencia.</p></div>
+    </div>
+  </div></section>
+
+  <section class="band cream" id="oxi-portafolio" style="scroll-margin-top:90px"><div class="wrap">
+    <div class="shead"><span class="n">02</span><div><h2>Portafolio Fase III: 9 proyectos para vincular</h2><p>Cartera de proyectos elegibles para Obras por Impuestos en la modalidad especial del Decreto 1389. Cada ficha muestra la propuesta y, cuando existe, el estado actual de la edificación afectada.</p></div></div>
+    <div class="oxifil" id="oxiFil"></div>
+    <div class="oxilist" id="oxiList"></div>
+    <p class="sub" style="margin-top:14px">Fuente: Fichas de proyectos «Caldas, Reconstruir es Avanzar» y presentación de la Secretaría de Planeación, Gobierno de Caldas. Las imágenes de los proyectos son referencias de diseño.</p>
+  </div></section>
+
+  <section class="band white"><div class="wrap">
+    <div class="shead"><span class="n">03</span><div><h2>La ruta: de la idea al pacto empresarial en 6 semanas</h2><p>«Caldas Nos Mueve» es el vehículo departamental para movilizar inversión privada hacia la reconstrucción por medio de Obras por Impuestos.</p></div></div>
+    <div class="oxiseq"><span>Conceptualizar</span><i>→</i><span>Priorizar</span><i>→</i><span>Empaquetar</span><i>→</i><span>Convocar</span><i>→</i><span>Conectar</span><i>→</i><span>Estructurar</span><i>→</i><span>Comprometer</span><i>→</i><span>Ejecutar</span><i>→</i><span>Mostrar resultados</span></div>
+    <div class="oxisteps" id="oxiSteps"></div>
+    <div class="card" style="margin-top:22px"><h3>Cronograma de implementación</h3><p class="sub">Las 8 etapas operativas en 6 semanas; la etapa 8 arranca en la semana 6 y sigue hasta que terminen las obras.</p><div class="scroll"><table class="t oxigantt" id="oxiGantt"></table></div></div>
+    <div class="oxicta">
+      <div><h3>¿Su empresa quiere convertir su impuesto en reconstrucción?</h3><p>El equipo de la Gobernación de Caldas acompaña a cada empresa desde la manifestación de interés hasta la vinculación del proyecto al mecanismo: análisis del proyecto, estructuración técnica, financiera y jurídica, y seguimiento público de la obra.</p></div>
+      <div class="oxictab"><b>Secretaría de Desarrollo, Empleo e Innovación</b><span>Gobernación de Caldas</span></div>
+    </div>
+  </div></section>
+</div>
+
 <!-- =================== LOGIN =================== -->
 <div id="v-ingresar" data-view hidden>
   <div class="wrap">
@@ -693,7 +793,7 @@ function alertas(rep){
 /* ================= NAV / ROUTER ================= */
 function renderNav(){
   const v=(location.hash||"#inicio").slice(1);
-  let h=`<a href="#inicio">Consolidado</a><a href="#acciones">Acciones de la Gobernación</a><a href="#fase3">Proyectos Fase III</a>`;
+  let h=`<a href="#inicio">Consolidado</a><a href="#acciones">Acciones de la Gobernación</a><a href="#fase3">Proyectos Fase III</a><a href="#oxi">Obras por Impuestos</a>`;
   if(SES&&SES.rol==="municipio")h+=`<a href="#municipio">Mi reporte</a>`;
   if(SES&&SES.rol==="gobernacion")h+=`<a href="#gobernacion">Panel Gobernación</a>`;
   h+=`<a href="instructivo-pae-caldas.pdf" target="_blank" rel="noopener">Instructivo</a>`;
@@ -703,7 +803,7 @@ function renderNav(){
   $$("#nav a").forEach(a=>{if(a.getAttribute("href")==="#"+v)a.setAttribute("aria-current","page")});
   const lb=$("#logoutBtn");if(lb)lb.addEventListener("click",()=>logout());
 }
-const VIEWS=["inicio","fase3","ingresar","municipio","gobernacion"];
+const VIEWS=["inicio","fase3","oxi","ingresar","municipio","gobernacion"];
 function route(){
   let v=(location.hash||"#inicio").slice(1);
   const anc=["consolidado","acciones"].includes(v)?v:null;
@@ -717,6 +817,7 @@ function route(){
   renderNav();
   if(v==="inicio")loadPublic();
   if(v==="fase3")loadFase3();
+  if(v==="oxi")renderOxi();
   if(v==="ingresar")initLogin();
   if(v==="municipio")openMunicipio();
   if(v==="gobernacion")openGob();
@@ -942,6 +1043,46 @@ function renderGob(C){
   dbars($("#gobRec"),rec,moneyM);
   const pt=u("plan_total");$("#gobPlan").innerHTML=pf.length?"Plan financiero por fuente: "+pf.map(x=>`${esc(x.cat)} ${moneyM(x.valor)}`).join(" · "):pt?`Plan financiero: ${esc(pt.nota||"")}.`:"";
 }
+
+/* ================= OBRAS POR IMPUESTOS (Caldas Nos Mueve) ================= */
+const OXI=[
+ {n:1,sec:"Infraestructura social",nom:"Construcción del Centro de Integración para la Primera Infancia CDI «Construyendo Sueños»",mun:"San José",val:5972727897,est:"En viabilización",plazo:11,desc:"Nuevo Centro de Desarrollo Infantil para fortalecer la atención integral a la primera infancia. Beneficiará directamente a 60 niños y niñas, con capacidad para atender hasta 95, con espacios seguros para educación inicial, alimentación, cuidado y acompañamiento familiar.",ben:"60 niños y niñas",img:"p1",estado:1},
+ {n:2,sec:"Infraestructura social",nom:"Ampliación y mejoramiento del Centro de Integración para la Primera Infancia CDI «Huellitas»",mun:"Palestina · corregimiento de Arauca",val:3174216965,est:"Viabilidad técnica",plazo:8,desc:"Fortalecerá la atención integral de 95 niños y niñas de primera infancia en el corregimiento de Arauca, con espacios modernos, seguros y accesibles para el aprendizaje, la atención familiar y el desarrollo infantil.",ben:"95 niños y niñas",img:"p2"},
+ {n:3,sec:"Infraestructura social",nom:"Construcción del Centro de Integración para la Primera Infancia CDI en el municipio de Victoria",mun:"Victoria",val:5666467630,est:"En viabilización",plazo:11,desc:"Nuevo Centro de Desarrollo Infantil para 94 niños y niñas de primera infancia, con espacios adecuados, accesibles y diseñados para su desarrollo integral.",ben:"94 niños y niñas",img:"p3"},
+ {n:4,sec:"Infraestructura social",nom:"Construcción del segundo bloque del Centro de Protección para el Adulto Mayor «El Porvenir»",mun:"Filadelfia",val:1718296136,est:"En viabilización",plazo:4,desc:"Ampliación para mejorar la calidad de atención de población en condición de vulnerabilidad. Beneficiará directamente a 10 adultos mayores y fortalecerá la atención institucional para más de 2.600 personas mayores del municipio.",ben:"10 adultos mayores (más de 2.600 en el municipio)",img:"p4"},
+ {n:5,sec:"Infraestructura hospitalaria",nom:"Reposición de la infraestructura hospitalaria del Hospital Santa Teresita",mun:"Pácora",val:27844890666,est:"En viabilización",plazo:15,desc:"Nueva edificación que cumpla las normas técnicas y asistenciales vigentes, fortalezca la capacidad de atención en salud, mejore la seguridad de pacientes y personal médico y responda a la demanda actual y futura del municipio.",img:"p5",estado:1},
+ {n:6,sec:"Infraestructura hospitalaria",nom:"Reposición de la infraestructura de urgencias y hospitalización del Hospital San José",mun:"Viterbo",val:8700600000,est:"En viabilización",plazo:14,desc:"Mejora la calidad y oportunidad de los servicios de salud con espacios modernos, seguros y adecuados para pacientes, personal médico y usuarios.",img:"p6",estado:1},
+ {n:7,sec:"Infraestructura hospitalaria",nom:"Primera fase de reposición del Hospital San Lorenzo",mun:"Supía",val:8700600000,est:"En estudios y diseños",plazo:14,desc:"Reposición enfocada en los servicios de urgencias y vacunación, ejecutada por etapas para mejorar progresivamente la capacidad de atención sin interrumpir los servicios de salud.",img:"p7",estado:1},
+ {n:8,sec:"Equipamientos públicos",nom:"Construcción de la Estación de Bomberos del municipio de Belalcázar",mun:"Belalcázar",val:6547836906,est:"En estudios y diseños",plazo:6,desc:"Nueva estación para fortalecer la respuesta ante emergencias en Belalcázar y su área de influencia, con infraestructura moderna y funcional para la atención de incidentes y desastres.",img:"p8",estado:1},
+ {n:9,sec:"Equipamientos públicos",nom:"Construcción de la Estación de Bomberos del municipio de Aguadas",mun:"Aguadas",val:6547836906,est:"En estudios y diseños",plazo:7,desc:"Nueva estación que mejora la capacidad operativa, logística y de atención de emergencias, y fortalece la gestión del riesgo con instalaciones modernas y especializadas.",img:"p9"}
+];
+const OXI_ETAPAS=[
+ ["Conceptualización y estructuración de la estrategia","Propósito, narrativa, gobernanza y operación bajo la idea «el sector privado también reconstruye Caldas»; reglas de OxI post-sismo, actores y criterios de priorización.","Documento estratégico + modelo de gestión público-privada",[1,2]],
+ ["Construcción y depuración del portafolio","Proyectos maduros por sector, cada uno con ficha ejecutiva: inversión, municipio, población, estado, plazo, impacto y ruta OxI.","Portafolio de Inversión para la Reconstrucción",[1,2]],
+ ["Mapeo y segmentación empresarial","Empresas según capacidad tributaria, presencia territorial, sector, estrategia ESG y afinidad con cada proyecto: Ancla, Aliadas y Gremios Multiplicadores.","Matriz de empresas potenciales",[2,3]],
+ ["Presentación y socialización","Reuniones de alto nivel con empresas, gremios y cámaras y un gran encuentro de lanzamiento: «su obligación tributaria puede convertirse en infraestructura y bienestar para Caldas».","Encuentro de lanzamiento Gobernación–sector privado",[3,4]],
+ ["Mesas Empresas + Gobernación","Mesas uno a uno o en grupos pequeños con Planeación, Hacienda y las secretarías: capacidad de inversión, interés, proyecto elegible y territorio.","Manifestación de interés + hoja de ruta por empresa",[4,5]],
+ ["Match empresa–proyecto y estructuración","«Investment Room»: acompañamiento técnico, financiero y jurídico hasta la vinculación efectiva al mecanismo, con responsables institucional y empresarial.","Acuerdo estructurado por proyecto",[5,6]],
+ ["Pacto «Caldas Nos Mueve»","Momento público, no protocolario: cada empresa anuncia su proyecto, municipio, inversión e impacto esperado.","Compromisos públicos de inversión",[6]],
+ ["Ejecución, seguimiento y visibilidad","Tablero público con recursos movilizados, empresas vinculadas, proyectos financiados, municipios beneficiados, población impactada y avance de obras.","Seguimiento permanente hasta terminar las obras",[6]]
+];
+let OXIF="";
+function renderOxi(){
+  const tot=OXI.reduce((a,x)=>a+x.val,0),mun=new Set(OXI.map(x=>x.mun.split(" · ")[0])).size;
+  $("#oxiKpi").innerHTML=[[OXI.length,"proyectos"],[moneyM(tot),"valor total"],[mun,"municipios"],["3","sectores"]].map(([b,t])=>`<div><b class="num">${b}</b><span>${t}</span></div>`).join("");
+  const secs=[...new Set(OXI.map(x=>x.sec))];
+  $("#oxiFil").innerHTML=[["","Todos ("+OXI.length+")"]].concat(secs.map(s=>[s,s+" ("+OXI.filter(x=>x.sec===s).length+")"])).map(([k,t])=>`<button type="button" data-f="${esc(k)}" aria-pressed="${k===OXIF}">${esc(t)}</button>`).join("");
+  const ec=e=>/técnica/i.test(e)?"t":/estudios/i.test(e)?"d":"v";
+  $("#oxiList").innerHTML=OXI.filter(x=>!OXIF||x.sec===OXIF).map(x=>`<article class="oxicard">
+    <div class="im"><img src="img/oxi/${x.img}-render.jpg" alt="Referencia de diseño: ${esc(x.nom)}" loading="lazy" data-r="img/oxi/${x.img}-render.jpg" ${x.estado?`data-e="img/oxi/${x.img}-estado.jpg"`:""}><span class="tag">${esc(x.sec)}</span><span class="num">${x.n} de 9</span>
+      ${x.estado?`<div class="oxisw"><button type="button" aria-pressed="true" data-v="r">Propuesta</button><button type="button" aria-pressed="false" data-v="e">Estado actual</button></div>`:""}</div>
+    <div class="bd"><span class="mun">${esc(x.mun)}, Caldas</span><h3>${esc(x.nom)}</h3><p>${esc(x.desc)}</p>
+      <div class="meta"><div><b class="num">${money(x.val)}</b><span>valor del proyecto</span></div><div><span class="est ${ec(x.est)}">${esc(x.est)}</span><br><span>estado</span></div><div><b class="num">${x.plazo} meses</b><span>plazo de ejecución</span></div></div></div></article>`).join("");
+  $("#oxiSteps").innerHTML=OXI_ETAPAS.map(([t,d,p],i)=>`<div class="oxist"><span class="n">${i+1}</span><b>${esc(t)}</b><p>${esc(d)}</p><em>${esc(p)}</em></div>`).join("");
+  $("#oxiGantt").innerHTML=`<thead><tr><th>Etapa</th>${[1,2,3,4,5,6].map(w=>`<th>S${w}</th>`).join("")}</tr></thead><tbody>${OXI_ETAPAS.map(([t,,,ws],i)=>`<tr><td>${i+1}. ${esc(t)}</td>${[1,2,3,4,5,6].map(w=>`<td class="${ws.includes(w)?"on":""}" aria-label="${ws.includes(w)?"semana "+w:""}"></td>`).join("")}</tr>`).join("")}</tbody>`;
+}
+$("#oxiFil").addEventListener("click",e=>{const b=e.target.closest("[data-f]");if(!b)return;OXIF=b.dataset.f;renderOxi()});
+$("#oxiList").addEventListener("click",e=>{const b=e.target.closest("[data-v]");if(!b)return;const im=b.closest(".im"),img=im.querySelector("img");img.src=b.dataset.v==="e"?img.dataset.e:img.dataset.r;img.alt=(b.dataset.v==="e"?"Estado actual de la edificación afectada":"Referencia de diseño");im.querySelectorAll("[data-v]").forEach(x=>x.setAttribute("aria-pressed",x===b))});
 
 /* ================= PROYECTOS FASE III ================= */
 let F3=null;
