@@ -164,6 +164,7 @@ p{margin:0}
 .oxifil button[aria-pressed="true"]{background:var(--teal);color:#fff}
 .oxilist{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:18px}
 .oxicard{background:#fff;border-radius:18px;overflow:hidden;border:1px solid #e4e1d8;display:flex;flex-direction:column;box-shadow:0 6px 18px rgba(11,43,46,.06)}
+.oxinota{margin:12px 0 0;font-size:12.5px;color:var(--muted,#5b6b6a);font-style:italic}
 .oxicard .im{position:relative;aspect-ratio:16/9;background:#e9e5dc;overflow:hidden}
 .oxicard .im img{width:100%;height:100%;object-fit:cover;display:block;transition:opacity .3s}
 .oxicard .im .tag{position:absolute;top:12px;left:12px;background:var(--gold);color:#fff;font:700 11.5px var(--body);letter-spacing:.04em;text-transform:uppercase;padding:5px 10px;border-radius:999px}
@@ -570,7 +571,7 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
     <div>
       <span class="eyebrow">Caldas Nos Mueve · Empresas que transforman territorios</span>
       <h1>Obras por Impuestos para la reconstrucción</h1>
-      <p class="lead">Su impuesto de renta puede convertirse en hospitales, centros para la primera infancia y estaciones de bomberos en los municipios afectados por el sismo. Conozca la cartera de 8 proyectos de la Fase III y la ruta para vincular a su empresa.</p>
+      <p class="lead">Su impuesto de renta puede convertirse en hospitales, centros para la primera infancia, estaciones de bomberos y plazas de mercado en los municipios afectados por el sismo. Conozca la cartera de 9 proyectos de la Fase III y la ruta para vincular a su empresa.</p>
       <p style="margin:14px 0 0"><a class="btn gold" href="#oxi-contacto" onclick="event.preventDefault();document.getElementById('oxi-contacto').scrollIntoView({behavior:'smooth'})">Hablar con el programa</a></p>
       <div class="oxikpi" id="oxiKpi"></div>
     </div>
@@ -598,10 +599,10 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
   </div></section>
 
   <section class="band cream" id="oxi-portafolio" style="scroll-margin-top:90px"><div class="wrap">
-    <div class="shead"><span class="n">02</span><div><h2>Portafolio Fase III: 8 proyectos para vincular</h2><p>Cartera de proyectos elegibles para Obras por Impuestos en la modalidad especial del Decreto 1389. Cada ficha muestra la propuesta y, cuando existe, el estado actual de la edificación afectada.</p></div></div>
+    <div class="shead"><span class="n">02</span><div><h2>Portafolio Fase III: 9 proyectos para vincular</h2><p>Cartera de proyectos elegibles para Obras por Impuestos en la modalidad especial del Decreto 1389. Cada ficha muestra la propuesta y, cuando existe, el estado actual de la edificación afectada.</p></div></div>
     <div class="oxifil" id="oxiFil"></div>
     <div class="oxilist" id="oxiList"></div>
-    <p class="sub" style="margin-top:14px">Fuente: Fichas de proyectos «Caldas, Reconstruir es Avanzar» y presentación de la Secretaría de Planeación, Gobierno de Caldas. Las imágenes de los proyectos son referencias de diseño.</p>
+    <p class="sub" style="margin-top:14px">Fuente: Fichas de proyectos «Caldas, Reconstruir es Avanzar» y presentación de la Secretaría de Planeación, Gobierno de Caldas. Plaza de Mercado de Riosucio: ficha de proyecto e Informe Público de Situación de EMSA E.S.P. (noviembre de 2026). Las imágenes de los proyectos son referencias de diseño.</p>
   </div></section>
 
   <section class="band white"><div class="wrap">
@@ -1056,7 +1057,8 @@ const OXI=[
  {n:5,sec:"Infraestructura hospitalaria",nom:"Reposición de la infraestructura de urgencias y hospitalización del Hospital San José",mun:"Viterbo",val:8700600000,est:"En viabilización",plazo:14,desc:"Mejora la calidad y oportunidad de los servicios de salud con espacios modernos, seguros y adecuados para pacientes, personal médico y usuarios.",img:"p6",estado:1},
  {n:6,sec:"Infraestructura hospitalaria",nom:"Primera fase de reposición del Hospital San Lorenzo",mun:"Supía",val:8700600000,est:"En estudios y diseños",plazo:14,desc:"Reposición enfocada en los servicios de urgencias y vacunación, ejecutada por etapas para mejorar progresivamente la capacidad de atención sin interrumpir los servicios de salud.",img:"p7",estado:1},
  {n:7,sec:"Equipamientos públicos",nom:"Construcción de la Estación de Bomberos del municipio de Belalcázar",mun:"Belalcázar",val:6547836906,est:"En estudios y diseños",plazo:6,desc:"Nueva estación para fortalecer la respuesta ante emergencias en Belalcázar y su área de influencia, con infraestructura moderna y funcional para la atención de incidentes y desastres.",img:"p8",estado:1},
- {n:8,sec:"Equipamientos públicos",nom:"Construcción de la Estación de Bomberos del municipio de Aguadas",mun:"Aguadas",val:6547836906,est:"En estudios y diseños",plazo:7,desc:"Nueva estación que mejora la capacidad operativa, logística y de atención de emergencias, y fortalece la gestión del riesgo con instalaciones modernas y especializadas.",img:"p9"}
+ {n:8,sec:"Equipamientos públicos",nom:"Construcción de la Estación de Bomberos del municipio de Aguadas",mun:"Aguadas",val:6547836906,est:"En estudios y diseños",plazo:7,desc:"Nueva estación que mejora la capacidad operativa, logística y de atención de emergencias, y fortalece la gestión del riesgo con instalaciones modernas y especializadas.",img:"p9"},
+ {n:9,sec:"Equipamientos públicos",nom:"Nueva Plaza de Mercado de Riosucio",mun:"Riosucio",val:null,est:"En estudios técnicos",plazo:null,desc:"Centro de abastecimiento del municipio, con más de 75 años, declarado no habitable tras el sismo (daño estructural severo, grado 4 EMS-98). Sus 352 comerciantes y cerca de 1.000 empleos directos e indirectos funcionan hoy en carpas en las calles aledañas. La propuesta: patio central a doble altura, terraza con cafetería, puestos de frutas y verduras, y accesos con zonas verdes.",img:"p10",estado:1,nota:"Valor y plazo se definirán con los estudios de reforzamiento o reconstrucción. Administra EMSA E.S.P."}
 ];
 const OXI_ETAPAS=[
  ["Conceptualización y estructuración de la estrategia","Propósito, narrativa, gobernanza y operación bajo la idea «el sector privado también reconstruye Caldas»; reglas de OxI post-sismo, actores y criterios de priorización.","Documento estratégico + modelo de gestión público-privada",[1,2]],
@@ -1070,8 +1072,8 @@ const OXI_ETAPAS=[
 ];
 let OXIF="";
 function renderOxi(){
-  const tot=OXI.reduce((a,x)=>a+x.val,0),mun=new Set(OXI.map(x=>x.mun.split(" · ")[0])).size;
-  $("#oxiKpi").innerHTML=[[OXI.length,"proyectos"],[moneyM(tot),"valor total"],[mun,"municipios"],["3","sectores"]].map(([b,t])=>`<div><b class="num">${b}</b><span>${t}</span></div>`).join("");
+  const cv=OXI.filter(x=>x.val),tot=cv.reduce((a,x)=>a+x.val,0),mun=new Set(OXI.map(x=>x.mun.split(" · ")[0])).size,ns=new Set(OXI.map(x=>x.sec)).size;
+  $("#oxiKpi").innerHTML=[[OXI.length,"proyectos"],[moneyM(tot),cv.length<OXI.length?"valor de los "+cv.length+" con costo definido":"valor total"],[mun,"municipios"],[ns,"sectores"]].map(([b,t])=>`<div><b class="num">${b}</b><span>${t}</span></div>`).join("");
   const secs=[...new Set(OXI.map(x=>x.sec))];
   $("#oxiFil").innerHTML=[["","Todos ("+OXI.length+")"]].concat(secs.map(s=>[s,s+" ("+OXI.filter(x=>x.sec===s).length+")"])).map(([k,t])=>`<button type="button" data-f="${esc(k)}" aria-pressed="${k===OXIF}">${esc(t)}</button>`).join("");
   const ec=e=>/técnica/i.test(e)?"t":/estudios/i.test(e)?"d":"v";
@@ -1079,7 +1081,7 @@ function renderOxi(){
     <div class="im"><img src="img/oxi/${x.img}-render.jpg" alt="Referencia de diseño: ${esc(x.nom)}" loading="lazy" data-r="img/oxi/${x.img}-render.jpg" ${x.estado?`data-e="img/oxi/${x.img}-estado.jpg"`:""}><span class="tag">${esc(x.sec)}</span><span class="num">${x.n} de ${OXI.length}</span>
       ${x.estado?`<div class="oxisw"><button type="button" aria-pressed="true" data-v="r">Propuesta</button><button type="button" aria-pressed="false" data-v="e">Estado actual</button></div>`:""}</div>
     <div class="bd"><span class="mun">${esc(x.mun)}, Caldas</span><h3>${esc(x.nom)}</h3><p>${esc(x.desc)}</p>
-      <div class="meta"><div><b class="num">${money(x.val)}</b><span>valor del proyecto</span></div><div><span class="est ${ec(x.est)}">${esc(x.est)}</span><br><span>estado</span></div><div><b class="num">${x.plazo} meses</b><span>plazo de ejecución</span></div></div></div></article>`).join("");
+      <div class="meta"><div><b class="num">${x.val?money(x.val):"Por definir"}</b><span>valor del proyecto</span></div><div><span class="est ${ec(x.est)}">${esc(x.est)}</span><br><span>estado</span></div><div><b class="num">${x.plazo?x.plazo+" meses":"Por definir"}</b><span>plazo de ejecución</span></div></div>${x.nota?`<p class="oxinota">${esc(x.nota)}</p>`:""}</div></article>`).join("");
   $("#oxiSteps").innerHTML=OXI_ETAPAS.map(([t,d,p],i)=>`<div class="oxist"><span class="n">${i+1}</span><b>${esc(t)}</b><p>${esc(d)}</p><em>${esc(p)}</em></div>`).join("");
   $("#oxiGantt").innerHTML=`<thead><tr><th>Etapa</th>${[1,2,3,4,5,6].map(w=>`<th>S${w}</th>`).join("")}</tr></thead><tbody>${OXI_ETAPAS.map(([t,,,ws],i)=>`<tr><td>${i+1}. ${esc(t)}</td>${[1,2,3,4,5,6].map(w=>`<td class="${ws.includes(w)?"on":""}" aria-label="${ws.includes(w)?"semana "+w:""}"></td>`).join("")}</tr>`).join("")}</tbody>`;
 }
