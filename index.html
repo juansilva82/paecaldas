@@ -212,6 +212,10 @@ section.band.cream{background:var(--cream)}
 .cmp .lb .ok{color:#22663a;font-weight:700}.cmp .lb .lo{color:#8a5a1d;font-weight:700}.cmp .lb .hi{color:#9b2c1f;font-weight:700}
 .cmp .det{padding:6px 2px 8px;font-size:12.5px;display:grid;gap:3px}
 .cmp .det div{display:flex;justify-content:space-between;gap:10px;border-bottom:1px dotted #e6e0d2;padding:2px 0}
+.sinT td{vertical-align:middle}.sinT .r{text-align:right}
+.pbar{height:10px;background:#efe9db;border-radius:5px;overflow:hidden;margin-bottom:3px}.pbar i{display:block;height:100%;border-radius:5px}
+.pbar i.r,.sem.r{background:#c0412b}.pbar i.o,.sem.o{background:#e07b2a}.pbar i.y,.sem.y{background:#e2b04a}.pbar i.g,.sem.g{background:#3a8a3f}
+.sem{display:inline-block;color:#fff;font:700 11.5px var(--body);padding:3px 8px;border-radius:999px;margin:2px 0}.sem.y{color:#4a3300}.sem.v{background:#fff;color:#9b2c1f;border:1.5px solid #c0412b}
 .cmp .r{display:grid;grid-template-columns:minmax(0,260px) minmax(0,1fr) 110px;gap:10px;align-items:center;font-size:13.5px}
 @media (max-width:760px){.cmp summary{grid-template-columns:1fr;gap:6px}.cmpctl{align-items:flex-start}}
 .cmp .track{height:18px;background:#efe9db;border-radius:5px;position:relative;overflow:hidden}
@@ -420,7 +424,7 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
         <div class="card"><h3>Eje 1 · Rehabilitación</h3><p class="sub">Millones de pesos · haga clic en una línea para ver qué municipios aportan</p><div class="cmp" id="cmpE1" style="margin-top:14px"></div></div>
         <div class="card"><h3>Eje 2 · Reconstrucción resiliente</h3><p class="sub">Millones de pesos · haga clic en una línea para ver qué municipios aportan</p><div class="cmp" id="cmpE2" style="margin-top:14px"></div></div>
       </div>
-      <div class="card" id="cmpSinCard" style="margin-top:20px"><h3>Sin línea del PAE asignada</h3><p class="sub">Intervenciones reportadas que todavía no tienen línea FR/FAR: no suman en ninguna barra hasta que el municipio las clasifique.</p><div id="cmpSin" style="margin-top:10px"></div></div>
+      <div class="card" id="cmpSinCard" style="margin-top:20px"><h3>Cartera por clasificar</h3><p class="sub">Intervenciones que el municipio reportó sin elegir línea del PAE (FR o FAR). Mientras no se clasifiquen, no aparecen en las barras de arriba. Cada municipio las clasifica en <b>3 · Intervenciones</b>.</p><div id="cmpSin" style="margin-top:12px"></div></div>
       <div class="grid3" style="margin-top:20px" id="pubTot"></div>
       <div class="note info" style="margin-top:18px"><b class="t">Eje 3 · Reducción del riesgo y reconstrucción segura</b>Es transversal: no tiene líneas ni valores propios. Sus medidas se registran dentro de las intervenciones de los ejes 1 y 2, marcando la casilla correspondiente.</div>
     </div>
@@ -769,8 +773,24 @@ function renderCartera(){
         <span class="lb"><b>${fmtM(x.rep)} M</b> de ${fmtM(x.esp)} M esperables · <span class="${cls}">${pct(x.rep,x.esp)} · ${txt}</span><br>Necesidad total del PAE: ${fmt(x.l.nec)} M (reportado ${pct(x.rep,x.nec)})</span></span></summary>
         <div class="det">${x.quien.length?x.quien.map(([k,v])=>`<div><span>${esc(k)}</span><b>${fmtM(v)} M · ${pct(v,x.rep)}</b></div>`).join(""):'<span class="muted">Ningún municipio ha reportado intervenciones en esta línea.</span>'}</div></details>`}).join("")};
   draw($("#cmpE1"),filas("1"));draw($("#cmpE2"),filas("2"));
-  const sl=src.map(m=>[m.municipio,Math.max(0,num(m.costoIntervenciones)-Object.values(m.porLinea||{}).reduce((a,v)=>a+num(v),0))]).filter(x=>x[1]>0).sort((a,b)=>b[1]-a[1]),tsl=sl.reduce((a,x)=>a+x[1],0);
-  $("#cmpSin").innerHTML=tsl?`<p style="margin:0 0 8px"><b>${moneyM(tsl)}</b> en intervenciones sin línea.</p><div class="dbars">${sl.map(([k,v])=>`<div class="r"><span>${esc(k)}</span><div class="bar"><i style="width:calc(${v/sl[0][1]} * (100% - 110px));background:#b9b3a6"></i><em>${moneyM(v)}</em></div></div>`).join("")}</div>`:'<p class="muted" style="margin:0">Todas las intervenciones reportadas tienen línea asignada.</p>';
+  // ---- Cartera por clasificar ----
+  const necTot=LIN.reduce((a,l)=>a+l.nec,0)*1e6;
+  const fil=src.map(m=>{const tot=num(m.costoIntervenciones),cla=Object.values(m.porLinea||{}).reduce((a,v)=>a+num(v),0),sinL=Math.max(0,tot-cla),
+      esp=m.dane==="17001"?0:(vT?viv(m)/vT*necTot:0);return{m,tot,sinL,pct:tot?sinL/tot:0,esp,raro:esp>0&&tot>3*esp&&tot>2e10}}).filter(x=>x.tot>0);
+  const T=fil.reduce((a,x)=>a+x.tot,0),SL=fil.reduce((a,x)=>a+x.sinL,0),pc=T?SL/T:0;
+  const sem=p=>p>=.75?["r","casi todo sin clasificar"]:p>=.4?["o","buena parte sin clasificar"]:p>=.1?["y","por completar"]:p>0?["g","casi listo"]:["g","todo clasificado"];
+  const P=v=>(v*100).toLocaleString("es-CO",{maximumFractionDigits:v<.1&&v>0?1:0})+" %";
+  const filas2=fil.filter(x=>x.sinL>0||x.raro).sort((a,b)=>b.sinL-a.sinL);
+  $("#cmpSin").innerHTML=!T?'<p class="muted" style="margin:0">Todavía no hay cartera reportada.</p>':`
+    <p style="margin:0 0 8px">De <b>${moneyM(T)}</b> reportados por ${fil.length} ${fil.length===1?"municipio":"municipios"}, <b>el ${P(1-pc)} ya está en una línea del PAE</b> y el ${P(pc)} (<b>${moneyM(SL)}</b>) está por clasificar.</p>
+    <div class="stack" role="img" aria-label="Clasificado ${P(1-pc)}, por clasificar ${P(pc)}" style="height:16px;margin:6px 0 4px"><i style="flex:${1-pc};background:var(--teal)"></i><i style="flex:${pc};background:repeating-linear-gradient(135deg,#d9cfb8 0 4px,#c9bea4 4px 8px)"></i></div>
+    <div class="cmplg" style="margin-bottom:14px"><span><i class="sw rep"></i>Clasificado en una línea</span><span><i class="sw" style="background:repeating-linear-gradient(135deg,#d9cfb8 0 3px,#c9bea4 3px 6px)"></i>Por clasificar</span></div>
+    ${filas2.length?`<div class="scroll"><table class="t sinT"><thead><tr><th>Municipio</th><th class="r">Por clasificar</th><th style="min-width:180px">% de su cartera</th><th>Estado</th></tr></thead><tbody>${filas2.map(x=>{const[c,t]=sem(x.pct);return`<tr>
+      <td><b>${esc(x.m.municipio)}</b><br><span class="muted" style="font-size:12px">cartera total ${moneyM(x.tot)}</span></td>
+      <td class="r num"><b>${moneyM(x.sinL)}</b></td>
+      <td><div class="pbar"><i class="${c}" style="width:${Math.max(1,x.pct*100)}%"></i></div><span class="num" style="font-size:12.5px">${P(x.pct)}</span></td>
+      <td><span class="sem ${c}">${t}</span>${x.raro?`<br><span class="sem v" title="La cartera reportada supera más de tres veces lo esperable según sus viviendas afectadas (${moneyM(x.esp)})">cifra a verificar: ${(x.tot/x.esp).toLocaleString("es-CO",{maximumFractionDigits:1})} veces lo esperable</span>`:""}</td></tr>`}).join("")}</tbody></table></div>
+      <p class="sub" style="margin:10px 0 0">Semáforo según el porcentaje de la cartera del municipio sin línea: verde menos de 10 %, amarillo 10–40 %, naranja 40–75 %, rojo 75 % o más. «Cifra a verificar» aparece cuando la cartera total de un municipio supera tres veces lo esperable según su participación en las viviendas afectadas (EDAN): puede ser real, pero conviene revisar que no haya errores de digitación.</p>`:'<p class="muted" style="margin:0">Todas las intervenciones reportadas tienen línea asignada.</p>'}`;
 }
 ["#cmpOrd","#cmpMan"].forEach(id=>$(id).addEventListener("change",renderCartera));
 function cmpBars(el,rows){
