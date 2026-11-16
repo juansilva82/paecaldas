@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap">
 <script src="config.js"></script>
 <script src="catalogo.js"></script>
+<script src="mapa-caldas.js"></script>
 <script src="xlsx.js"></script>
 <style>
 :root{
@@ -275,6 +276,42 @@ section.band.cream{background:var(--cream)}
 .cmp .v{text-align:right;font-weight:600}
 @media (max-width:700px){.cmp .r{grid-template-columns:minmax(0,1fr) 92px}.cmp .track{grid-column:1/-1;order:3}}
 
+
+/* ===== Mapa de Caldas ===== */
+.mapa{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(280px,1fr);gap:22px;align-items:start}
+.mapctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px}
+.mapctl .seg{display:inline-flex;background:#fff;border:1.5px solid var(--teal);border-radius:999px;padding:3px;gap:2px}
+.mapctl .seg button{all:unset;cursor:pointer;font:600 13.5px/1 var(--head);color:var(--teal);padding:9px 14px;border-radius:999px}
+.mapctl .seg button[aria-pressed="true"]{background:var(--teal);color:#fff}
+.mapctl .seg.sub{border-color:var(--line)}.mapctl .seg.sub button{font-size:12.5px;padding:7px 11px;color:var(--muted)}
+.mapctl .seg.sub button[aria-pressed="true"]{background:var(--cream);color:var(--ink)}
+.mapbox{position:relative;background:#eef3f2;border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.mapbox svg{display:block;width:100%;height:auto}
+.mapbox .vec{fill:#e6e9e5;stroke:#fff;stroke-width:1.4}
+.mapbox .vecl{font:700 10px var(--body);letter-spacing:.14em;fill:#9aa6a3}
+.mapbox .mu{stroke:#fff;stroke-width:1.1;cursor:pointer;transition:fill .25s}
+.mapbox .mu:hover,.mapbox .mu:focus{stroke:var(--dark);stroke-width:2.2;outline:none}
+.mapbox .mu.sel{stroke:var(--dark);stroke-width:2.6}
+.mapbox .lbl{font:600 8.6px var(--body);fill:var(--ink);paint-order:stroke;stroke:rgba(255,255,255,.85);stroke-width:2.6px;pointer-events:none;text-anchor:middle}
+.mapbox .lbl.inv{fill:#fff;stroke:rgba(11,43,46,.55)}
+.mapbox .epi{pointer-events:none}.mapbox .epi circle.r{fill:none;stroke:#b8432c;stroke-width:1;stroke-dasharray:3 4;opacity:.7}
+.mapbox .epi text{font:600 9px var(--body);fill:#8a2d17;paint-order:stroke;stroke:#eef3f2;stroke-width:3px}
+.mapbox .bub{cursor:pointer}.mapbox .bub circle{stroke:#fff;stroke-width:1.6}.mapbox .bub text{font:700 10px var(--head);fill:#fff;text-anchor:middle;pointer-events:none}
+.mapnote{font-size:12.5px;color:var(--muted);margin:10px 2px 0}
+.mapside{display:grid;gap:14px}
+.mapside .card{padding:18px}
+.maplg{display:grid;gap:6px;margin-top:8px}.maplg div{display:flex;align-items:center;gap:9px;font-size:13.5px}
+.maplg i{width:22px;height:13px;border-radius:3px;flex:none}.maplg i.o{border-radius:50%;width:15px;height:15px}
+.maprank{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:2px}
+.maprank li button{all:unset;cursor:pointer;display:grid;grid-template-columns:20px 1fr auto;gap:8px;width:100%;box-sizing:border-box;padding:6px 8px;border-radius:8px;font-size:14px}
+.maprank li button:hover,.maprank li button:focus-visible{background:var(--cream)}
+.maprank li em{font-style:normal;color:var(--muted);font-size:12px}.maprank li b{font:700 14px var(--head)}
+.mapdet h3{font-size:20px}.mapdet .sub{margin:2px 0 10px}
+.mapdet dl{display:grid;grid-template-columns:1fr auto;gap:7px 12px;margin:0;font-size:14px}.mapdet dt{color:var(--muted)}.mapdet dd{margin:0;font:700 14px var(--head);text-align:right}
+.mapdet .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.mapdet ul{margin:10px 0 0;padding-left:18px;font-size:13.5px;display:grid;gap:4px}
+@media (max-width:900px){.mapa{grid-template-columns:1fr}}
+@media (max-width:600px){.mapbox .lbl,.mapbox .vecl,.mapbox .epi text{display:none}.mapctl .seg{display:flex;width:100%}.mapctl .seg button{flex:1;text-align:center;font-size:12.5px;padding:9px 6px}.mapnote::before{content:"Toque un municipio para ver su detalle. "}}
 /* status chips */
 .chip{display:inline-flex;align-items:center;gap:6px;font:600 12px/1 var(--body);padding:5px 10px;border-radius:999px;background:#eef1f1;color:var(--muted);white-space:nowrap}
 .chip::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor}
@@ -426,6 +463,20 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
       <div class="r"><b>6</b><span>productos para decidir y gestionar recursos</span></div>
     </div>
   </div></section>
+
+  <section class="band cream" id="mapa" aria-labelledby="h-mapa" style="scroll-margin-top:90px">
+    <div class="wrap">
+      <div class="shead"><div><h2 id="h-mapa">Caldas en el mapa</h2><p>Dónde golpeó el sismo, cómo va el reporte de cada municipio y dónde están los proyectos listos para financiar. Haga clic en un municipio para ver su detalle.</p><div class="bar4" style="margin-top:10px"></div></div></div>
+      <div class="mapctl">
+        <div class="seg" role="group" aria-label="Capa del mapa" id="mapCapa"><button type="button" data-c="af" aria-pressed="true">Afectación del sismo</button><button type="button" data-c="es" aria-pressed="false">Estado del reporte</button><button type="button" data-c="pr" aria-pressed="false">Proyectos</button></div>
+        <div class="seg sub" role="group" aria-label="Medida de afectación" id="mapMed"><button type="button" data-m="abs" aria-pressed="false">Viviendas afectadas</button><button type="button" data-m="rel" aria-pressed="true">Por cada 1.000 viviendas</button></div>
+      </div>
+      <div class="mapa">
+        <div><div class="mapbox" id="mapBox"></div><p class="mapnote" id="mapNote"></p></div>
+        <div class="mapside"><div class="card" id="mapLeg"></div><div class="card mapdet" id="mapDet"></div></div>
+      </div>
+    </div>
+  </section>
 
   <section class="band white" id="consolidado" aria-labelledby="h-av">
     <div class="wrap">
@@ -917,8 +968,112 @@ async function loadPublic(){
   hbars($("#pubViv"),viv);
   hbars($("#pubSub"),[["Centro Sur",13984,"· 59,5 %"],["Bajo Occidente",3996,"· 17,0 %"],["Alto Occidente",2310,"· 9,8 %"],["Norte",1977,"· 8,4 %"],["Alto Oriente",685,"· 2,9 %"],["Magdalena Caldense",540,"· 2,3 %"]],"var(--gold)");
   renderAcciones(d.acciones||[],$("#pubAcc"));
-  initTablero(M);renderGob(Array.isArray(d.cifras)?d.cifras:(window.PAE_CIFRAS||[]));  // servidor sin «cifras» (versión anterior): usa las iniciales
+  initTablero(M);MP.M=M;MP.F3=d.fase3||[];renderMapa();renderGob(Array.isArray(d.cifras)?d.cifras:(window.PAE_CIFRAS||[]));  // servidor sin «cifras» (versión anterior): usa las iniciales
 }
+
+/* ================= MAPA DE CALDAS ================= */
+// Secuencial de un solo tono (claro→oscuro) para magnitud; estados con los mismos tonos de las fichas de estado.
+const MAPA_SEQ=["#fde7d6","#f8bf96","#ee8a57","#d2552c","#9b2c12"],MAPA_NODATA="#dfe3e1";
+const MAPA_CORTES={abs:[100,300,600,1500],rel:[25,50,100,200]};
+const MAPA_EST={"sin iniciar":["#d3d9d9","Sin iniciar"],"diligenciamiento":["#e7b75a","En diligenciamiento"],"enviado":["#5d97cf","Enviado"],"validado":["#3f9150","Validado"]};
+let MP={capa:"af",med:"rel",sel:null,M:[],F3:[]};
+function mapaDatos(){
+  const G=window.PAE_MAPA,CEN=window.PAE_VIV_CENSO||{},ED=window.PAE_VIV_EDAN||{};if(!G)return null;
+  const low=s=>String(s||"").normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase().trim();
+  const porNom=Object.fromEntries(MUN.map(m=>[low(m.nombre),m.dane]));
+  const oxi={};(typeof OXI!=="undefined"?OXI:[]).forEach(x=>{const d=porNom[low(x.mun.split(" · ")[0])];if(d)(oxi[d]=oxi[d]||[]).push(x)});
+  const f3={};(MP.F3||[]).forEach(x=>{(f3[x.dane]=f3[x.dane]||[]).push(x)});
+  const byD=Object.fromEntries((MP.M||[]).map(m=>[m.dane,m]));
+  return MUN.map(m=>{const r=byD[m.dane]||{},lb=r.lineaBase&&r.lineaBase.viviendasAfectadas;
+    const viv=lb!=null&&lb!==""?num(lb):(ED[m.nombre]!=null?ED[m.nombre]:null),cen=CEN[m.dane]||null;
+    return{dane:m.dane,nombre:m.nombre,sub:m.subregion,estado:r.estado||"sin iniciar",r,viv,cen,rel:viv!=null&&cen?viv/cen*1000:null,f3:f3[m.dane]||[],oxi:oxi[m.dane]||[],g:G.m[m.dane]}});
+}
+function mapaClase(v,c){if(v==null)return -1;let i=0;while(i<c.length&&v>=c[i])i++;return i}
+function mapaColor(x){
+  if(MP.capa==="es")return(MAPA_EST[x.estado]||MAPA_EST["sin iniciar"])[0];
+  if(MP.capa==="pr")return x.f3.length||x.oxi.length?"#dcebe8":"#f4f1ea";
+  const v=MP.med==="abs"?x.viv:x.rel,k=mapaClase(v,MAPA_CORTES[MP.med]);return k<0?MAPA_NODATA:MAPA_SEQ[k];
+}
+function mapaOscuro(x){if(MP.capa==="es")return x.estado==="enviado"||x.estado==="validado";if(MP.capa==="af"){const v=MP.med==="abs"?x.viv:x.rel;return mapaClase(v,MAPA_CORTES[MP.med])>=3}return false}
+function mapaValor(x){
+  if(MP.capa==="es")return chipTxt(x.estado);
+  if(MP.capa==="pr"){const a=[];if(x.f3.length)a.push(x.f3.length+(x.f3.length===1?" proyecto":" proyectos")+" en Fase III");if(x.oxi.length)a.push(x.oxi.length+" en Obras por Impuestos");return a.join(" · ")||"Sin proyectos publicados"}
+  if(MP.med==="abs")return x.viv==null?"Sin dato":fmt(x.viv)+" viviendas afectadas";
+  return x.rel==null?"Sin dato":fmt(Math.round(x.rel))+" de cada 1.000 viviendas afectadas";
+}
+function renderMapa(){
+  const G=window.PAE_MAPA,D=mapaDatos(),box=$("#mapBox");if(!box)return;
+  if(!G||!D){box.innerHTML='<div class="empty">No fue posible cargar el mapa.</div>';return}
+  $("#mapCapa").querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.c===MP.capa));
+  $("#mapMed").style.display=MP.capa==="af"?"":"none";
+  $("#mapMed").querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.m===MP.med));
+  const vec=Object.values(G.v).map(v=>`<path class="vec" d="${v.d}"/>`).join("");
+  const vecl=[["CHOCÓ",12,G.h*.42],["RISARALDA",G.w*.2,G.h-12],["ANTIOQUIA",G.w*.42,16],["TOLIMA",G.w*.70,G.h-12],["CUNDINAMARCA",G.w-12,G.h*.62,"end"]].map(([t,x,y,an])=>`<text class="vecl" x="${x}" y="${y}"${an?` text-anchor="${an}"`:""}>${t}</text>`).join("");
+  const mus=D.map(x=>`<path class="mu${MP.sel===x.dane?" sel":""}" d="${x.g.d}" fill="${mapaColor(x)}" data-d="${x.dane}" tabindex="0" role="button" aria-label="${esc(x.nombre)}: ${esc(mapaValor(x))}"/>`).join("");
+  let epi="";
+  if(MP.capa==="af"){const [ex,ey]=G.epi,k=G.km;epi=`<g class="epi">${[50,100,150].map(r=>`<circle class="r" cx="${ex}" cy="${ey}" r="${(r*k).toFixed(1)}"/>`).join("")}${[50,100].map(r=>`<text x="${(ex+r*k*.5+3).toFixed(1)}" y="${(ey-r*k*.866-3).toFixed(1)}">${r} km</text>`).join("")}<path d="M${ex},${ey-8}L${ex+2.4},${ey-2.6}L${ex+8},${ey-2.4}L${ex+3.6},${ey+1.4}L${ex+5},${ey+7.4}L${ex},${ey+4}L${ex-5},${ey+7.4}L${ex-3.6},${ey+1.4}L${ex-8},${ey-2.4}L${ex-2.4},${ey-2.6}Z" fill="#b8432c" stroke="#fff" stroke-width="1.2"/><text x="${ex-9}" y="${ey+19}" style="font-weight:700">Epicentro</text><text x="${ex-9}" y="${ey+30}">San José del Palmar (Chocó)</text></g>`}
+  let bub="",lbl="";const OBS=[];
+  const NUDGE={"17616":[200,251],"17665":[171,265],"17877":[137,276],"17088":[165,297]};
+  D.forEach(x=>{const [cx,cy]=NUDGE[x.dane]||x.g.c;x._c=[[cx,cy+3,"middle"],[cx,cy-8,"middle"],[cx,cy+14,"middle"]];
+    if(MP.capa==="pr"&&(x.f3.length||x.oxi.length)){
+      const both=x.f3.length&&x.oxi.length,r1=x.f3.length?8+3*Math.sqrt(x.f3.length):0,r2=x.oxi.length?8+2*Math.sqrt(x.oxi.length):0,R=Math.max(r1,r2);
+      const c1=both?cx-r1*.62:cx,c2=both?cx+r2*.62:cx,y0=cy-4,t=esc(x.nombre+": "+mapaValor(x));
+      if(x.f3.length){bub+=`<g class="bub" data-d="${x.dane}"><title>${t}</title><circle cx="${c1}" cy="${y0}" r="${r1.toFixed(1)}" fill="var(--teal)"/><text x="${c1}" y="${y0+3.5}">${x.f3.length}</text></g>`;OBS.push([c1-r1,y0-r1,c1+r1,y0+r1])}
+      if(x.oxi.length){bub+=`<g class="bub" data-d="${x.dane}"><title>${t}</title><circle cx="${c2}" cy="${y0}" r="${r2.toFixed(1)}" fill="var(--gold)"/><text x="${c2}" y="${y0+3.5}">${x.oxi.length}</text></g>`;OBS.push([c2-r2,y0-r2,c2+r2,y0+r2])}
+      const L=Math.min(c1||c2,c2)-(c1?r1:r2),Rt=Math.max(c1,c2)+(x.oxi.length?r2:r1);
+      x._c=[[cx,y0+R+10,"middle"],[cx,y0-R-3,"middle"],[L-3,y0+3,"end"],[Rt+3,y0+3,"start"]]}});
+  // Etiquetas: se elige, para cada municipio, la primera posición que no tape otra etiqueta ni un círculo.
+  const box_=(l,t)=>{const w=t.length*4.9,x0=l[2]==="start"?l[0]:l[2]==="end"?l[0]-w:l[0]-w/2;return[x0,l[1]-8,x0+w,l[1]+2]},hit=(a,b)=>a[0]<b[2]&&b[0]<a[2]&&a[1]<b[3]&&b[1]<a[3];
+  const puestas=[];
+  [...D].sort((a,b)=>(b._c.length>3)-(a._c.length>3)).forEach(x=>{const ok=x._c.find(l=>{const me=box_(l,x.nombre);return!OBS.some(o=>hit(me,o))&&!puestas.some(o=>hit(me,o))})||x._c[0];
+    puestas.push(box_(ok,x.nombre));lbl+=`<text class="lbl${mapaOscuro(x)?" inv":""}" x="${ok[0]}" y="${ok[1]}" style="text-anchor:${ok[2]}">${esc(x.nombre)}</text>`;delete x._c});
+  box.innerHTML=`<svg viewBox="0 0 ${G.w} ${G.h}" role="group" aria-label="Mapa de los 27 municipios de Caldas">${vec}${vecl}${mus}<path d="${G.dep}" fill="none" stroke="var(--dark)" stroke-width="1.4" stroke-opacity=".55" pointer-events="none"/>${epi}${lbl}${bub}</svg>`;
+  const tip=dbTip(),byD=Object.fromEntries(D.map(x=>[x.dane,x]));
+  box.querySelectorAll("[data-d]").forEach(el=>{const x=byD[el.dataset.d];
+    el.addEventListener("mousemove",ev=>{tip.innerHTML=`<b>${esc(x.nombre)}</b><br>${esc(mapaValor(x))}`;tip.style.display="block";tip.style.left=(ev.clientX+14)+"px";tip.style.top=(ev.clientY+12)+"px"});
+    el.addEventListener("mouseleave",()=>tip.style.display="none");
+    el.addEventListener("click",()=>{tip.style.display="none";mapaSel(x.dane)});
+    el.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();mapaSel(x.dane)}})});
+  mapaLeyenda(D);mapaDetalle(D);
+  $("#mapNote").innerHTML=(MP.capa==="af"?(MP.med==="rel"?"Viviendas afectadas según el EDAN (línea base de la plataforma) por cada 1.000 viviendas habitadas del Censo DANE 2018. Así se compara el golpe sin que el tamaño del municipio lo esconda.":"Viviendas afectadas según el EDAN (línea base de la plataforma). Manizales concentra la mayor cifra por ser el municipio más grande.")+" El epicentro se marca en la cabecera de San José del Palmar como referencia; los círculos indican la distancia en línea recta."
+    :MP.capa==="es"?"Estado del reporte de cada municipio en esta plataforma, con los mismos colores de las fichas de abajo."
+    :"Círculo verde: proyectos con estudios y diseños definitivos (Fase III) reportados por el municipio. Círculo dorado: proyectos del portafolio de Obras por Impuestos.")+" Límites municipales: DANE, Marco Geoestadístico Nacional 2018.";
+}
+function mapaLeyenda(D){
+  const el=$("#mapLeg");let h="",rk=[];
+  const item=(c,t,o)=>`<div><i${o?' class="o"':""} style="background:${c}"></i><span>${t}</span></div>`;
+  if(MP.capa==="af"){const c=MAPA_CORTES[MP.med],f=n=>fmt(n),lab=MP.med==="abs"?["Menos de "+f(c[0]),f(c[0])+" a "+f(c[1]-1),f(c[1])+" a "+f(c[2]-1),f(c[2])+" a "+f(c[3]-1),f(c[3])+" o más"]:["Menos de "+c[0],c[0]+" a "+(c[1]-1),c[1]+" a "+(c[2]-1),c[2]+" a "+(c[3]-1),c[3]+" o más"];
+    h=`<h3>${MP.med==="abs"?"Viviendas afectadas":"Viviendas afectadas por cada 1.000"}</h3><div class="maplg">${MAPA_SEQ.map((c,i)=>item(c,lab[i])).join("")}</div>`;
+    rk=D.filter(x=>(MP.med==="abs"?x.viv:x.rel)!=null).sort((a,b)=>(MP.med==="abs"?b.viv-a.viv:b.rel-a.rel)).slice(0,6).map(x=>[x,MP.med==="abs"?fmt(x.viv):fmt(Math.round(x.rel)),MP.med==="abs"?"viviendas":"por 1.000"]);
+    h+=`<h3 style="margin-top:16px;font-size:15px">Los más afectados</h3>`}
+  else if(MP.capa==="es"){const n=e=>D.filter(x=>x.estado===e).length;
+    h=`<h3>Estado del reporte</h3><div class="maplg">${Object.entries(MAPA_EST).map(([k,[c,t]])=>item(c,`${t} <b class="num">· ${n(k)}</b>`)).join("")}</div>`;
+    rk=D.filter(x=>x.estado==="sin iniciar").sort((a,b)=>(b.viv||0)-(a.viv||0)).slice(0,6).map(x=>[x,x.viv!=null?fmt(x.viv):"–","viv. afectadas"]);
+    if(rk.length)h+=`<h3 style="margin-top:16px;font-size:15px">Sin iniciar, de mayor a menor afectación</h3>`}
+  else{const nf=D.reduce((a,x)=>a+x.f3.length,0),no=D.reduce((a,x)=>a+x.oxi.length,0);
+    h=`<h3>Proyectos</h3><div class="maplg">${item("var(--teal)",`Fase III reportados por los municipios <b class="num">· ${nf}</b>`,1)}${item("var(--gold)",`Obras por Impuestos <b class="num">· ${no}</b>`,1)}</div>`;
+    rk=D.filter(x=>x.f3.length||x.oxi.length).sort((a,b)=>(b.f3.length+b.oxi.length)-(a.f3.length+a.oxi.length)||a.nombre.localeCompare(b.nombre,"es")).slice(0,6).map(x=>{const n=x.f3.length+x.oxi.length;return[x,String(n),n===1?"proyecto":"proyectos"]});
+    if(rk.length)h+=`<h3 style="margin-top:16px;font-size:15px">Municipios con más proyectos</h3>`}
+  if(rk.length)h+=`<ol class="maprank">${rk.map(([x,v,u],i)=>`<li><button type="button" data-d="${x.dane}"><em>${i+1}</em><span>${esc(x.nombre)}</span><span><b class="num">${v}</b> <em>${u}</em></span></button></li>`).join("")}</ol>`;
+  el.innerHTML=h;el.querySelectorAll("[data-d]").forEach(b=>b.onclick=()=>mapaSel(b.dataset.d));
+}
+function mapaDetalle(D){
+  const el=$("#mapDet"),x=D.find(y=>y.dane===MP.sel);
+  if(!x){const tv=D.reduce((a,y)=>a+(y.viv||0),0),tc=D.reduce((a,y)=>a+(y.viv!=null&&y.cen?y.cen:0),0);
+    el.innerHTML=`<h3>Caldas</h3><p class="sub muted">27 municipios · haga clic en uno para ver su detalle</p><dl><dt>Viviendas afectadas (EDAN)</dt><dd class="num">${fmt(tv)}</dd><dt>Por cada 1.000 viviendas</dt><dd class="num">${tc?fmt(Math.round(tv/tc*1000)):"–"}</dd><dt>Municipios con reporte iniciado</dt><dd class="num">${D.filter(y=>y.estado!=="sin iniciar").length} de 27</dd><dt>Proyectos en Fase III</dt><dd class="num">${fmt(D.reduce((a,y)=>a+y.f3.length,0))}</dd></dl>`;return}
+  const r=x.r||{},con=x.estado!=="sin iniciar"&&(r.necesidades||r.intervenciones||r.proyectos);
+  const lst=[...x.f3.slice(0,4).map(p=>esc(p.nombre)),...x.oxi.map(p=>esc(p.nom)+' <span class="muted">(Obras por Impuestos)</span>')];
+  el.innerHTML=`<div style="display:flex;justify-content:space-between;gap:8px;align-items:start"><h3>${esc(x.nombre)}</h3>${chip(x.estado)}</div><p class="sub muted">${esc(x.sub)}</p>
+  <dl><dt>Viviendas afectadas (EDAN)</dt><dd class="num">${x.viv!=null?fmt(x.viv):"Sin dato"}</dd><dt>Por cada 1.000 viviendas</dt><dd class="num">${x.rel!=null?fmt(Math.round(x.rel)):"–"}</dd><dt>Viviendas habitadas (Censo 2018)</dt><dd class="num">${x.cen?fmt(x.cen):"–"}</dd>${r.costoIntervenciones?`<dt>Intervenciones reportadas</dt><dd class="num">${moneyM(r.costoIntervenciones)}</dd>`:""}<dt>Proyectos en Fase III</dt><dd class="num">${x.f3.length}</dd><dt>Obras por Impuestos</dt><dd class="num">${x.oxi.length}</dd></dl>
+  ${lst.length?"<ul></ul>":""}
+  <div class="acts">${con?`<button class="btn small" type="button" data-go="tab">Ver su tablero</button>`:""}${x.f3.length?`<a class="btn ghost small" href="#fase3">Proyectos Fase III</a>`:""}${x.oxi.length?`<a class="btn ghost small" href="#oxi">Obras por Impuestos</a>`:""}<button class="btn ghost small" type="button" data-go="clr">Ver Caldas</button></div>`;
+  const ul=el.querySelector("ul");if(ul)ul.innerHTML=lst.map(t=>`<li>${t}</li>`).join("")+(x.f3.length>4?`<li class="muted">y ${x.f3.length-4} más en Fase III</li>`:"");
+  const t=el.querySelector('[data-go="tab"]');if(t)t.onclick=()=>{$("#dbMun").value=x.dane;renderTablero();$("#tablero").scrollIntoView({behavior:"smooth",block:"start"})};
+  el.querySelector('[data-go="clr"]').onclick=()=>mapaSel(null);
+}
+function mapaSel(d){MP.sel=MP.sel===d?null:d;renderMapa();if(d&&innerWidth<=900)$("#mapDet").scrollIntoView({behavior:"smooth",block:"nearest"})}
+$("#mapCapa").addEventListener("click",e=>{const b=e.target.closest("[data-c]");if(b){MP.capa=b.dataset.c;renderMapa()}});
+$("#mapMed").addEventListener("click",e=>{const b=e.target.closest("[data-m]");if(b){MP.med=b.dataset.m;renderMapa()}});
 
 /* ================= TABLERO POR MUNICIPIO ================= */
 // Paleta categórica validada (orden fijo, nunca cíclica); gris para «Otros» y «Sin línea».
