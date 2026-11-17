@@ -277,6 +277,30 @@ section.band.cream{background:var(--cream)}
 @media (max-width:700px){.cmp .r{grid-template-columns:minmax(0,1fr) 92px}.cmp .track{grid-column:1/-1;order:3}}
 
 
+/* ===== Títulos que concluyen y detalle de cifras ===== */
+.shead{flex-wrap:nowrap}.shead > div{min-width:0;flex:1}.shead h2{max-width:36ch}
+.shead .eyebrow{display:block;font:700 11px var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.stat .det{font-size:12.5px;line-height:1.4;color:var(--muted);margin-top:3px}
+/* ===== Caldas en el país ===== */
+.natgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.hbx{display:grid;gap:8px;margin-top:12px}
+.hbx .r{display:grid;grid-template-columns:120px minmax(0,1fr);gap:10px;align-items:center;font-size:13.5px}
+.hbx .r.hi{font-weight:700}
+.hbx .bar{display:flex;align-items:center;gap:8px;min-width:0}
+.hbx .bar i{display:block;height:18px;border-radius:0 5px 5px 0;background:#b9c6c4;flex:none;min-width:2px}
+.hbx .r.hi .bar i{background:var(--gold)}
+.hbx .bar em{font-style:normal;white-space:nowrap;color:var(--muted)}.hbx .r.hi .bar em{color:var(--ink)}
+/* ===== Brecha de financiación ===== */
+.gap{display:grid;gap:10px}
+.gapbar{display:flex;height:30px;border-radius:8px;overflow:hidden;background:#eef1ef}
+.gapbar i{display:block;height:100%}.gapbar i+i{border-left:2px solid #fff}
+.gapbar .c{background:var(--green)}.gapbar .b{background:var(--gold)}
+.gaplg{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:var(--muted)}.gaplg span{display:inline-flex;gap:7px;align-items:center}.gaplg i{width:14px;height:14px;border-radius:3px;display:inline-block}
+.gaprow{display:grid;grid-template-columns:150px minmax(0,1fr) auto;gap:10px;align-items:center;font-size:13.5px}
+.gaprow .gapbar{height:16px;border-radius:0 5px 5px 0;background:transparent}
+.gaprow em{font-style:normal;color:var(--muted);white-space:nowrap;font-size:12.5px}.gaprow em b{color:var(--ink)}
+@media (max-width:900px){.natgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.natgrid{grid-template-columns:1fr}.gaprow{grid-template-columns:95px minmax(0,1fr)}.gaprow em{grid-column:2}}
 /* ===== Mapa de Caldas ===== */
 .mapa{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(280px,1fr);gap:22px;align-items:start}
 .mapctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px}
@@ -297,7 +321,7 @@ section.band.cream{background:var(--cream)}
 .mapbox .epi{pointer-events:none}.mapbox .epi circle.r{fill:none;stroke:#b8432c;stroke-width:1;stroke-dasharray:3 4;opacity:.7}
 .mapbox .epi text{font:600 9px var(--body);fill:#8a2d17;paint-order:stroke;stroke:#eef3f2;stroke-width:3px}
 .mapbox .bub{cursor:pointer}.mapbox .bub circle{stroke:#fff;stroke-width:1.6}.mapbox .bub text{font:700 10px var(--head);fill:#fff;text-anchor:middle;pointer-events:none}
-.mapnote{font-size:12.5px;color:var(--muted);margin:10px 2px 0}
+.mapnote,.srcnote{font-size:12.5px;color:var(--muted);margin:10px 2px 0}.srcnote{margin-top:14px}
 .mapside{display:grid;gap:14px}
 .mapside .card{padding:18px}
 .maplg{display:grid;gap:6px;margin-top:8px}.maplg div{display:flex;align-items:center;gap:9px;font-size:13.5px}
@@ -464,9 +488,26 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
     </div>
   </div></section>
 
+  <section class="band white" id="pais" aria-labelledby="h-pais" style="scroll-margin-top:90px">
+    <div class="wrap">
+      <div class="shead"><div><small class="eyebrow">Caldas en el PAE nacional</small><h2 id="h-pais">Caldas reúne el 6 % de las personas afectadas del país y el 8,2 % del valor del plan nacional</h2><p>El sismo del 10 de agosto afectó a 778.281 personas en 16 departamentos. Así se ve Caldas dentro del Plan de Acción Específico nacional de la UNGRD, que suma $58,29 billones para 2026–2030.</p><div class="bar4" style="margin-top:10px"></div></div></div>
+      <div class="natgrid">
+        <div class="stat"><b class="num">41.987</b><span>personas afectadas registradas en el RUD</span><em class="det">6,0 % del país, 5.º departamento · 20.526 jefes de hogar</em></div>
+        <div class="stat"><b class="num">22.282</b><span>viviendas afectadas</span><em class="det">19.609 averiadas y 2.673 destruidas · 8,7 % del total nacional</em></div>
+        <div class="stat b"><b class="num">742</b><span>sedes educativas afectadas</span><em class="det">3.er departamento del país · 80.178 estudiantes · $1,39 billones en daños del sector</em></div>
+        <div class="stat g"><b class="num">$4,80 b</b><span>programados para Caldas en el PAE nacional</span><em class="det">6.º departamento · $1,22 billones en 2026–2027 y $3,57 billones en 2028–2030</em></div>
+      </div>
+      <div class="grid2" style="margin-top:20px">
+        <div class="card"><h3>Personas afectadas por departamento</h3><p class="sub">Porcentaje del total nacional · RUD</p><div class="hbx" id="natPer"></div></div>
+        <div class="card"><h3>Valor del PAE nacional por departamento</h3><p class="sub">Billones de pesos · 2026–2030</p><div class="hbx" id="natPae"></div></div>
+      </div>
+      <p class="srcnote">Fuente: UNGRD, <a href="https://portal.gestiondelriesgo.gov.co/pae" target="_blank" rel="noopener">PAE Sismo 2026</a> (<a href="https://portal.gestiondelriesgo.gov.co/pae/Documents/PAE-SISMO-2026.pdf" target="_blank" rel="noopener">documento</a>), tablas de población, vivienda, educación y valor por departamento; RUD y sectores con corte de septiembre y octubre de 2026. Estas cifras difieren de las del EDAN que usa el resto de esta plataforma porque tienen otra fuente y otro corte: por ejemplo, 22.282 frente a 23.492 viviendas afectadas.</p>
+    </div>
+  </section>
+
   <section class="band cream" id="mapa" aria-labelledby="h-mapa" style="scroll-margin-top:90px">
     <div class="wrap">
-      <div class="shead"><div><h2 id="h-mapa">Caldas en el mapa</h2><p>Dónde golpeó el sismo, cómo va el reporte de cada municipio y dónde están los proyectos listos para financiar. Haga clic en un municipio para ver su detalle.</p><div class="bar4" style="margin-top:10px"></div></div></div>
+      <div class="shead"><div><small class="eyebrow">Caldas en el mapa</small><h2 id="h-mapa">Caldas en el mapa</h2><p>Dónde golpeó el sismo, cómo va el reporte de cada municipio y dónde están los proyectos listos para financiar. Haga clic en un municipio para ver su detalle.</p><div class="bar4" style="margin-top:10px"></div></div></div>
       <div class="mapctl">
         <div class="seg" role="group" aria-label="Capa del mapa" id="mapCapa"><button type="button" data-c="af" aria-pressed="true">Afectación del sismo</button><button type="button" data-c="es" aria-pressed="false">Estado del reporte</button><button type="button" data-c="pr" aria-pressed="false">Proyectos</button></div>
         <div class="seg sub" role="group" aria-label="Medida de afectación" id="mapMed"><button type="button" data-m="abs" aria-pressed="false">Viviendas afectadas</button><button type="button" data-m="rel" aria-pressed="true">Por cada 1.000 viviendas</button></div>
@@ -480,7 +521,7 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
 
   <section class="band white" id="consolidado" aria-labelledby="h-av">
     <div class="wrap">
-      <div class="shead"><span class="n">01</span><div><h2 id="h-av">Avance del reporte municipal</h2><p>Estado de cada municipio en la plataforma. Las cifras son agregadas; los detalles de cada reporte son de uso de la Gobernación.</p><div class="bar4" style="margin-top:10px"></div></div></div>
+      <div class="shead"><span class="n">01</span><div><small class="eyebrow">Avance del reporte municipal</small><h2 id="h-av">Avance del reporte municipal</h2><p>Estado de cada municipio en la plataforma. Las cifras son agregadas; los detalles de cada reporte son de uso de la Gobernación.</p><div class="bar4" style="margin-top:10px"></div></div></div>
       <div class="grid4" id="pubKpis"></div>
       <div style="display:flex;gap:10px;flex-wrap:wrap;margin:20px 0 12px;align-items:center"><span class="chip sin">Sin iniciar</span><span class="chip dil">En diligenciamiento</span><span class="chip env">Enviado</span><span class="chip val">Validado</span><span class="muted" id="pubCorte" style="margin-left:auto;font-size:13px"></span></div>
       <div class="mgrid" id="pubMunis"></div>
@@ -516,7 +557,7 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
 
   <section class="band" aria-labelledby="h-pae">
     <div class="wrap">
-      <div class="shead"><span class="n">02</span><div><h2 id="h-pae">Cartera reportada frente al PAE</h2><p>Costo de las intervenciones reportadas por los 26 municipios distintos de Manizales, comparado con la necesidad estimada por línea en el PAE departamental (19-oct-2026). Manizales se lee aparte porque el dimensionamiento departamental cubre a los otros 26.</p></div></div>
+      <div class="shead"><span class="n">02</span><div><small class="eyebrow">Cartera reportada frente al PAE</small><h2 id="h-pae">Cartera reportada frente al PAE</h2><p>Costo de las intervenciones reportadas por los 26 municipios distintos de Manizales, comparado con la necesidad estimada por línea en el PAE departamental (19-oct-2026). Manizales se lee aparte porque el dimensionamiento departamental cubre a los otros 26.</p></div></div>
       <div class="cov" id="cmpCov"></div>
       <div class="cmpctl">
         <div class="cmplg" aria-hidden="true"><span><i class="sw rep"></i>Reportado</span><span><i class="sw esp"></i>Esperable de los municipios que ya reportaron</span><span><i class="sw pen"></i>Pendiente de los que no han reportado</span></div>
@@ -528,13 +569,24 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
       </div>
       <div class="card" id="cmpSinCard" style="margin-top:20px"><h3>Cartera por clasificar</h3><p class="sub">Intervenciones que el municipio reportó sin elegir línea del PAE (FR o FAR). Mientras no se clasifiquen, no aparecen en las barras de arriba. Cada municipio las clasifica en <b>3 · Intervenciones</b>.</p><div id="cmpSin" style="margin-top:12px"></div></div>
       <div class="grid3" style="margin-top:20px" id="pubTot"></div>
+      <div class="card" id="gapCard" style="margin-top:20px">
+        <small class="eyebrow" style="font:700 11px var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--gold)">Brecha de financiación</small>
+        <h3 id="gapTit" style="font-size:22px;margin-top:4px">Brecha de financiación de los proyectos</h3>
+        <p class="sub">Costo de los proyectos que reportaron los municipios frente a los recursos que ya tienen confirmados. Lo que falta es lo que hay que gestionar con la Nación, el SGR, Obras por Impuestos, la cooperación o el sector privado.</p>
+        <div class="gap" id="gapTot" style="margin-top:14px"></div>
+        <div class="grid2" style="margin-top:22px">
+          <div><h3 style="font-size:16px">Por municipio</h3><p class="sub">Los 10 con mayor brecha</p><div class="gap" id="gapMun" style="margin-top:10px"></div></div>
+          <div><h3 style="font-size:16px">Por vía de financiación</h3><p class="sub">Vía que el municipio eligió para cada proyecto</p><div class="gap" id="gapVia" style="margin-top:10px"></div>
+            <h3 style="font-size:16px;margin-top:20px">Cartera por plazo</h3><p class="sub">Costo de las intervenciones según cuándo se ejecutan</p><div class="gap" id="gapPl" style="margin-top:10px"></div></div>
+        </div>
+      </div>
       <div class="note info" style="margin-top:18px"><b class="t">Eje 3 · Reducción del riesgo y reconstrucción segura</b>Es transversal: no tiene líneas ni valores propios. Sus medidas se registran dentro de las intervenciones de los ejes 1 y 2, marcando la casilla correspondiente.</div>
     </div>
   </section>
 
   <section class="band white" aria-labelledby="h-lb">
     <div class="wrap">
-      <div class="shead"><span class="n">03</span><div><h2 id="h-lb">Línea base de afectaciones</h2><p>Cada cifra se muestra con su fuente y su fecha de corte; las series no se suman ni se promedian entre sí.</p></div></div>
+      <div class="shead"><span class="n">03</span><div><small class="eyebrow">Línea base de afectaciones</small><h2 id="h-lb">Caldas tiene 23.492 viviendas afectadas, y casi la mitad están en Manizales</h2><p>Cada cifra se muestra con su fuente y su fecha de corte; las series no se suman ni se promedian entre sí.</p></div></div>
       <div class="grid3">
         <div class="stat"><small>EDAN 14-sep</small><b class="num">22.469</b><span>familias afectadas</span></div>
         <div class="stat"><small>EDAN 14-sep</small><b class="num">23.492</b><span>viviendas averiadas (20.503) o destruidas (2.989)</span></div>
@@ -783,7 +835,7 @@ function pubAgg(m,estado,act,rep,lb){
   const N=rep.necesidades||[],I=rep.intervenciones||[],P=rep.proyectos||[],porLinea={},porEje={},porTax={},porSector={};
   I.forEach(x=>{const c=num(x.costo);if(x.linea)porLinea[x.linea]=(porLinea[x.linea]||0)+c;if(x.eje)porEje[x.eje]=(porEje[x.eje]||0)+c;if(x.taxonomia)porTax[x.taxonomia]=(porTax[x.taxonomia]||0)+c});
   N.forEach(x=>{if(x.sector)porSector[x.sector]=(porSector[x.sector]||0)+1});
-  return{dane:m.dane,municipio:m.nombre,subregion:m.subregion,estado,actualizado:act,necesidades:N.length,urgenciaAlta:N.filter(x=>x.urgencia==="Alta").length,personas:N.reduce((a,x)=>a+num(x.personas),0),intervenciones:I.length,costoIntervenciones:I.reduce((a,x)=>a+num(x.costo),0),proyectos:P.length,costoProyectos:P.reduce((a,x)=>a+num(x.costo),0),confirmado:P.reduce((a,x)=>a+num(x.confirmado),0),porLinea,porEje,porTax,porSector,lineaBase:lb||{}};
+  return{dane:m.dane,municipio:m.nombre,subregion:m.subregion,estado,actualizado:act,necesidades:N.length,urgenciaAlta:N.filter(x=>x.urgencia==="Alta").length,personas:N.reduce((a,x)=>a+num(x.personas),0),intervenciones:I.length,costoIntervenciones:I.reduce((a,x)=>a+num(x.costo),0),proyectos:P.length,costoProyectos:P.reduce((a,x)=>a+num(x.costo),0),confirmado:P.reduce((a,x)=>a+num(x.confirmado),0),cp:I.reduce((a,x)=>a+num(x.cp),0),mp:I.reduce((a,x)=>a+num(x.mp),0),porVia:P.reduce((o,x)=>{const k=x.via||"Sin vía definida",v=o[k]||(o[k]=[0,0,0]);v[0]+=num(x.costo);v[1]+=num(x.confirmado);v[2]++;return o},{}),porLinea,porEje,porTax,porSector,lineaBase:lb||{}};
 }
 
 /* Proyectos en Fase III (estudios y diseños definitivos) o listos para gestionar recursos — misma regla que el servidor */
@@ -958,18 +1010,53 @@ async function loadPublic(){
   let d;try{const j=DEMO?await demo("publico"):await apiGet({action:"publico"});if(!j.ok)throw new Error(j.error);d=j.datos;$("#syncState").textContent=DEMO?"Modo demostración (sin base de datos)":"Datos en línea"}catch(e){$("#syncState").textContent="Sin conexión con la base de datos";$("#pubMunis").innerHTML='<div class="empty">No fue posible cargar el consolidado. Intente recargar la página.</div>';return}
   const M=d.municipios,c=e=>M.filter(m=>m.estado===e).length;
   $("#pubCorte").textContent="Corte: "+fdt(d.corte);
-  $("#pubKpis").innerHTML=[[`${M.length-c("sin iniciar")} de 27`,"municipios con reporte iniciado",""],[c("enviado")+c("validado"),"reportes enviados a la Gobernación","b"],[c("validado"),"reportes validados (Cartera Única)","v"],[fmt(M.reduce((a,m)=>a+m.proyectos,0)),"proyectos reportados","g"]].map(([b,s,k])=>`<div class="stat ${k}"><b class="num">${b}</b><span>${s}</span></div>`).join("");
+  const ini=M.length-c("sin iniciar"),env=c("enviado"),val=c("validado"),nP=M.reduce((a,m)=>a+m.proyectos,0),cP=M.reduce((a,m)=>a+m.costoProyectos,0),mP=M.filter(m=>m.proyectos).length;
+  $("#pubKpis").innerHTML=[[`${ini} de 27`,"municipios con reporte iniciado","",`${c("diligenciamiento")} en diligenciamiento · ${27-ini} sin iniciar`],
+    [env+val,"reportes enviados a la Gobernación","b",`${Math.round((env+val)/27*100)} % de los 27 municipios`],
+    [val,"reportes validados (Cartera Única)","v",env?`${env} ${env===1?"espera":"esperan"} revisión de la Gobernación`:"Ninguno pendiente de revisión"],
+    [fmt(nP),"proyectos reportados","g",nP?`${moneyM(cP)} en total, de ${mP} ${mP===1?"municipio":"municipios"}`:"Aún sin proyectos"]]
+    .map(([b,s,k,dt])=>`<div class="stat ${k}"><b class="num">${b}</b><span>${s}</span><em class="det">${dt}</em></div>`).join("");
+  $("#h-av").textContent=ini===0?"Ningún municipio ha iniciado todavía su reporte":`${ini} de los 27 municipios ya iniciaron su reporte`+(val?` y ${val} ${val===1?"está validado":"están validados"}`:"");
   $("#pubMunis").innerHTML=[...M].sort((a,b)=>a.municipio.localeCompare(b.municipio,"es")).map(m=>`<div class="mcard"><div style="display:flex;justify-content:space-between;gap:6px;align-items:center"><b>${esc(m.municipio)}</b>${chip(m.estado)}</div><span class="meta">${esc(m.subregion)}</span><span class="meta num">${m.necesidades} N · ${m.intervenciones} I · ${m.proyectos} P${m.costoIntervenciones?` · ${moneyM(m.costoIntervenciones)}`:""}</span></div>`).join("");
   const sin=M.filter(m=>m.dane!=="17001"),man=M.find(m=>m.dane==="17001")||{porLinea:{}};
   CMP=M;renderCartera();
   const tot26=sin.reduce((a,m)=>a+m.costoIntervenciones,0),totMan=man.costoIntervenciones||0,conf=M.reduce((a,m)=>a+m.confirmado,0),cp=M.reduce((a,m)=>a+m.costoProyectos,0);
-  $("#pubTot").innerHTML=`<div class="stat"><small>26 municipios</small><b class="num">${moneyM(tot26)}</b><span>en intervenciones reportadas, frente a $2.227.050 M de necesidad estimada en el PAE</span></div><div class="stat b"><small>Manizales (aparte)</small><b class="num">${moneyM(totMan)}</b><span>en intervenciones reportadas por la capital</span></div><div class="stat g"><small>27 municipios</small><b class="num">${moneyM(conf)}</b><span>en recursos confirmados de ${moneyM(cp)} en proyectos (brecha ${moneyM(Math.max(0,cp-conf))})</span></div>`;
+  const pNec=tot26/2227050e6*100,nRep26=sin.filter(m=>m.costoIntervenciones>0).length;
+  $("#pubTot").innerHTML=`<div class="stat"><small>26 municipios</small><b class="num">${moneyM(tot26)}</b><span>en intervenciones reportadas</span><em class="det">${pctTxt(pNec)} de los $2.227.050 M de necesidad estimada en el PAE · ${nRep26} de 26 municipios con costos</em></div><div class="stat b"><small>Manizales (aparte)</small><b class="num">${moneyM(totMan)}</b><span>en intervenciones reportadas por la capital</span><em class="det">${totMan?"Se lee aparte: el PAE departamental dimensiona a los otros 26":"Aún sin costos reportados"}</em></div><div class="stat g"><small>27 municipios</small><b class="num">${moneyM(conf)}</b><span>en recursos confirmados</span><em class="det">de ${moneyM(cp)} en proyectos · brecha ${moneyM(Math.max(0,cp-conf))}</em></div>`;
+  $("#h-pae").textContent=tot26?`Lo reportado por los municipios suma ${moneyM(tot26)}: el ${pctTxt(pNec)} de la necesidad estimada en el PAE`:"Los municipios aún no reportan costos frente al PAE";
+  renderBrecha(M);
   const viv=M.filter(m=>m.dane!=="17001"&&m.lineaBase&&m.lineaBase.viviendasAfectadas!=null).map(m=>[m.municipio,num(m.lineaBase.viviendasAfectadas)]).sort((a,b)=>b[1]-a[1]);
   hbars($("#pubViv"),viv);
   hbars($("#pubSub"),[["Centro Sur",13984,"· 59,5 %"],["Bajo Occidente",3996,"· 17,0 %"],["Alto Occidente",2310,"· 9,8 %"],["Norte",1977,"· 8,4 %"],["Alto Oriente",685,"· 2,9 %"],["Magdalena Caldense",540,"· 2,3 %"]],"var(--gold)");
   renderAcciones(d.acciones||[],$("#pubAcc"));
   initTablero(M);MP.M=M;MP.F3=d.fase3||[];renderMapa();renderGob(Array.isArray(d.cifras)?d.cifras:(window.PAE_CIFRAS||[]));  // servidor sin «cifras» (versión anterior): usa las iniciales
 }
+
+/* ================= BRECHA DE FINANCIACIÓN ================= */
+function pctTxt(p){return(p>0&&p<1?p.toLocaleString("es-CO",{maximumFractionDigits:1}):Math.round(p).toLocaleString("es-CO"))+" %"}
+function gapRows(el,rows,mx){el.innerHTML=rows.map(([k,cost,conf])=>{const c=Math.min(conf,cost),g=Math.max(0,cost-conf);return`<div class="gaprow"><span title="${esc(k)}" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(k)}</span><div class="gapbar" role="img" aria-label="${esc(k)}: ${moneyM(c)} confirmados y ${moneyM(g)} por conseguir">${c?`<i class="c" style="width:${c/mx*100}%"></i>`:""}${g?`<i class="b" style="width:${g/mx*100}%"></i>`:""}</div><em><b>${moneyM(g)}</b> por conseguir</em></div>`}).join("")}
+function renderBrecha(M){
+  const cost=M.reduce((a,m)=>a+num(m.costoProyectos),0),conf=M.reduce((a,m)=>a+Math.min(num(m.confirmado),num(m.costoProyectos)),0),gap=Math.max(0,cost-conf);
+  const nota='<p class="muted" style="font-size:13px;margin:0">Este desglose aparece cuando la Gobernación actualice el servidor de la plataforma (versión 5).</p>';
+  if(!cost){$("#gapTit").textContent="Aún no hay proyectos con costo reportado";["#gapTot","#gapMun","#gapVia","#gapPl"].forEach(i=>$(i).innerHTML="");$("#gapMun").innerHTML='<p class="muted" style="font-size:13px;margin:0">Sin datos todavía.</p>';return}
+  const pc=conf/cost*100;
+  $("#gapTit").textContent=`De ${moneyM(cost)} en proyectos, ${pc<50?"solo ":""}el ${pctTxt(pc)} tiene recursos confirmados`;
+  $("#gapTot").innerHTML=`<div class="gapbar" role="img" aria-label="${moneyM(conf)} confirmados y ${moneyM(gap)} por conseguir"><i class="c" style="width:${pc}%"></i><i class="b" style="width:${100-pc}%"></i></div><div class="gaplg"><span><i style="background:var(--green)"></i>Confirmado · <b class="num" style="color:var(--ink)">${moneyM(conf)}</b></span><span><i style="background:var(--gold)"></i>Por conseguir · <b class="num" style="color:var(--ink)">${moneyM(gap)}</b> (${pctTxt(100-pc)})</span></div>`;
+  const mu=M.filter(m=>num(m.costoProyectos)>0).map(m=>[m.municipio,num(m.costoProyectos),num(m.confirmado)]).sort((a,b)=>(b[1]-Math.min(b[2],b[1]))-(a[1]-Math.min(a[2],a[1]))).slice(0,10);
+  gapRows($("#gapMun"),mu,Math.max(...mu.map(r=>r[1])));
+  const tieneVia=M.some(m=>m.porVia);
+  if(tieneVia){const V={};M.forEach(m=>Object.entries(m.porVia||{}).forEach(([k,[a,b]])=>{const o=V[k]||(V[k]=[0,0]);o[0]+=num(a);o[1]+=Math.min(num(b),num(a))}));
+    const rv=Object.entries(V).filter(([,v])=>v[0]>0).map(([k,v])=>[k,v[0],v[1]]).sort((a,b)=>b[1]-a[1]);gapRows($("#gapVia"),rv,Math.max(1,...rv.map(r=>r[1])))}
+  else $("#gapVia").innerHTML=nota;
+  if(M.some(m=>m.cp!=null)){const c1=M.reduce((a,m)=>a+num(m.cp),0),c2=M.reduce((a,m)=>a+num(m.mp),0),t=c1+c2;
+    $("#gapPl").innerHTML=t?[["2026–2027",c1],["2028–2030",c2]].map(([k,v])=>`<div class="gaprow"><span>${k}</span><div class="gapbar"><i style="width:${v/Math.max(c1,c2)*100}%;background:var(--teal)"></i></div><em><b>${moneyM(v)}</b> · ${pctTxt(v/t*100)}</em></div>`).join(""):'<p class="muted" style="font-size:13px;margin:0">Los municipios aún no reparten los costos por plazo.</p>'}
+  else $("#gapPl").innerHTML=nota;
+}
+
+/* ================= CALDAS EN EL PAE NACIONAL ================= */
+function hbx(el,rows,dec,suf){const mx=Math.max(...rows.map(r=>r[1]));el.innerHTML=rows.map(([k,v])=>`<div class="r${k==="Caldas"?" hi":""}"><span>${esc(k)}</span><div class="bar"><i style="width:calc(${v/mx} * (100% - 80px))"></i><em>${v.toLocaleString("es-CO",{minimumFractionDigits:dec,maximumFractionDigits:dec})}${suf}</em></div></div>`).join("")}
+hbx($("#natPer"),[["Valle del Cauca",41.5],["Risaralda",21.3],["Quindío",12.0],["Chocó",11.3],["Caldas",6.0],["Cauca",3.9],["Otros 10",3.9]],1," %");
+hbx($("#natPae"),[["Valle del Cauca",20.43],["Risaralda",8.50],["Chocó",6.17],["Quindío",5.81],["Antioquia",4.91],["Caldas",4.80],["Cauca",2.73],["Otros 9",4.94]],2," b");
 
 /* ================= MAPA DE CALDAS ================= */
 // Secuencial de un solo tono (claro→oscuro) para magnitud; estados con los mismos tonos de las fichas de estado.
@@ -1035,6 +1122,8 @@ function renderMapa(){
     el.addEventListener("click",()=>{tip.style.display="none";mapaSel(x.dane)});
     el.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();mapaSel(x.dane)}})});
   mapaLeyenda(D);mapaDetalle(D);
+  const top=D.filter(x=>x.rel!=null).sort((a,b)=>b.rel-a.rel);
+  if(top.length>1)$("#h-mapa").textContent=`${top[0].nombre} y ${top[1].nombre}: los municipios más golpeados en proporción a su tamaño`;
   $("#mapNote").innerHTML=(MP.capa==="af"?(MP.med==="rel"?"Viviendas afectadas según el EDAN (línea base de la plataforma) por cada 1.000 viviendas habitadas del Censo DANE 2018. Así se compara el golpe sin que el tamaño del municipio lo esconda.":"Viviendas afectadas según el EDAN (línea base de la plataforma). Manizales concentra la mayor cifra por ser el municipio más grande.")+" El epicentro se marca en la cabecera de San José del Palmar como referencia; los círculos indican la distancia en línea recta."
     :MP.capa==="es"?"Estado del reporte de cada municipio en esta plataforma, con los mismos colores de las fichas de abajo."
     :"Círculo verde: proyectos con estudios y diseños definitivos (Fase III) reportados por el municipio. Círculo dorado: proyectos del portafolio de Obras por Impuestos.")+" Límites municipales: DANE, Marco Geoestadístico Nacional 2018.";
