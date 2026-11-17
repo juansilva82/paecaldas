@@ -780,7 +780,7 @@ const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 /* Celdas de Excel: «183592578.85» es un número con decimales, no miles con punto. */
 const numX=v=>{const t=String(v??"").trim();return /^-?\d+(\.\d+)?([eE][+-]?\d+)?$/.test(t)?Number(t):num(t)};
-const num=v=>{const n=Number(String(v??"").replace(/\./g,"").replace(/,/g,".").replace(/[^\d.-]/g,""));return isFinite(n)?n:0};
+const num=v=>{if(typeof v==="number")return isFinite(v)?v:0;const n=Number(String(v??"").replace(/\./g,"").replace(/,/g,".").replace(/[^\d.-]/g,""));return isFinite(n)?n:0};
 const fmt=n=>Math.round(n).toLocaleString("es-CO");
 const fmtM=n=>(n/1e6).toLocaleString("es-CO",{maximumFractionDigits:n/1e6<10?1:0});           // pesos -> millones
 const money=n=>n?("$"+fmt(n)):"—";
@@ -1046,7 +1046,8 @@ function renderBrecha(M){
   gapRows($("#gapMun"),mu,Math.max(...mu.map(r=>r[1])));
   const tieneVia=M.some(m=>m.porVia);
   if(tieneVia){const V={};M.forEach(m=>Object.entries(m.porVia||{}).forEach(([k,[a,b]])=>{const o=V[k]||(V[k]=[0,0]);o[0]+=num(a);o[1]+=Math.min(num(b),num(a))}));
-    const rv=Object.entries(V).filter(([,v])=>v[0]>0).map(([k,v])=>[k,v[0],v[1]]).sort((a,b)=>b[1]-a[1]);gapRows($("#gapVia"),rv,Math.max(1,...rv.map(r=>r[1])))}
+    const rv=Object.entries(V).filter(([,v])=>v[0]>0).map(([k,v])=>[k,v[0],v[1]]).sort((a,b)=>b[1]-a[1]);gapRows($("#gapVia"),rv,Math.max(1,...rv.map(r=>r[1])));
+    if(rv.length&&rv.every(r=>r[0]==="Sin vía definida"))$("#gapVia").insertAdjacentHTML("beforeend",'<p class="muted" style="font-size:13px;margin:8px 0 0">Ningún proyecto tiene todavía una vía de financiación definida. Cada municipio la elige en <b>4 · Proyectos</b>.</p>')}
   else $("#gapVia").innerHTML=nota;
   if(M.some(m=>m.cp!=null)){const c1=M.reduce((a,m)=>a+num(m.cp),0),c2=M.reduce((a,m)=>a+num(m.mp),0),t=c1+c2;
     $("#gapPl").innerHTML=t?[["2026–2027",c1],["2028–2030",c2]].map(([k,v])=>`<div class="gaprow"><span>${k}</span><div class="gapbar"><i style="width:${v/Math.max(c1,c2)*100}%;background:var(--teal)"></i></div><em><b>${moneyM(v)}</b> · ${pctTxt(v/t*100)}</em></div>`).join(""):'<p class="muted" style="font-size:13px;margin:0">Los municipios aún no reparten los costos por plazo.</p>'}
