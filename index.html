@@ -17,6 +17,7 @@
 <script src="catalogo.js"></script>
 <script src="mapa-caldas.js"></script>
 <script src="banco-departamental.js"></script>
+<script src="documentos.js"></script>
 <script src="xlsx.js"></script>
 <style>
 :root{
@@ -226,6 +227,12 @@ section.band.cream{background:var(--cream)}
 .shead .n{font:800 64px/.8 var(--head);color:var(--gold)}
 .shead h2{font-size:clamp(23px,2.8vw,33px)}
 .shead p{color:var(--muted);margin-top:6px;max-width:80ch}
+.docgrid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:20px;align-items:start}
+.docnow h3{margin:12px 0 2px;font-size:22px}.doccorte{font:700 15px/1.3 var(--head);color:var(--teal);margin:0 0 10px}
+.docnums{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:14px 0}.docnums div{background:#f4f7f7;border-radius:10px;padding:10px}.docnums b{display:block;font:800 20px/1.1 var(--head);color:var(--ink)}.docnums span{font-size:12px;color:var(--muted)}
+.docest{font-size:13px;color:#8a6100;font-weight:600;margin:0 0 14px}.docmeta{font-size:12.5px;color:var(--muted);margin:10px 0 0}
+.doclist{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:12px}.doclist li{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;border-top:1px solid var(--line);padding-top:12px}.doclist span{display:block;font-size:13px;color:var(--muted);margin-top:4px}.doclist em{display:block;font-size:12px;font-style:normal;color:var(--muted);margin-top:4px}
+@media (max-width:860px){.docgrid{grid-template-columns:1fr}.docnums{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
 .grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
 .grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
@@ -491,7 +498,7 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
       <span class="eyebrow">Plan de Acción Específico · PAE departamental</span>
       <h1>Plataforma Departamental de Consolidación del PAE</h1>
       <p class="lead">Los 27 municipios de Caldas reportan aquí, con un mismo formato, qué se dañó, qué se va a hacer, cuánto cuesta y qué tan listo está cada proyecto. Con esa información la Gobernación construye la Cartera Única y la traduce a la taxonomía del PAE Nacional.</p>
-      <div class="ctas"><a class="btn gold" href="#ingresar">Ingresar a reportar</a><a class="btn ghost" href="#consolidado">Ver el consolidado</a><a class="btn ghost" href="instructivo-pae-caldas.pdf" target="_blank" rel="noopener">Instructivo (PDF)</a></div>
+      <div class="ctas"><a class="btn gold" href="#ingresar">Ingresar a reportar</a><a class="btn ghost" href="#consolidado">Ver el consolidado</a><a class="btn ghost" href="#documento">Documento PAE (PDF)</a><a class="btn ghost" href="instructivo-pae-caldas.pdf" target="_blank" rel="noopener">Instructivo (PDF)</a></div>
       <span class="pill">Sismo M 7,4 · 10 de agosto de 2026</span><span class="pill">Decreto 392 · calamidad pública</span>
     </div>
     <div class="onepage" aria-label="En una página">
@@ -502,6 +509,17 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
       <div class="r"><b>6</b><span>productos para decidir y gestionar recursos</span></div>
     </div>
   </div></section>
+
+  <section class="band cream" id="documento" aria-labelledby="h-doc" style="scroll-margin-top:90px">
+    <div class="wrap">
+      <div class="shead"><div><small class="eyebrow">Seguimiento al PAE Caldas</small><h2 id="h-doc">Documento del PAE Caldas</h2><p>Descargue el Plan de Acción Específico con la Cartera Única a la última fecha de corte. Cada versión conserva su corte, así puede ver cómo avanza el plan.</p><div class="bar4" style="margin-top:10px"></div></div></div>
+      <div class="docgrid">
+        <div class="card docnow" id="docNow"></div>
+        <div class="card"><h3>Versiones anteriores</h3><p class="sub">Todas siguen disponibles para consulta.</p><ul class="doclist" id="docList"></ul></div>
+      </div>
+      <p class="srcnote">El documento es preliminar. Las cifras municipales reproducen lo que cada municipio envió a esta plataforma y pueden cambiar con la validación técnica de la Gobernación; no constituyen aprobación de proyectos ni disponibilidad de recursos. Las cifras del consolidado de esta página se actualizan en tiempo real y pueden ser más recientes que la última versión del documento.</p>
+    </div>
+  </section>
 
   <section class="band white" id="pais" aria-labelledby="h-pais" style="scroll-margin-top:90px">
     <div class="wrap">
@@ -933,7 +951,7 @@ function alertas(rep){
 /* ================= NAV / ROUTER ================= */
 function renderNav(){
   const v=(location.hash||"#inicio").slice(1);
-  let h=`<a href="#inicio">Consolidado</a><a href="#acciones">Acciones de la Gobernación</a><a href="#fase3">Proyectos Fase III</a><a href="#oxi">Obras por Impuestos</a>`;
+  let h=`<a href="#inicio">Consolidado</a><a href="#documento">Documento PAE</a><a href="#acciones">Acciones de la Gobernación</a><a href="#fase3">Proyectos Fase III</a><a href="#oxi">Obras por Impuestos</a>`;
   if(SES&&SES.rol==="municipio")h+=`<a href="#municipio">Mi reporte</a>`;
   if(SES&&SES.rol==="gobernacion")h+=`<a href="#gobernacion">Panel Gobernación</a>`;
   if(SES&&SES.rol==="aliado")h+=`<a href="#gobernacion">Panel departamental</a>`;
@@ -947,7 +965,7 @@ function renderNav(){
 const VIEWS=["inicio","fase3","oxi","ingresar","municipio","gobernacion"];
 function route(){
   let v=(location.hash||"#inicio").slice(1);
-  const anc=["consolidado","acciones"].includes(v)?v:null;
+  const anc=["consolidado","acciones","documento"].includes(v)?v:null;
   if(anc){v="inicio";setTimeout(()=>$("#"+anc).scrollIntoView({behavior:"smooth"}),60)}
   if(!VIEWS.includes(v))v="inicio";
   if(v==="municipio"&&!(SES&&SES.rol==="municipio"))v=SES?"gobernacion":"ingresar";
@@ -958,7 +976,7 @@ function route(){
   if(!anc&&("#"+v)!==location.hash)history.replaceState(null,"","#"+v);
   $$("[data-view]").forEach(el=>el.hidden=el.id!=="v-"+v);
   renderNav();
-  if(v==="inicio")loadPublic();
+  if(v==="inicio"){renderDocs();loadPublic();}
   if(v==="fase3")loadFase3();
   if(v==="oxi")renderOxi();
   if(v==="ingresar")initLogin();
@@ -1041,6 +1059,14 @@ function cmpBars(el,rows){
   el.innerHTML=rows.map(r=>{const p=r.nec?Math.min(100,r.rep/(r.nec*1e6)*100):0;return `<div class="r"><span><b class="code">${r.id}</b>${esc(r.nombre)}</span><div class="track" role="img" aria-label="${r.id}: reportado ${fmtM(r.rep)} millones de ${fmt(r.nec)} millones"><i style="width:${p}%"></i></div><span class="v num">${fmtM(r.rep)} / ${fmt(r.nec)}</span></div>`}).join("");
 }
 function hbars(el,rows,color){const mx=Math.max(1,...rows.map(r=>r[1]));el.innerHTML=rows.map(([k,v,ex])=>`<div class="r"><span title="${esc(k)}">${esc(k)}</span><div class="bar"><i style="width:calc(${v/mx} * (100% - 120px));background:${color||"var(--teal)"}"></i><em><b>${fmt(v)}</b>${ex?" "+ex:""}</em></div></div>`).join("")}
+/* ================= DOCUMENTO PAE (versiones por corte) ================= */
+function fechaLarga(iso){const[y,mo,d]=String(iso).split("-").map(Number);const M=["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];return`${d} de ${M[mo-1]} de ${y}`}
+function renderDocs(){
+  const D=window.PAE_DOCS||[],now=$("#docNow"),ls=$("#docList");if(!now||!D.length)return;
+  const a=D[0],c=a.cifras;
+  now.innerHTML=`<span class="chip env">Versión vigente</span><h3>PAE Caldas · versión ${esc(a.version)}</h3><p class="doccorte">Corte al ${fechaLarga(a.corte)}</p><p>${esc(a.resumen)}</p>${c?`<div class="docnums"><div><b class="num">${c.enviados} de 27</b><span>municipios con reporte enviado</span></div><div><b class="num">${c.validados}</b><span>reportes validados</span></div><div><b class="num">${c.intervenciones.toLocaleString("es-CO")}</b><span>intervenciones</span></div><div><b class="num">${c.proyectos.toLocaleString("es-CO")}</b><span>proyectos</span></div></div>`:""}<p class="docest">${esc(a.estado)}</p><div class="ctas"><a class="btn gold" href="${esc(a.archivo)}" download>Descargar PDF</a><a class="btn ghost" href="${esc(a.archivo)}" target="_blank" rel="noopener">Ver en el navegador</a></div><p class="docmeta">${a.paginas} páginas · ${esc(a.peso)}</p>`;
+  ls.innerHTML=D.slice(1).map(d=>`<li><div><b>Versión ${esc(d.version)}</b> · ${d.corte===D[D.length-1].corte&&d.version==="1.0"?"":"corte al "}${fechaLarga(d.corte)}<span>${esc(d.resumen)}</span><em>${esc(d.estado)} · ${d.paginas} páginas · ${esc(d.peso)}</em></div><a class="btn ghost small" href="${esc(d.archivo)}" download>PDF</a></li>`).join("")||'<li class="muted">Aún no hay versiones anteriores.</li>';
+}
 async function loadPublic(){
   renderCal();
   let d;try{const j=DEMO?await demo("publico"):await apiGet({action:"publico"});if(!j.ok)throw new Error(j.error);d=j.datos;$("#syncState").textContent=DEMO?"Modo demostración (sin base de datos)":"Datos en línea"}catch(e){$("#syncState").textContent="Sin conexión con la base de datos";$("#pubMunis").innerHTML='<div class="empty">No fue posible cargar el consolidado. Intente recargar la página.</div>';return}
