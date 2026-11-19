@@ -1,0 +1,58 @@
+/* Banco departamental de proyectos · Gobernación de Caldas (Equipo Estructurador), corte 17 de noviembre de 2026.
+   Fuente: «2026.11.17 Proyectos Infraestructura Social dpto Calamidad.xlsx». Nombres depurados de mayúsculas y errores de digitación; cifras sin cambios.
+   g = grupo: "v" = en ejecución, contratación y viabilizados 2025–2026 · "s" = infraestructura social por la calamidad (en viabilización y estudios y diseños).
+   val = valor total · gob / mun / nac = aportes (null = sin dato) · hab = habitantes impactados · plazo = tiempo de ejecución. */
+window.PAE_BANCO = {
+  corte: "2026-11-17",
+  fuente: "Gobernación de Caldas · Equipo Estructurador",
+  p: [
+    {g:"v",n:1,nom:"Mejoramiento de la red vial secundaria en el sector Tres Puertas–Alto del Paisa",sec:"Vías y transporte",sub:"Centro Sur",mun:"Manizales",val:20529824939,gob:20529824939,mu:0,nac:null,hab:473084,est:"En ejecución"},
+    {g:"v",n:2,nom:"Mejoramiento de las vías perimetrales del parque de Pácora",sec:"Vías y transporte",sub:"Norte",mun:"Pácora",val:2017238690,gob:2017238690,mu:0,nac:null,hab:15791,est:"En ejecución"},
+    {g:"v",n:3,nom:"Construcción del complejo deportivo La Violeta",sec:"Deporte y recreación",sub:"Centro Sur",mun:"Neira",val:7241738086,gob:5000000000,mu:2241738086,nac:null,hab:21644,est:"En ejecución"},
+    {g:"v",n:4,nom:"Construcción de la cancha municipal Los Alpes",sec:"Deporte y recreación",sub:"Magdalena Caldense",mun:"La Dorada",val:6365000000,gob:5515000000,mu:850000000,nac:null,hab:75448,est:"En ejecución"},
+    {g:"v",n:5,nom:"Ampliación de la Central de Abastos",sec:"Desarrollo económico",sub:"Magdalena Caldense",mun:"La Dorada",val:6658000000,gob:6008000000,mu:650000000,nac:null,hab:75448,est:"En ejecución"},
+    {g:"v",n:6,nom:"Iluminación eficiente de escenarios deportivos · grupo 1 (Aguadas, Aranzazu, Neira y Chinchiná)",sec:"Deporte y recreación",sub:"Varias",mun:"Aguadas · Aranzazu · Neira · Chinchiná",val:5433989989,gob:5433989989,mu:0,nac:0,hab:null,est:"En ejecución"},
+    {g:"v",n:7,nom:"Iluminación eficiente de escenarios deportivos · grupo 2 (Viterbo, San José, Manzanares, Victoria y Samaná)",sec:"Deporte y recreación",sub:"Varias",mun:"Viterbo · San José · Manzanares · Victoria · Samaná",val:4782979026,gob:4782979026,mu:0,nac:0,hab:null,est:"En ejecución"},
+    {g:"v",n:8,nom:"Mejoramiento de la red vial terciaria en el sector central San Lorenzo, etapa II",sec:"Vías y transporte",sub:"Alto Occidente",mun:"Riosucio",val:7590205438,gob:0,mu:0,nac:0,hab:null,est:"En ejecución"},
+    {g:"v",n:9,nom:"Placa huella La Alemania–El Madroño (1,5 km)",sec:"Vías y transporte",sub:"Bajo Occidente",mun:"Belalcázar",val:3681903632,gob:3681903632,mu:0,nac:null,hab:10995,est:"En ejecución"},
+    {g:"v",n:10,nom:"Construcción del parque recreodeportivo del centro poblado La Felisa",sec:"Deporte y recreación",sub:"Alto Occidente",mun:"La Merced",val:1097519748,gob:987519748,mu:110000000,nac:null,hab:6293,est:"En ejecución"},
+    {g:"v",n:11,nom:"Construcción de la cancha multipropósito del corregimiento de Arboleda",sec:"Deporte y recreación",sub:"Alto Oriente",mun:"Pensilvania",val:2808051093,gob:2808051093,mu:0,nac:null,hab:10995,est:"Contratación"},
+    {g:"v",n:12,nom:"Mejoramiento de las vías urbanas de Viterbo",sec:"Vías y transporte",sub:"Bajo Occidente",mun:"Viterbo",val:2774622615,gob:2274622615,mu:500000000,nac:0,hab:null,est:"En ejecución"},
+    {g:"v",n:13,nom:"Mejoramiento y pavimentación de la Transversal de Caldas, etapa II, sector Salamina–La Merced (4 km)",sec:"Vías y transporte",sub:"Norte · Alto Occidente",mun:"Salamina · La Merced",val:21018737222,gob:21018737222,mu:0,nac:null,hab:26359,est:"En ejecución"},
+    {g:"v",n:14,nom:"Construcción, adecuación y dotación del parque recreodeportivo Parque de los Novios, barrio Las Ferias",sec:"Deporte y recreación",sub:"Magdalena Caldense",mun:"La Dorada",val:1766420413,gob:null,mu:null,nac:null,hab:null,est:"En ejecución"},
+    {g:"v",n:15,nom:"Construcción del parque recreodeportivo Las Margaritas",sec:"Deporte y recreación",sub:"Magdalena Caldense",mun:"La Dorada",val:4509855198,gob:null,mu:null,nac:null,hab:null,est:"En ejecución"},
+    {g:"v",n:16,nom:"Pavimentación de vías urbanas del centro poblado San Juan",sec:"Vías y transporte",sub:"Alto Occidente",mun:"Marmato",val:5252182243,gob:3000000000,mu:2252182243,nac:null,hab:9341,est:"Contratación"},
+    {g:"v",n:17,nom:"Adecuación de la Casa de la Cultura de Viterbo",sec:"Cultura",sub:"Bajo Occidente",mun:"Viterbo",val:1121867418,gob:860933709,mu:260933709,nac:null,hab:13292,est:"Contratación"},
+    {g:"v",n:18,nom:"Reposición y ampliación del Hospital Sagrado Corazón de Norcasia",sec:"Salud",sub:"Magdalena Caldense",mun:"Norcasia",val:13152887989,gob:5261155195.6,mu:0,nac:7891732793.4,hab:6146,est:"En viabilización"},
+    {g:"v",n:19,nom:"Construcción del Centro Día para el Adulto Mayor en el centro poblado de Isaza",sec:"Desarrollo social",sub:"Magdalena Caldense",mun:"Victoria",val:1825784536,gob:1825784536,mu:0,nac:0,hab:10571,est:"Contratación"},
+    {g:"v",n:20,nom:"Vivienda de interés social «Primero tu Casa» en el territorio ancestral San Lorenzo",sec:"Vivienda",sub:"Alto Occidente",mun:"Riosucio",val:2157601412,gob:2157601412,mu:0,nac:0,hab:null,est:"Viabilizado"},
+    {g:"v",n:21,nom:"Vivienda de interés prioritario «Vivienda Social para el Campo» en Riosucio y La Merced",sec:"Vivienda",sub:"Alto Occidente",mun:"Riosucio · La Merced",val:3664428449,gob:3166203449,mu:498225000,nac:0,hab:null,est:"Viabilizado"},
+    {g:"v",n:22,nom:"Reposición de la infraestructura del Hospital San Vicente de Paúl de Aranzazu",sec:"Salud",sub:"Norte",mun:"Aranzazu",val:17852879722,gob:7141151888.8,mu:0,nac:10711727833.2,hab:92352,est:"Viabilidad técnica"},
+    {g:"v",n:23,nom:"Construcción de la sede de salud mental de la ESE Hospital Departamental San Vicente de Paúl de Aranzazu",sec:"Salud",sub:"Norte",mun:"Aranzazu",val:16454950760,gob:null,mu:null,nac:null,hab:null,est:"En viabilización"},
+    {g:"v",n:24,nom:"Reposición del Hospital Santa Teresita de Pácora",sec:"Salud",sub:"Norte",mun:"Pácora",val:32500000000,gob:null,mu:null,nac:null,hab:null,est:"En viabilización"},
+    {g:"v",n:25,nom:"Placa huella La Alemania–El Madroño (1,3 km)",sec:"Vías y transporte",sub:"Bajo Occidente",mun:"Belalcázar",val:3672000000,gob:null,mu:null,nac:null,hab:null,est:"En viabilización"},
+    {g:"v",n:26,nom:"Estabilización del sitio crítico K9+800, vereda El Cairo",sec:"Vías y transporte",sub:"Bajo Occidente",mun:"Belalcázar",val:1232144576,gob:null,mu:null,nac:null,hab:null,est:"En viabilización"},
+    {g:"v",n:27,nom:"Construcción y adecuación del parque recreodeportivo Las Palmas",sec:"Deporte y recreación",sub:"Magdalena Caldense",mun:"La Dorada",val:4419131687,gob:null,mu:null,nac:null,hab:null,est:"En viabilización"},
+    {g:"v",n:28,nom:"Construcción de la Estación de Bomberos de Norcasia",sec:"Gestión del riesgo y bomberos",sub:"Magdalena Caldense",mun:"Norcasia",val:3538744688.7,gob:null,mu:null,nac:null,hab:null,est:"En viabilización"},
+    {g:"v",n:29,nom:"Construcción del Centro de Convenciones de Samaná",sec:"Cultura",sub:"Magdalena Caldense",mun:"Samaná",val:7889735144,gob:null,mu:null,nac:null,hab:null,est:"En viabilización"},
+    {g:"v",n:30,nom:"Mejoramiento vial El Descanso–Aguacatal–Tapias–río Magallanes (K1+965 a K5+500), tramo 4",sec:"Vías y transporte",sub:"Centro Sur",mun:"Neira",val:33600000000,gob:null,mu:null,nac:null,hab:null,est:"En viabilización"},
+    {g:"v",n:31,nom:"Mejoramiento del Centro de Integración Ciudadana de Belalcázar",sec:"Cultura",sub:"Bajo Occidente",mun:"Belalcázar",val:2019000000,gob:null,mu:null,nac:null,hab:null,est:"En viabilización"},
+    {g:"v",n:32,nom:"Ampliación y mejoramiento del CDI «Huellitas», corregimiento de Arauca",sec:"Desarrollo social",sub:"Centro Sur",mun:"Palestina",val:3200000000,gob:null,mu:null,nac:null,hab:null,est:"En viabilización"},
+    {g:"v",n:33,nom:"Construcción del Centro de Protección del corregimiento de Montebonito",sec:"Desarrollo social",sub:"Alto Oriente",mun:"Marulanda",val:3098938630,gob:null,mu:null,nac:null,hab:null,est:"En viabilización"},
+    {g:"v",n:34,nom:"Construcción de cancha en el corregimiento La Plata",sec:"Deporte y recreación",sub:"Centro Sur",mun:"Palestina",val:3838148905,gob:null,mu:null,nac:null,hab:null,est:"En viabilización"},
+
+    {g:"s",n:1,nom:"Ampliación y mejoramiento del CDI «Huellitas», corregimiento de Arauca",sec:"Desarrollo social",mun:"Palestina",val:3174216965,est:"Viabilidad técnica",plazo:"8 meses"},
+    {g:"s",n:2,nom:"Construcción del Centro de Integración para la Primera Infancia de Victoria",sec:"Desarrollo social",mun:"Victoria",val:5718242630,est:"En viabilización",plazo:"11 meses"},
+    {g:"s",n:3,nom:"Construcción del segundo bloque del Centro de Protección para el Adulto Mayor «El Porvenir»",sec:"Desarrollo social",mun:"Filadelfia",val:1718296136,est:"En viabilización",plazo:"4 meses"},
+    {g:"s",n:4,nom:"Construcción del CDI «Construyendo Sueños»",sec:"Desarrollo social",mun:"San José",val:6333436358,est:"En viabilización",plazo:"11 meses"},
+    {g:"s",n:5,nom:"Construcción de la Estación de Bomberos de Aguadas",sec:"Gestión del riesgo y bomberos",mun:"Aguadas",val:6570058071,est:"En estudios y diseños",plazo:"7 meses"},
+    {g:"s",n:6,nom:"Construcción de la Estación de Bomberos de Belalcázar",sec:"Gestión del riesgo y bomberos",mun:"Belalcázar",val:5124645294,est:"En estudios y diseños",plazo:"6 meses"},
+    {g:"s",n:7,nom:"Construcción de la Estación de Bomberos de San José",sec:"Gestión del riesgo y bomberos",mun:"San José",val:4599040649,est:"En estudios y diseños",plazo:null},
+    {g:"s",n:8,nom:"Reposición y ampliación de urgencias y hospitalización de la ESE Hospital San José de Viterbo",sec:"Salud",mun:"Viterbo",val:8617797569,est:"En viabilización",plazo:"10 meses"},
+    {g:"s",n:9,nom:"Reposición del Hospital Santa Teresita de Pácora",sec:"Salud",mun:"Pácora",val:27844890666,est:"En viabilización",plazo:"15 meses"},
+    {g:"s",n:10,nom:"Construcción del Hospital San Lorenzo de Supía, fase 1",sec:"Salud",mun:"Supía",val:8279691011,est:"En estudios y diseños",plazo:"10 meses"},
+    {g:"s",n:11,nom:"Laboratorio de Salud Pública",sec:"Salud",mun:"Manizales",val:28810118307,est:"En viabilización",plazo:null},
+    {g:"s",n:12,nom:"Vivienda: mejoramiento, construcción o reposición (bolsa departamental, tope máximo)",sec:"Vivienda",mun:"Departamento de Caldas",val:40000000000,est:"Bolsa (tope máximo)",plazo:null},
+    {g:"s",n:13,nom:"Reconstrucción, adecuación y dotación de establecimientos comerciales y unidades productivas afectadas por el sismo (bolsa, tope máximo)",sec:"Desarrollo económico",mun:"Departamento de Caldas",val:4000000000,est:"Bolsa (tope máximo)",plazo:null}
+  ]
+};

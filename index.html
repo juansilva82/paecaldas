@@ -16,6 +16,7 @@
 <script src="config.js"></script>
 <script src="catalogo.js"></script>
 <script src="mapa-caldas.js"></script>
+<script src="banco-departamental.js"></script>
 <script src="xlsx.js"></script>
 <style>
 :root{
@@ -61,6 +62,15 @@ p{margin:0}
 .f3filters label.grow{max-width:none}
 .f3filters label.grow{flex:1;min-width:200px}
 .f3filters select,.f3filters input{font:14px var(--body);padding:9px 10px;border:1px solid #d6d3c9;border-radius:10px;background:#fff;color:var(--ink,#1d2b2a)}
+.f3tabs{display:flex;gap:6px;flex-wrap:wrap;background:#fff;border:1.5px solid var(--teal);border-radius:999px;padding:4px;width:max-content;max-width:100%;margin:0 0 22px}
+.f3tabs button{all:unset;cursor:pointer;font:600 14px/1 var(--head);color:var(--teal);padding:11px 18px;border-radius:999px}
+.f3tabs button[aria-pressed="true"]{background:var(--teal);color:#fff}
+.f3tabs button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.bd-grp{display:flex;gap:6px;flex-wrap:wrap;margin:18px 0 0}.bd-grp button{all:unset;cursor:pointer;font:600 13px var(--body);padding:8px 14px;border-radius:999px;border:1px solid #d6d3c9;color:var(--muted);background:#fff}
+.bd-grp button[aria-pressed="true"]{border-color:var(--teal);color:var(--teal);background:var(--soft)}
+.f3card .tag.e1{background:#e3f1e7;color:#22663a}.f3card .tag.e2{background:#e2eef6;color:#1d5a85}.f3card .tag.e3{background:#fbf0d6;color:#7a5a12}.f3card .tag.e4{background:#efeee9;color:#5b5a53}.f3card .tag.e5{background:#efe6f5;color:#5d3a7a}
+.bd-bars{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:18px}
+@media (max-width:760px){.bd-bars{grid-template-columns:1fr}.f3tabs{border-radius:16px}.f3tabs button{flex:1;text-align:center}}
 .f3list{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:14px}
 .f3card{background:#fff;border:1px solid #e4e1d8;border-radius:16px;padding:16px 18px;display:flex;flex-direction:column;gap:8px}
 .f3card h3{font:700 16px/1.3 var(--head);color:var(--teal);margin:0}
@@ -657,7 +667,10 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
       <span class="pill" id="f3Corte">Cargando…</span>
     </div>
   </div></section>
-  <section class="band white"><div class="wrap">
+  <section class="band white"><div class="wrap" style="padding-bottom:0">
+    <div class="f3tabs" role="group" aria-label="Fuente de los proyectos" id="f3Tabs"><button type="button" data-t="mun" aria-pressed="true">Reportados por los municipios</button><button type="button" data-t="dep" aria-pressed="false">Banco departamental · Gobernación</button></div>
+  </div></section>
+  <section class="band white" id="f3PaneMun" style="padding-top:0"><div class="wrap">
     <div class="grid4" id="f3Kpis"></div>
     <div class="f3filters">
       <label>Subregión<select id="f3Sub"><option value="">Todas</option></select></label>
@@ -669,6 +682,21 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
     </div>
     <div id="f3List" class="f3list"></div>
     <div class="note info" style="margin-top:18px"><b class="t">Cómo entra un proyecto a esta lista</b>El municipio registra el proyecto en su reporte con la etapa «Factibilidad y diseños» o «Para gestión de recursos». La marca <em>Validado</em> indica que la Gobernación ya revisó el reporte del municipio; los demás son información reportada por el municipio, pendiente de validación.</div>
+  </div></section>
+  <section class="band white" id="f3PaneDep" style="padding-top:0" hidden><div class="wrap">
+    <div class="shead" style="margin-bottom:14px"><div><small class="eyebrow">Banco departamental de proyectos</small><h2 id="bdTit">Proyectos de la Gobernación de Caldas</h2><p>Proyectos que estructura y gestiona la Gobernación: en ejecución, en contratación, viabilizados y en viabilización, más los de infraestructura social para atender la calamidad del sismo. Corte: <b id="bdCorte"></b>.</p></div></div>
+    <div class="grid4" id="bdKpis"></div>
+    <div class="bd-grp" role="group" aria-label="Grupo de proyectos" id="bdGrp"></div>
+    <div class="bd-bars"><div class="card"><h3 style="font-size:16px">Valor por estado</h3><div class="gap" id="bdEst" style="margin-top:10px"></div></div><div class="card"><h3 style="font-size:16px">Valor por sector</h3><div class="gap" id="bdSec" style="margin-top:10px"></div></div></div>
+    <div class="f3filters">
+      <label>Municipio<select id="bdMun"><option value="">Todos</option></select></label>
+      <label>Sector<select id="bdSecF"><option value="">Todos</option></select></label>
+      <label>Estado<select id="bdEstF"><option value="">Todos</option></select></label>
+      <label class="grow">Buscar<input id="bdQ" type="search" placeholder="Nombre del proyecto, municipio…"></label>
+      <button class="btn small" type="button" id="bdXlsx">Descargar Excel</button>
+    </div>
+    <div id="bdList" class="f3list"></div>
+    <div class="note info" style="margin-top:18px"><b class="t">Sobre estas cifras</b>Fuente: Gobernación de Caldas, Equipo Estructurador, «Proyectos de infraestructura social · departamento · calamidad» (corte 17 de noviembre de 2026). Los dos grupos se muestran por separado y no se suman entre sí: el CDI «Huellitas» de Palestina y el Hospital Santa Teresita de Pácora aparecen en ambos con valores distintos. Las bolsas de vivienda y de unidades productivas son topes máximos, no proyectos individuales. Cuando un aporte figura como «sin dato», el archivo de origen no lo trae.</div>
   </div></section>
 </div>
 
@@ -1376,6 +1404,47 @@ $("#f3Q").addEventListener("input",renderFase3);
 $("#f3Xlsx").addEventListener("click",()=>{const P=f3Filtrados();
   const C=[["municipio","Municipio",16],["dane","DANE",8],["subregion","Subregión",16],["id","ID",8],["nombre","Proyecto",44],["objetivo","Objetivo",40],["producto","Producto",24],["localizacion","Localización",22],["beneficiarios","Beneficiarios",12],["etapa","Etapa",22],["linea","Línea PAE",10],["taxonomia","Taxonomía",14],["costo","Costo (pesos)",16],["confirmado","Confirmado (pesos)",16],["brecha","Brecha (pesos)",16],["via","Vía de financiación",20],["estudios","Estudios y diseños",12],["predio","Predio",10],["presupuesto","Presupuesto",12],["validado","Reporte validado",12]];
   XLSX.escribir([{nombre:"Proyectos Fase III",columnas:C.map(([,t,w])=>({t,w})),filas:P.map(x=>C.map(([k])=>k==="brecha"?(x.costo?Math.max(0,x.costo-x.confirmado):""):k==="validado"?(x.estado==="validado"?"Sí":"No"):x[k]===0&&["costo","confirmado","beneficiarios"].includes(k)?"":x[k]))}],`Proyectos_Fase_III_PAE_Caldas_${new Date().toISOString().slice(0,10)}.xlsx`)});
+
+/* ================= BANCO DEPARTAMENTAL (Fase III · Gobernación) ================= */
+const BD={grp:"v"};
+const BD_EST={"En ejecución":"e1","Contratación":"e1","Viabilizado":"e2","Viabilidad técnica":"e2","En viabilización":"e3","En estudios y diseños":"e4","Bolsa (tope máximo)":"e5"};
+const BD_ORD=["En ejecución","Contratación","Viabilizado","Viabilidad técnica","En viabilización","En estudios y diseños","Bolsa (tope máximo)"];
+const bdM=v=>v==null?"Sin dato":money(v);
+function bdFiltrados(){const B=window.PAE_BANCO;if(!B)return[];const mu=$("#bdMun").value,se=$("#bdSecF").value,es=$("#bdEstF").value,q=($("#bdQ").value||"").normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase().trim();
+  return B.p.filter(x=>x.g===BD.grp&&(!mu||x.mun.split(" · ").includes(mu))&&(!se||x.sec===se)&&(!es||x.est===es)&&(!q||(x.nom+" "+x.mun).normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase().includes(q)))}
+function bdBarras(el,pares){const mx=Math.max(1,...pares.map(p=>p[1]));el.innerHTML=pares.map(([k,v,n])=>`<div class="gaprow"><span title="${esc(k)}" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(k)}</span><div class="gapbar"><i style="width:${v/mx*100}%;background:var(--teal)"></i></div><em><b>${moneyM(v)}</b> · ${n}</em></div>`).join("")}
+function initBanco(){const B=window.PAE_BANCO;if(!B||$("#bdMun").options.length>1)return;
+  $("#bdCorte").textContent=new Date(B.corte+"T12:00:00").toLocaleDateString("es-CO",{day:"numeric",month:"long",year:"numeric"});
+  const muns=[...new Set(B.p.flatMap(x=>x.mun.split(" · ")))].filter(m=>m!=="Departamento de Caldas").sort((a,b)=>a.localeCompare(b,"es"));
+  $("#bdMun").insertAdjacentHTML("beforeend",muns.map(m=>`<option>${esc(m)}</option>`).join(""));
+  $("#bdSecF").insertAdjacentHTML("beforeend",[...new Set(B.p.map(x=>x.sec))].sort((a,b)=>a.localeCompare(b,"es")).map(m=>`<option>${esc(m)}</option>`).join(""));
+  $("#bdEstF").insertAdjacentHTML("beforeend",BD_ORD.map(m=>`<option>${esc(m)}</option>`).join(""));
+  ["#bdMun","#bdSecF","#bdEstF"].forEach(id=>$(id).addEventListener("change",renderBanco));$("#bdQ").addEventListener("input",renderBanco);
+  $("#bdGrp").addEventListener("click",e=>{const b=e.target.closest("[data-g]");if(b){BD.grp=b.dataset.g;$("#bdEstF").value="";renderBanco()}});
+  $("#bdXlsx").addEventListener("click",()=>{const P=bdFiltrados(),C=[["n","N.º",6],["nom","Proyecto",56],["sec","Sector",22],["sub","Subregión",16],["mun","Municipio",22],["est","Estado",18],["plazo","Plazo",10],["val","Valor del proyecto",18],["gob","Aporte Gobernación",18],["mu","Aporte municipio",16],["nac","Aporte Nación",16],["hab","Habitantes impactados",14]];
+    XLSX.escribir([{nombre:BD.grp==="v"?"Ejecución y viabilización":"Infraestructura social",columnas:C.map(([,t,w])=>({t,w})),filas:P.map(x=>C.map(([k])=>x[k]==null?"":x[k]))}],"Banco_departamental_proyectos_Caldas.xlsx")});
+}
+function renderBanco(){const B=window.PAE_BANCO;if(!B)return;initBanco();
+  const G={v:B.p.filter(x=>x.g==="v"),s:B.p.filter(x=>x.g==="s")},tot=L=>L.reduce((a,x)=>a+x.val,0),cnt=(L,f)=>L.filter(f).length;
+  $("#bdGrp").innerHTML=[["v",`Ejecución y viabilización 2025–2026 · ${G.v.length}`],["s",`Infraestructura social por la calamidad · ${G.s.length}`]].map(([k,t])=>`<button type="button" data-g="${k}" aria-pressed="${BD.grp===k}">${t}</button>`).join("");
+  const ej=G.v.filter(x=>x.est==="En ejecución"||x.est==="Contratación");
+  $("#bdTit").textContent=`${ej.length} proyectos en ejecución o contratación por ${moneyM(tot(ej))}, y ${G.v.length-ej.length} más viabilizados o en viabilización`;
+  const L=G[BD.grp],gob=L.reduce((a,x)=>a+(x.gob||0),0),nac=L.reduce((a,x)=>a+(x.nac||0),0);
+  $("#bdKpis").innerHTML=(BD.grp==="v"?[[fmt(L.length),"proyectos","",`en ${new Set(L.flatMap(x=>x.mun.split(" · "))).size} municipios`],[moneyM(tot(L)),"valor total","b",`${cnt(L,x=>x.est==="En ejecución")} en ejecución · ${cnt(L,x=>x.est==="Contratación")} en contratación`],[moneyM(gob),"aporte de la Gobernación","v",`identificado en ${cnt(L,x=>x.gob)} proyectos`],[moneyM(nac),"aporte de la Nación","g",`en ${cnt(L,x=>x.nac)} proyectos de salud`]]
+    :[[fmt(L.length),"proyectos y bolsas","",`${cnt(L,x=>x.est==="Bolsa (tope máximo)")} son bolsas con tope máximo`],[moneyM(tot(L)),"valor total","b","incluye $44.000 M en bolsas"],[fmt(cnt(L,x=>x.est==="En viabilización"||x.est==="Viabilidad técnica")),"en viabilización","v","con viabilidad técnica o en trámite"],[fmt(cnt(L,x=>x.est==="En estudios y diseños")),"en estudios y diseños","g","estaciones de bomberos y Hospital de Supía"]])
+    .map(([b,t,k,d])=>`<div class="stat ${k}"><b class="num">${b}</b><span>${t}</span><em class="det">${d}</em></div>`).join("");
+  const agr=(f,ord)=>{const o={};L.forEach(x=>{const k=f(x);o[k]=o[k]||[0,0];o[k][0]+=x.val;o[k][1]++});return Object.entries(o).map(([k,[v,n]])=>[k,v,n+(n===1?" proyecto":" proyectos")]).sort((a,b)=>ord?ord.indexOf(a[0])-ord.indexOf(b[0]):b[1]-a[1])};
+  bdBarras($("#bdEst"),agr(x=>x.est,BD_ORD));bdBarras($("#bdSec"),agr(x=>x.sec));
+  const P=bdFiltrados();
+  $("#bdList").innerHTML=P.map(x=>`<article class="f3card">
+    <div class="top"><span>${esc(x.mun)}${x.sub?" · "+esc(x.sub):""} · N.º ${x.n}</span></div>
+    <h3>${esc(x.nom)}</h3>
+    <div class="tags"><span class="tag ${BD_EST[x.est]||""}">${esc(x.est)}</span><span class="tag">${esc(x.sec)}</span>${x.plazo?`<span class="tag">Plazo: ${esc(x.plazo)}</span>`:""}${x.hab?`<span class="tag">${fmt(x.hab)} habitantes</span>`:""}</div>
+    <div class="money"><div><b class="num">${money(x.val)}</b><span>valor</span></div>${x.g==="v"?`<div><b class="num">${bdM(x.gob)}</b><span>Gobernación</span></div><div><b class="num">${x.nac?money(x.nac):x.mu?money(x.mu):bdM(x.nac==null&&x.mu==null?null:0)}</b><span>${x.nac?"Nación":"Municipio"}</span></div>`:`<div></div><div></div>`}</div>
+  </article>`).join("")||'<div class="empty">No hay proyectos con estos filtros.</div>';
+}
+$("#f3Tabs").addEventListener("click",e=>{const b=e.target.closest("[data-t]");if(!b)return;const dep=b.dataset.t==="dep";
+  $$("#f3Tabs button").forEach(x=>x.setAttribute("aria-pressed",x===b));$("#f3PaneMun").hidden=dep;$("#f3PaneDep").hidden=!dep;if(dep)renderBanco()});
 
 /* ================= LOGIN ================= */
 function initLogin(){
