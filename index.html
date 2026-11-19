@@ -862,9 +862,9 @@ function demoRep(db,d){if(!db.reportes[d])db.reportes[d]={estado:"sin iniciar",v
 function demoOut(d,r,admin){const o={dane:d,municipio:MUNI[d].nombre,subregion:MUNI[d].subregion,estado:r.estado,version:r.version,actualizado:r.actualizado,enviado:r.enviado,validado:r.validado,reporte:r.reporte,observaciones:r.adm.observaciones||[],lineaBase:r.adm.lineaBase||{}};if(admin){o.dictamen=r.adm.dictamen||"";o.prioridad=r.adm.prioridad||"";o.fondoMilagro=r.adm.fondoMilagro||""}return o}
 function demoLog(db,u,d,a,det){db.bitacora.unshift({fecha:new Date().toISOString(),usuario:u==="gobernacion"?"Gobernación":(MUNI[u]?MUNI[u].nombre:u),municipio:d&&MUNI[d]?MUNI[d].nombre:"",accion:a,detalle:det||""})}
 async function demo(a,b){
-  const db=demoDB(),u=SES&&SES.usuario,adm=u==="gobernacion"||u==="pnud";
+  const db=demoDB(),u=SES&&SES.usuario,adm=u==="gobernacion"||u==="pnud"||u==="pnud-ungrd";
   const done=x=>{demoSave(db);return x};
-  if(a==="login"){if(b.clave!=="demo")return{ok:false,error:"En modo demostración la contraseña es «demo»"};const m=MUNI[b.usuario];demoLog(db,b.usuario,m?b.usuario:"","Ingresó a la plataforma");return done({ok:true,token:"demo",usuario:b.usuario,rol:b.usuario==="gobernacion"?"gobernacion":b.usuario==="pnud"?"aliado":"municipio",aliado:b.usuario==="pnud"?{nombre:"PNUD · Naciones Unidas"}:null,municipio:m||null})}
+  if(a==="login"){if(b.clave!=="demo")return{ok:false,error:"En modo demostración la contraseña es «demo»"};const m=MUNI[b.usuario];demoLog(db,b.usuario,m?b.usuario:"","Ingresó a la plataforma");return done({ok:true,token:"demo",usuario:b.usuario,rol:(b.usuario==="gobernacion"||b.usuario==="pnud-ungrd")?"gobernacion":b.usuario==="pnud"?"aliado":"municipio",aliado:b.usuario==="pnud"?{nombre:"PNUD · Naciones Unidas"}:b.usuario==="pnud-ungrd"?{nombre:"PNUD · Enlace UNGRD"}:null,municipio:m||null})}
   if(a==="publico"){return{ok:true,datos:{municipios:MUN.map(m=>{const r=demoRep(db,m.dane);return pubAgg(m,r.estado,r.actualizado,r.reporte,r.adm.lineaBase)}),fase3:MUN.flatMap(m=>{const r=demoRep(db,m.dane);return fase3Of(r.reporte,m,r.estado)}),acciones:db.acciones||window.PAE_ACCIONES||[],cifras:db.cifras||window.PAE_CIFRAS||[],corte:new Date().toISOString()}}}
   if(a==="mi")return done({ok:true,reporte:demoOut(u,demoRep(db,u),false)});
   if(a==="guardar"){const d=adm?b.dane:u,r=demoRep(db,d);if(Number(b.version)!==r.version)return{ok:false,error:"conflicto",mensaje:"Hay una versión más reciente.",reporte:demoOut(d,r,adm)};if(r.estado==="sin iniciar")r.estado="diligenciamiento";if(r.estado==="validado"&&!adm){r.estado="enviado";demoLog(db,u,d,"Editó un reporte validado: vuelve a «enviado»")}r.reporte=b.reporte;r.version++;r.actualizado=new Date().toISOString();return done({ok:true,version:r.version,estado:r.estado,actualizado:r.actualizado})}
@@ -956,7 +956,7 @@ function renderNav(){
   if(SES&&SES.rol==="gobernacion")h+=`<a href="#gobernacion">Panel Gobernación</a>`;
   if(SES&&SES.rol==="aliado")h+=`<a href="#gobernacion">Panel departamental</a>`;
   h+=`<a href="instructivo-pae-caldas.pdf" target="_blank" rel="noopener">Instructivo</a>`;
-  if(SES)h+=`<span class="who">${esc(SES.rol==="gobernacion"?"Gobernación":SES.rol==="aliado"?((SES.aliado||{}).nombre||"PNUD"):(SES.municipio||{}).nombre)}</span><button type="button" id="logoutBtn">Salir</button>`;
+  if(SES)h+=`<span class="who">${esc(SES.rol==="gobernacion"?(SES.aliado?SES.aliado.nombre:"Gobernación"):SES.rol==="aliado"?((SES.aliado||{}).nombre||"PNUD"):(SES.municipio||{}).nombre)}</span><button type="button" id="logoutBtn">Salir</button>`;
   else h+=`<a href="#ingresar" class="cta">Ingresar</a>`;
   $("#nav").innerHTML=h;
   $$("#nav a").forEach(a=>{if(a.getAttribute("href")==="#"+v)a.setAttribute("aria-current","page")});
@@ -1476,7 +1476,7 @@ $("#f3Tabs").addEventListener("click",e=>{const b=e.target.closest("[data-t]");i
 
 /* ================= LOGIN ================= */
 function initLogin(){
-  const s=$("#lgUser");if(!s.options.length)s.innerHTML=`<option value="">Seleccione…</option><option value="gobernacion">Gobernación de Caldas · equipo coordinador</option><option value="pnud">PNUD · Naciones Unidas (consulta)</option><optgroup label="Municipios">${[...MUN].sort((a,b)=>a.nombre.localeCompare(b.nombre,"es")).map(m=>`<option value="${m.dane}">${esc(m.nombre)} (${m.dane})</option>`).join("")}</optgroup>`;
+  const s=$("#lgUser");if(!s.options.length)s.innerHTML=`<option value="">Seleccione…</option><option value="gobernacion">Gobernación de Caldas · equipo coordinador</option><option value="pnud-ungrd">PNUD · Enlace UNGRD (gestión)</option><option value="pnud">PNUD · Naciones Unidas (consulta)</option><optgroup label="Municipios">${[...MUN].sort((a,b)=>a.nombre.localeCompare(b.nombre,"es")).map(m=>`<option value="${m.dane}">${esc(m.nombre)} (${m.dane})</option>`).join("")}</optgroup>`;
   $("#demoHint").hidden=!DEMO;
 }
 $("#loginForm").addEventListener("submit",async e=>{
