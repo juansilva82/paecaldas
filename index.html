@@ -1538,8 +1538,9 @@ function stepObs(){
   $("#wsBody").innerHTML=`<div class="listhead"><h2>Observaciones de la Gobernación</h2></div><p class="muted">Solo la Gobernación escribe observaciones; usted las lee y ajusta su reporte.</p>
    ${O.length?`<div class="obs">${[...O].reverse().map(o=>`<div class="o ${o.tipo==="devolución"?"dev":""}"><small>${fdt(o.fecha)} · ${esc(o.tipo==="devolución"?"Devolución":"Observación")}${o.autor&&o.autor!=="Gobernación"?" · "+esc(o.autor):""}</small>${esc(o.texto).replace(/\n/g,"<br>")}</div>`).join("")}</div>`:'<div class="empty">No hay observaciones.</div>'}`;
 }
-function stepCuenta(){
-  $("#wsBody").innerHTML=`<div class="listhead"><h2>Mi cuenta</h2></div>
+function gCuenta(){stepCuenta("#gBody")}
+function stepCuenta(sel){
+  $(sel||"#wsBody").innerHTML=`<div class="listhead"><h2>Mi cuenta</h2></div>
    <form class="panel" id="pwForm" style="max-width:480px"><h3>Cambiar contraseña</h3>
    <label class="f">Contraseña actual<input type="password" id="pwA" autocomplete="current-password" required></label>
    <label class="f">Nueva contraseña <small>Mínimo 10 caracteres</small><input type="password" id="pwN" autocomplete="new-password" minlength="10" required></label>
@@ -1734,7 +1735,7 @@ async function importXlsx(file){
 
 /* ================= PANEL DE LA GOBERNACIÓN ================= */
 let G=null;   // {reportes, acciones, tab, sel}
-const GT=[["Municipios","municipios"],["Cartera Única","cartera"],["Cartera frente al PAE","pae"],["Equivalencia PAE Nacional","nacional"],["Acciones","acciones"],["Cifras de la respuesta","cifras"],["Bitácora","bitacora"]];
+const GT=[["Municipios","municipios"],["Cartera Única","cartera"],["Cartera frente al PAE","pae"],["Equivalencia PAE Nacional","nacional"],["Acciones","acciones"],["Cifras de la respuesta","cifras"],["Bitácora","bitacora"],["Mi cuenta","cuenta"]];
 async function openGob(force){
   if(G&&!force){renderG();return}
   $("#gBody").innerHTML='<div class="empty">Cargando los 27 reportes…</div>';
@@ -1744,7 +1745,7 @@ $("#gReload").addEventListener("click",()=>openGob(true));
 function renderG(){
   $("#gTabs").innerHTML=GT.map(([t,k])=>`<button type="button" data-g="${k}"${G.tab===k?' aria-current="step"':""}>${t}</button>`).join("");
   $("#gMeta").textContent=`${G.reportes.filter(r=>r.estado==="validado").length} validados · ${G.reportes.filter(r=>r.estado==="enviado").length} por revisar · ${G.reportes.filter(r=>r.estado==="sin iniciar").length} sin iniciar`;
-  ({municipios:G.sel?gMuni:gList,cartera:gCartera,pae:gPAE,nacional:gNacional,acciones:gAcciones,cifras:gCifras,bitacora:gBitacora})[G.tab]();
+  ({municipios:G.sel?gMuni:gList,cartera:gCartera,pae:gPAE,nacional:gNacional,acciones:gAcciones,cifras:gCifras,bitacora:gBitacora,cuenta:gCuenta})[G.tab]();
 }
 $("#gTabs").addEventListener("click",e=>{const b=e.target.closest("[data-g]");if(!b)return;G.tab=b.dataset.g;G.sel=null;renderG()});
 const repOf=r=>Object.assign(emptyRep(),r.reporte||{});
