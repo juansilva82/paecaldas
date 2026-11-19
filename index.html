@@ -69,6 +69,7 @@ p{margin:0}
 .bd-grp{display:flex;gap:6px;flex-wrap:wrap;margin:18px 0 0}.bd-grp button{all:unset;cursor:pointer;font:600 13px var(--body);padding:8px 14px;border-radius:999px;border:1px solid #d6d3c9;color:var(--muted);background:#fff}
 .bd-grp button[aria-pressed="true"]{border-color:var(--teal);color:var(--teal);background:var(--soft)}
 .f3card .tag.e1{background:#e3f1e7;color:#22663a}.f3card .tag.e2{background:#e2eef6;color:#1d5a85}.f3card .tag.e3{background:#fbf0d6;color:#7a5a12}.f3card .tag.e4{background:#efeee9;color:#5b5a53}.f3card .tag.e5{background:#efe6f5;color:#5d3a7a}
+.bd-img{position:relative;display:block;margin:-16px -18px 4px;border-radius:16px 16px 0 0;overflow:hidden;aspect-ratio:16/8}.bd-img img{width:100%;height:100%;object-fit:cover;display:block}.bd-img span{position:absolute;left:10px;bottom:10px;font:700 11.5px var(--body);background:var(--gold);color:#fff;padding:4px 10px;border-radius:999px}
 .bd-bars{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:18px}
 @media (max-width:760px){.bd-bars{grid-template-columns:1fr}.f3tabs{border-radius:16px}.f3tabs button{flex:1;text-align:center}}
 .f3list{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:14px}
@@ -1437,6 +1438,7 @@ function renderBanco(){const B=window.PAE_BANCO;if(!B)return;initBanco();
   bdBarras($("#bdEst"),agr(x=>x.est,BD_ORD));bdBarras($("#bdSec"),agr(x=>x.sec));
   const P=bdFiltrados();
   $("#bdList").innerHTML=P.map(x=>`<article class="f3card">
+    ${x.img?`<a href="#oxi" class="bd-img" title="Ver en Obras por Impuestos"><img src="img/oxi/${x.img}-render.jpg" alt="Render del proyecto: ${esc(x.nom)}" loading="lazy"><span>También en Obras por Impuestos</span></a>`:""}
     <div class="top"><span>${esc(x.mun)}${x.sub?" · "+esc(x.sub):""} · N.º ${x.n}</span></div>
     <h3>${esc(x.nom)}</h3>
     <div class="tags"><span class="tag ${BD_EST[x.est]||""}">${esc(x.est)}</span><span class="tag">${esc(x.sec)}</span>${x.plazo?`<span class="tag">Plazo: ${esc(x.plazo)}</span>`:""}${x.hab?`<span class="tag">${fmt(x.hab)} habitantes</span>`:""}</div>
