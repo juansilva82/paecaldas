@@ -277,6 +277,10 @@ section.band.cream{background:var(--cream)}
 @media (max-width:700px){.cmp .r{grid-template-columns:minmax(0,1fr) 92px}.cmp .track{grid-column:1/-1;order:3}}
 
 
+/* ===== Rol de consulta (PNUD) ===== */
+.ro-only{display:none}body.ro .ro-only{display:block}
+.rob{margin:8px 0 0;padding:8px 12px;border-radius:10px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);font-size:13.5px;max-width:70ch}
+body.ro [data-x="validar"],body.ro [data-x="devolver"],body.ro [data-x="reset"],body.ro [data-x="reservado"],body.ro [data-x="lb"],body.ro [data-x="acc-save"],body.ro [data-x="cif-save"]{display:none!important}
 /* ===== Títulos que concluyen y detalle de cifras ===== */
 .shead{flex-wrap:nowrap}.shead > div{min-width:0;flex:1}.shead h2{max-width:36ch}
 .shead .eyebrow{display:block;font:700 11px var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
@@ -754,7 +758,7 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
 <!-- =================== GOBERNACIÓN =================== -->
 <div id="v-gobernacion" data-view hidden>
   <div class="ws-head"><div class="wrap">
-    <div><span class="eyebrow">Equipo coordinador de la reconstrucción</span><h1>Panel de la Gobernación</h1><p class="meta" id="gMeta">Revisión, validación y productos de la consolidación.</p></div>
+    <div><span class="eyebrow">Equipo coordinador de la reconstrucción</span><h1>Panel de la Gobernación</h1><p class="ro-only rob">Acceso de consulta · PNUD: puede ver los 27 reportes, descargar los consolidados y dejar observaciones. Validar, devolver y editar es exclusivo de la Gobernación.</p><p class="meta" id="gMeta">Revisión, validación y productos de la consolidación.</p></div>
     <div class="right"><button class="btn gold small" type="button" id="gReload">Actualizar datos</button></div>
   </div></div>
   <nav class="steps" aria-label="Secciones del panel"><div class="wrap" id="gTabs"></div></nav>
@@ -811,9 +815,9 @@ function demoRep(db,d){if(!db.reportes[d])db.reportes[d]={estado:"sin iniciar",v
 function demoOut(d,r,admin){const o={dane:d,municipio:MUNI[d].nombre,subregion:MUNI[d].subregion,estado:r.estado,version:r.version,actualizado:r.actualizado,enviado:r.enviado,validado:r.validado,reporte:r.reporte,observaciones:r.adm.observaciones||[],lineaBase:r.adm.lineaBase||{}};if(admin){o.dictamen=r.adm.dictamen||"";o.prioridad=r.adm.prioridad||"";o.fondoMilagro=r.adm.fondoMilagro||""}return o}
 function demoLog(db,u,d,a,det){db.bitacora.unshift({fecha:new Date().toISOString(),usuario:u==="gobernacion"?"Gobernación":(MUNI[u]?MUNI[u].nombre:u),municipio:d&&MUNI[d]?MUNI[d].nombre:"",accion:a,detalle:det||""})}
 async function demo(a,b){
-  const db=demoDB(),u=SES&&SES.usuario,adm=u==="gobernacion";
+  const db=demoDB(),u=SES&&SES.usuario,adm=u==="gobernacion"||u==="pnud";
   const done=x=>{demoSave(db);return x};
-  if(a==="login"){if(b.clave!=="demo")return{ok:false,error:"En modo demostración la contraseña es «demo»"};const m=MUNI[b.usuario];demoLog(db,b.usuario,m?b.usuario:"","Ingresó a la plataforma");return done({ok:true,token:"demo",usuario:b.usuario,rol:b.usuario==="gobernacion"?"gobernacion":"municipio",municipio:m||null})}
+  if(a==="login"){if(b.clave!=="demo")return{ok:false,error:"En modo demostración la contraseña es «demo»"};const m=MUNI[b.usuario];demoLog(db,b.usuario,m?b.usuario:"","Ingresó a la plataforma");return done({ok:true,token:"demo",usuario:b.usuario,rol:b.usuario==="gobernacion"?"gobernacion":b.usuario==="pnud"?"aliado":"municipio",aliado:b.usuario==="pnud"?{nombre:"PNUD · Naciones Unidas"}:null,municipio:m||null})}
   if(a==="publico"){return{ok:true,datos:{municipios:MUN.map(m=>{const r=demoRep(db,m.dane);return pubAgg(m,r.estado,r.actualizado,r.reporte,r.adm.lineaBase)}),fase3:MUN.flatMap(m=>{const r=demoRep(db,m.dane);return fase3Of(r.reporte,m,r.estado)}),acciones:db.acciones||window.PAE_ACCIONES||[],cifras:db.cifras||window.PAE_CIFRAS||[],corte:new Date().toISOString()}}}
   if(a==="mi")return done({ok:true,reporte:demoOut(u,demoRep(db,u),false)});
   if(a==="guardar"){const d=adm?b.dane:u,r=demoRep(db,d);if(Number(b.version)!==r.version)return{ok:false,error:"conflicto",mensaje:"Hay una versión más reciente.",reporte:demoOut(d,r,adm)};if(r.estado==="sin iniciar")r.estado="diligenciamiento";if(r.estado==="validado"&&!adm){r.estado="enviado";demoLog(db,u,d,"Editó un reporte validado: vuelve a «enviado»")}r.reporte=b.reporte;r.version++;r.actualizado=new Date().toISOString();return done({ok:true,version:r.version,estado:r.estado,actualizado:r.actualizado})}
@@ -903,8 +907,9 @@ function renderNav(){
   let h=`<a href="#inicio">Consolidado</a><a href="#acciones">Acciones de la Gobernación</a><a href="#fase3">Proyectos Fase III</a><a href="#oxi">Obras por Impuestos</a>`;
   if(SES&&SES.rol==="municipio")h+=`<a href="#municipio">Mi reporte</a>`;
   if(SES&&SES.rol==="gobernacion")h+=`<a href="#gobernacion">Panel Gobernación</a>`;
+  if(SES&&SES.rol==="aliado")h+=`<a href="#gobernacion">Panel departamental</a>`;
   h+=`<a href="instructivo-pae-caldas.pdf" target="_blank" rel="noopener">Instructivo</a>`;
-  if(SES)h+=`<span class="who">${esc(SES.rol==="gobernacion"?"Gobernación":(SES.municipio||{}).nombre)}</span><button type="button" id="logoutBtn">Salir</button>`;
+  if(SES)h+=`<span class="who">${esc(SES.rol==="gobernacion"?"Gobernación":SES.rol==="aliado"?((SES.aliado||{}).nombre||"PNUD"):(SES.municipio||{}).nombre)}</span><button type="button" id="logoutBtn">Salir</button>`;
   else h+=`<a href="#ingresar" class="cta">Ingresar</a>`;
   $("#nav").innerHTML=h;
   $$("#nav a").forEach(a=>{if(a.getAttribute("href")==="#"+v)a.setAttribute("aria-current","page")});
@@ -917,8 +922,10 @@ function route(){
   if(anc){v="inicio";setTimeout(()=>$("#"+anc).scrollIntoView({behavior:"smooth"}),60)}
   if(!VIEWS.includes(v))v="inicio";
   if(v==="municipio"&&!(SES&&SES.rol==="municipio"))v=SES?"gobernacion":"ingresar";
-  if(v==="gobernacion"&&!(SES&&SES.rol==="gobernacion"))v=SES?"municipio":"ingresar";
-  if(v==="ingresar"&&SES)v=SES.rol==="gobernacion"?"gobernacion":"municipio";
+  if(v==="municipio"&&(SES&&(SES.rol==="gobernacion"||SES.rol==="aliado")))v="gobernacion";
+  if(v==="gobernacion"&&!(SES&&(SES.rol==="gobernacion"||SES.rol==="aliado")))v=SES?"municipio":"ingresar";
+  if(v==="ingresar"&&SES)v=SES.rol==="municipio"?"municipio":"gobernacion";
+  document.body.classList.toggle("ro",!!(SES&&SES.rol==="aliado"));
   if(!anc&&("#"+v)!==location.hash)history.replaceState(null,"","#"+v);
   $$("[data-view]").forEach(el=>el.hidden=el.id!=="v-"+v);
   renderNav();
@@ -1372,7 +1379,7 @@ $("#f3Xlsx").addEventListener("click",()=>{const P=f3Filtrados();
 
 /* ================= LOGIN ================= */
 function initLogin(){
-  const s=$("#lgUser");if(!s.options.length)s.innerHTML=`<option value="">Seleccione…</option><option value="gobernacion">Gobernación de Caldas · equipo coordinador</option><optgroup label="Municipios">${[...MUN].sort((a,b)=>a.nombre.localeCompare(b.nombre,"es")).map(m=>`<option value="${m.dane}">${esc(m.nombre)} (${m.dane})</option>`).join("")}</optgroup>`;
+  const s=$("#lgUser");if(!s.options.length)s.innerHTML=`<option value="">Seleccione…</option><option value="gobernacion">Gobernación de Caldas · equipo coordinador</option><option value="pnud">PNUD · Naciones Unidas (consulta)</option><optgroup label="Municipios">${[...MUN].sort((a,b)=>a.nombre.localeCompare(b.nombre,"es")).map(m=>`<option value="${m.dane}">${esc(m.nombre)} (${m.dane})</option>`).join("")}</optgroup>`;
   $("#demoHint").hidden=!DEMO;
 }
 $("#loginForm").addEventListener("submit",async e=>{
@@ -1380,8 +1387,8 @@ $("#loginForm").addEventListener("submit",async e=>{
   if(!u||!p){msg.hidden=false;msg.textContent="Seleccione su usuario y escriba la contraseña.";return}
   b.disabled=true;b.textContent="Verificando…";msg.hidden=true;
   try{const j=await call("login",{usuario:u,clave:p});if(!j.ok)throw new Error(j.error);
-    SES={token:j.token,usuario:j.usuario,rol:j.rol,municipio:j.municipio};lsSet("pae.sesion",SES);$("#lgPass").value="";
-    location.hash=j.rol==="gobernacion"?"#gobernacion":"#municipio";
+    SES={token:j.token,usuario:j.usuario,rol:j.rol,municipio:j.municipio,aliado:j.aliado||null};lsSet("pae.sesion",SES);$("#lgPass").value="";
+    location.hash=j.rol==="municipio"?"#municipio":"#gobernacion";
   }catch(err){msg.hidden=false;msg.textContent=err.message||"No fue posible ingresar"}
   finally{b.disabled=false;b.textContent="Ingresar"}
 });
@@ -1529,7 +1536,7 @@ function stepReview(){
 function stepObs(){
   const O=W.data.observaciones||[];
   $("#wsBody").innerHTML=`<div class="listhead"><h2>Observaciones de la Gobernación</h2></div><p class="muted">Solo la Gobernación escribe observaciones; usted las lee y ajusta su reporte.</p>
-   ${O.length?`<div class="obs">${[...O].reverse().map(o=>`<div class="o ${o.tipo==="devolución"?"dev":""}"><small>${fdt(o.fecha)} · ${esc(o.tipo==="devolución"?"Devolución":"Observación")}</small>${esc(o.texto).replace(/\n/g,"<br>")}</div>`).join("")}</div>`:'<div class="empty">No hay observaciones.</div>'}`;
+   ${O.length?`<div class="obs">${[...O].reverse().map(o=>`<div class="o ${o.tipo==="devolución"?"dev":""}"><small>${fdt(o.fecha)} · ${esc(o.tipo==="devolución"?"Devolución":"Observación")}${o.autor&&o.autor!=="Gobernación"?" · "+esc(o.autor):""}</small>${esc(o.texto).replace(/\n/g,"<br>")}</div>`).join("")}</div>`:'<div class="empty">No hay observaciones.</div>'}`;
 }
 function stepCuenta(){
   $("#wsBody").innerHTML=`<div class="listhead"><h2>Mi cuenta</h2></div>
@@ -1766,7 +1773,7 @@ function gMuni(){
     </div>
     <div class="panel"><h3>Alertas automáticas (${A.length})</h3>${A.length?`<ul class="alerts">${A.map(a=>`<li><span class="tag ${a.n}">${a.n==="crit"?"Crítica":"Advertencia"}</span>${esc(a.t)}</li>`).join("")}</ul>`:'<div class="note ok">Sin alertas.</div>'}</div>
    </div>
-   ${(r.observaciones||[]).length?`<div class="panel"><h3>Historial de observaciones</h3><div class="obs">${[...r.observaciones].reverse().map(o=>`<div class="o ${o.tipo==="devolución"?"dev":""}"><small>${fdt(o.fecha)} · ${esc(o.tipo)}</small>${esc(o.texto).replace(/\n/g,"<br>")}</div>`).join("")}</div></div>`:""}
+   ${(r.observaciones||[]).length?`<div class="panel"><h3>Historial de observaciones</h3><div class="obs">${[...r.observaciones].reverse().map(o=>`<div class="o ${o.tipo==="devolución"?"dev":""}"><small>${fdt(o.fecha)} · ${esc(o.tipo)}${o.autor?" · "+esc(o.autor):""}</small>${esc(o.texto).replace(/\n/g,"<br>")}</div>`).join("")}</div></div>`:""}
    <div class="panel"><h3>Necesidades (${R.necesidades.length})</h3>${roTable("nec",R.necesidades)}</div>
    <div class="panel"><h3>Intervenciones (${R.intervenciones.length})</h3>${roTable("int",R.intervenciones)}</div>
    <div class="panel"><h3>Proyectos (${R.proyectos.length})</h3>${roTable("pro",R.proyectos)}</div>
