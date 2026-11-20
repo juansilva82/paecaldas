@@ -18,6 +18,7 @@
 <script src="mapa-caldas.js"></script>
 <script src="banco-departamental.js"></script>
 <script src="documentos.js"></script>
+<script src="ayuda-humanitaria.js"></script>
 <script src="xlsx.js"></script>
 <style>
 :root{
@@ -233,6 +234,11 @@ section.band.cream{background:var(--cream)}
 .docest{font-size:13px;color:#8a6100;font-weight:600;margin:0 0 14px}.docmeta{font-size:12.5px;color:var(--muted);margin:10px 0 0}
 .doclist{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:12px}.doclist li{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;border-top:1px solid var(--line);padding-top:12px}.doclist span{display:block;font-size:13px;color:var(--muted);margin-top:4px}.doclist em{display:block;font-size:12px;font-style:normal;color:var(--muted);margin-top:4px}
 @media (max-width:860px){.docgrid{grid-template-columns:1fr}.docnums{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.ahcard h4{font:700 15px/1.3 var(--head);color:var(--ink);margin:0 0 10px}
+.ahalert{margin:12px 0 16px;padding:12px 14px;border-left:4px solid #c2553a;background:#fbefeb;border-radius:0 10px 10px 0;font-size:14.5px;line-height:1.5}
+.ahalert:empty{display:none}
+.ahgrid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:24px;align-items:start}
+@media (max-width:860px){.ahgrid{grid-template-columns:1fr}}
 .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
 .grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
 .grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
@@ -542,7 +548,7 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
     <div class="wrap">
       <div class="shead"><div><small class="eyebrow">Caldas en el mapa</small><h2 id="h-mapa">Caldas en el mapa</h2><p>Dónde golpeó el sismo, cómo va el reporte de cada municipio y dónde están los proyectos listos para financiar. Haga clic en un municipio para ver su detalle.</p><div class="bar4" style="margin-top:10px"></div></div></div>
       <div class="mapctl">
-        <div class="seg" role="group" aria-label="Capa del mapa" id="mapCapa"><button type="button" data-c="af" aria-pressed="true">Afectación del sismo</button><button type="button" data-c="es" aria-pressed="false">Estado del reporte</button><button type="button" data-c="pr" aria-pressed="false">Proyectos</button></div>
+        <div class="seg" role="group" aria-label="Capa del mapa" id="mapCapa"><button type="button" data-c="af" aria-pressed="true">Afectación del sismo</button><button type="button" data-c="es" aria-pressed="false">Estado del reporte</button><button type="button" data-c="pr" aria-pressed="false">Proyectos</button><button type="button" data-c="ah" aria-pressed="false">Ayuda humanitaria</button></div>
         <div class="seg sub" role="group" aria-label="Medida de afectación" id="mapMed"><button type="button" data-m="abs" aria-pressed="false">Viviendas afectadas</button><button type="button" data-m="rel" aria-pressed="true">Por cada 1.000 viviendas</button></div>
       </div>
       <div class="mapa">
@@ -658,6 +664,7 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
         <div class="card"><h3>Giros pendientes por cobrar</h3><p class="sub" id="gobPenSub">Por municipio</p><div class="donutbox sm" id="gobPen"></div></div>
         <div class="card"><h3>Portafolio inicial de reconstrucción</h3><p class="sub" id="gobPorSub">Proyectos por tipo</p><div class="donutbox sm" id="gobPor"></div></div>
       </div>
+      <div class="card ahcard" style="margin-top:20px" id="ahCard"></div>
       <div class="card" style="margin-top:20px"><h3>Recursos de la emergencia</h3><p class="sub">Millones de pesos · montos de fuentes distintas: no se suman entre sí</p><div class="dbars wide" id="gobRec" style="margin-top:12px"></div><p class="sub" id="gobPlan" style="margin-top:10px"></p></div>
     </div>
   </section>
@@ -1125,6 +1132,7 @@ hbx($("#natPae"),[["Valle del Cauca",20.43],["Risaralda",8.50],["Chocó",6.17],[
 // Secuencial de un solo tono (claro→oscuro) para magnitud; estados con los mismos tonos de las fichas de estado.
 const MAPA_SEQ=["#fde7d6","#f8bf96","#ee8a57","#d2552c","#9b2c12"],MAPA_NODATA="#dfe3e1";
 const MAPA_CORTES={abs:[100,300,600,1500],rel:[25,50,100,200]};
+const MAPA_SEQ_AH=["#e2f1ec","#b5dccf","#7cc1ab","#3f9a80","#1d6b55"],MAPA_CORTES_AH={abs:[250,750,1500,2500],rel:[1,2,3,5]},MAPA_AH_CERO="#f2c9bf";
 const MAPA_EST={"sin iniciar":["#d3d9d9","Sin iniciar"],"diligenciamiento":["#e7b75a","En diligenciamiento"],"enviado":["#5d97cf","Enviado"],"validado":["#3f9150","Validado"]};
 let MP={capa:"af",med:"rel",sel:null,M:[],F3:[]};
 function mapaDatos(){
@@ -1136,18 +1144,21 @@ function mapaDatos(){
   const byD=Object.fromEntries((MP.M||[]).map(m=>[m.dane,m]));
   return MUN.map(m=>{const r=byD[m.dane]||{},lb=r.lineaBase&&r.lineaBase.viviendasAfectadas;
     const viv=lb!=null&&lb!==""?num(lb):(ED[m.nombre]!=null?ED[m.nombre]:null),cen=CEN[m.dane]||null;
-    return{dane:m.dane,nombre:m.nombre,sub:m.subregion,estado:r.estado||"sin iniciar",r,viv,cen,rel:viv!=null&&cen?viv/cen*1000:null,f3:f3[m.dane]||[],oxi:oxi[m.dane]||[],g:G.m[m.dane]}});
+    const ah=(window.PAE_AH&&PAE_AH.m[m.dane])||null;
+    return{dane:m.dane,nombre:m.nombre,sub:m.subregion,estado:r.estado||"sin iniciar",r,viv,cen,rel:viv!=null&&cen?viv/cen*1000:null,f3:f3[m.dane]||[],oxi:oxi[m.dane]||[],g:G.m[m.dane],ah,ahU:ah?ah.u:null,ahR:ah&&viv?ah.u/viv:null}});
 }
 function mapaClase(v,c){if(v==null)return -1;let i=0;while(i<c.length&&v>=c[i])i++;return i}
 function mapaColor(x){
   if(MP.capa==="es")return(MAPA_EST[x.estado]||MAPA_EST["sin iniciar"])[0];
   if(MP.capa==="pr")return x.f3.length||x.oxi.length?"#dcebe8":"#f4f1ea";
+  if(MP.capa==="ah"){if(x.ahU==null)return MAPA_NODATA;if(!x.ahU)return MAPA_AH_CERO;const v=MP.med==="abs"?x.ahU:x.ahR,k=mapaClase(v,MAPA_CORTES_AH[MP.med]);return k<0?MAPA_NODATA:MAPA_SEQ_AH[k]}
   const v=MP.med==="abs"?x.viv:x.rel,k=mapaClase(v,MAPA_CORTES[MP.med]);return k<0?MAPA_NODATA:MAPA_SEQ[k];
 }
-function mapaOscuro(x){if(MP.capa==="es")return x.estado==="enviado"||x.estado==="validado";if(MP.capa==="af"){const v=MP.med==="abs"?x.viv:x.rel;return mapaClase(v,MAPA_CORTES[MP.med])>=3}return false}
+function mapaOscuro(x){if(MP.capa==="ah"){const v=MP.med==="abs"?x.ahU:x.ahR;return !!x.ahU&&mapaClase(v,MAPA_CORTES_AH[MP.med])>=3}if(MP.capa==="es")return x.estado==="enviado"||x.estado==="validado";if(MP.capa==="af"){const v=MP.med==="abs"?x.viv:x.rel;return mapaClase(v,MAPA_CORTES[MP.med])>=3}return false}
 function mapaValor(x){
   if(MP.capa==="es")return chipTxt(x.estado);
   if(MP.capa==="pr"){const a=[];if(x.f3.length)a.push(x.f3.length+(x.f3.length===1?" proyecto":" proyectos")+" en Fase III");if(x.oxi.length)a.push(x.oxi.length+" en Obras por Impuestos");return a.join(" · ")||"Sin proyectos publicados"}
+  if(MP.capa==="ah"){if(x.ahU==null)return"Sin dato";if(!x.ahU)return"Sin entregas registradas"+(x.viv?" · "+fmt(x.viv)+" viviendas afectadas":"");return MP.med==="abs"?fmt(x.ahU)+" unidades de ayuda entregadas":(x.ahR==null?fmt(x.ahU)+" unidades":(x.ahR).toLocaleString("es-CO",{maximumFractionDigits:1})+" unidades por vivienda afectada")}
   if(MP.med==="abs")return x.viv==null?"Sin dato":fmt(x.viv)+" viviendas afectadas";
   return x.rel==null?"Sin dato":fmt(Math.round(x.rel))+" de cada 1.000 viviendas afectadas";
 }
@@ -1155,7 +1166,8 @@ function renderMapa(){
   const G=window.PAE_MAPA,D=mapaDatos(),box=$("#mapBox");if(!box)return;
   if(!G||!D){box.innerHTML='<div class="empty">No fue posible cargar el mapa.</div>';return}
   $("#mapCapa").querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.c===MP.capa));
-  $("#mapMed").style.display=MP.capa==="af"?"":"none";
+  $("#mapMed").style.display=MP.capa==="af"||MP.capa==="ah"?"":"none";
+  {const bs=$("#mapMed").querySelectorAll("button");bs[0].textContent=MP.capa==="ah"?"Unidades entregadas":"Viviendas afectadas";bs[1].textContent=MP.capa==="ah"?"Por vivienda afectada":"Por cada 1.000 viviendas"}
   $("#mapMed").querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.m===MP.med));
   const vec=Object.values(G.v).map(v=>`<path class="vec" d="${v.d}"/>`).join("");
   const vecl=[["CHOCÓ",12,G.h*.42],["RISARALDA",G.w*.2,G.h-12],["ANTIOQUIA",G.w*.42,16],["TOLIMA",G.w*.70,G.h-12],["CUNDINAMARCA",G.w-12,G.h*.62,"end"]].map(([t,x,y,an])=>`<text class="vecl" x="${x}" y="${y}"${an?` text-anchor="${an}"`:""}>${t}</text>`).join("");
@@ -1188,6 +1200,7 @@ function renderMapa(){
   const top=D.filter(x=>x.rel!=null).sort((a,b)=>b.rel-a.rel);
   if(top.length>1)$("#h-mapa").textContent=`${top[0].nombre} y ${top[1].nombre}: los municipios más golpeados en proporción a su tamaño`;
   $("#mapNote").innerHTML=(MP.capa==="af"?(MP.med==="rel"?"Viviendas afectadas según el EDAN (línea base de la plataforma) por cada 1.000 viviendas habitadas del Censo DANE 2018. Así se compara el golpe sin que el tamaño del municipio lo esconda.":"Viviendas afectadas según el EDAN (línea base de la plataforma). Manizales concentra la mayor cifra por ser el municipio más grande.")+" El epicentro se marca en la cabecera de San José del Palmar como referencia; los círculos indican la distancia en línea recta."
+    :MP.capa==="ah"?(MP.med==="rel"?"Unidades de ayuda humanitaria entregadas por cada vivienda afectada (EDAN). Así se ve dónde la ayuda llegó en menor proporción al daño.":"Unidades de ayuda humanitaria entregadas: kits de alimentos y aseo, tejas, frazadas, baldes, lonas y otros.")+` En rosado, municipios sin entregas registradas. Fuente: consolidado del centro de acopio humanitario, corte ${window.PAE_AH?fcorte(PAE_AH.corte):""}.`
     :MP.capa==="es"?"Estado del reporte de cada municipio en esta plataforma, con los mismos colores de las fichas de abajo."
     :"Círculo verde: proyectos con estudios y diseños definitivos (Fase III) reportados por el municipio. Círculo dorado: proyectos del portafolio de Obras por Impuestos.")+" Límites municipales: DANE, Marco Geoestadístico Nacional 2018.";
 }
@@ -1198,6 +1211,10 @@ function mapaLeyenda(D){
     h=`<h3>${MP.med==="abs"?"Viviendas afectadas":"Viviendas afectadas por cada 1.000"}</h3><div class="maplg">${MAPA_SEQ.map((c,i)=>item(c,lab[i])).join("")}</div>`;
     rk=D.filter(x=>(MP.med==="abs"?x.viv:x.rel)!=null).sort((a,b)=>(MP.med==="abs"?b.viv-a.viv:b.rel-a.rel)).slice(0,6).map(x=>[x,MP.med==="abs"?fmt(x.viv):fmt(Math.round(x.rel)),MP.med==="abs"?"viviendas":"por 1.000"]);
     h+=`<h3 style="margin-top:16px;font-size:15px">Los más afectados</h3>`}
+  else if(MP.capa==="ah"){const c=MAPA_CORTES_AH[MP.med],r1=n=>n.toLocaleString("es-CO"),lab=MP.med==="abs"?["Menos de "+fmt(c[0]),fmt(c[0])+" a "+fmt(c[1]-1),fmt(c[1])+" a "+fmt(c[2]-1),fmt(c[2])+" a "+fmt(c[3]-1),fmt(c[3])+" o más"]:["Menos de "+r1(c[0]),r1(c[0])+" a "+r1(c[1]),r1(c[1])+" a "+r1(c[2]),r1(c[2])+" a "+r1(c[3]),"Más de "+r1(c[3])];
+    h=`<h3>${MP.med==="abs"?"Unidades de ayuda entregadas":"Unidades por vivienda afectada"}</h3><div class="maplg">${item(MAPA_AH_CERO,"Sin entregas registradas")}${MAPA_SEQ_AH.map((cc,i)=>item(cc,lab[i])).join("")}</div>`;
+    rk=D.filter(x=>x.ahU!=null&&x.viv).sort((a,b)=>(a.ahR||0)-(b.ahR||0)).slice(0,6).map(x=>[x,x.ahU?(x.ahR).toLocaleString("es-CO",{maximumFractionDigits:1}):"0",x.ahU?"por vivienda":"entregas"]);
+    h+=`<h3 style="margin-top:16px;font-size:15px">Menos ayuda frente al daño</h3>`}
   else if(MP.capa==="es"){const n=e=>D.filter(x=>x.estado===e).length;
     h=`<h3>Estado del reporte</h3><div class="maplg">${Object.entries(MAPA_EST).map(([k,[c,t]])=>item(c,`${t} <b class="num">· ${n(k)}</b>`)).join("")}</div>`;
     rk=D.filter(x=>x.estado==="sin iniciar").sort((a,b)=>(b.viv||0)-(a.viv||0)).slice(0,6).map(x=>[x,x.viv!=null?fmt(x.viv):"–","viv. afectadas"]);
@@ -1212,11 +1229,11 @@ function mapaLeyenda(D){
 function mapaDetalle(D){
   const el=$("#mapDet"),x=D.find(y=>y.dane===MP.sel);
   if(!x){const tv=D.reduce((a,y)=>a+(y.viv||0),0),tc=D.reduce((a,y)=>a+(y.viv!=null&&y.cen?y.cen:0),0);
-    el.innerHTML=`<h3>Caldas</h3><p class="sub muted">27 municipios · haga clic en uno para ver su detalle</p><dl><dt>Viviendas afectadas (EDAN)</dt><dd class="num">${fmt(tv)}</dd><dt>Por cada 1.000 viviendas</dt><dd class="num">${tc?fmt(Math.round(tv/tc*1000)):"–"}</dd><dt>Municipios con reporte iniciado</dt><dd class="num">${D.filter(y=>y.estado!=="sin iniciar").length} de 27</dd><dt>Proyectos en Fase III</dt><dd class="num">${fmt(D.reduce((a,y)=>a+y.f3.length,0))}</dd></dl>`;return}
+    el.innerHTML=`<h3>Caldas</h3><p class="sub muted">27 municipios · haga clic en uno para ver su detalle</p><dl><dt>Viviendas afectadas (EDAN)</dt><dd class="num">${fmt(tv)}</dd><dt>Por cada 1.000 viviendas</dt><dd class="num">${tc?fmt(Math.round(tv/tc*1000)):"–"}</dd><dt>Municipios con reporte iniciado</dt><dd class="num">${D.filter(y=>y.estado!=="sin iniciar").length} de 27</dd><dt>Proyectos en Fase III</dt><dd class="num">${fmt(D.reduce((a,y)=>a+y.f3.length,0))}</dd>${window.PAE_AH?`<dt>Ayuda humanitaria entregada</dt><dd class="num">${fmt(ahTotal())} unidades</dd>`:""}</dl>`;return}
   const r=x.r||{},con=x.estado!=="sin iniciar"&&(r.necesidades||r.intervenciones||r.proyectos);
   const lst=[...x.f3.slice(0,4).map(p=>esc(p.nombre)),...x.oxi.map(p=>esc(p.nom)+' <span class="muted">(Obras por Impuestos)</span>')];
   el.innerHTML=`<div style="display:flex;justify-content:space-between;gap:8px;align-items:start"><h3>${esc(x.nombre)}</h3>${chip(x.estado)}</div><p class="sub muted">${esc(x.sub)}</p>
-  <dl><dt>Viviendas afectadas (EDAN)</dt><dd class="num">${x.viv!=null?fmt(x.viv):"Sin dato"}</dd><dt>Por cada 1.000 viviendas</dt><dd class="num">${x.rel!=null?fmt(Math.round(x.rel)):"–"}</dd><dt>Viviendas habitadas (Censo 2018)</dt><dd class="num">${x.cen?fmt(x.cen):"–"}</dd>${r.costoIntervenciones?`<dt>Intervenciones reportadas</dt><dd class="num">${moneyM(r.costoIntervenciones)}</dd>`:""}<dt>Proyectos en Fase III</dt><dd class="num">${x.f3.length}</dd><dt>Obras por Impuestos</dt><dd class="num">${x.oxi.length}</dd></dl>
+  <dl><dt>Viviendas afectadas (EDAN)</dt><dd class="num">${x.viv!=null?fmt(x.viv):"Sin dato"}</dd><dt>Por cada 1.000 viviendas</dt><dd class="num">${x.rel!=null?fmt(Math.round(x.rel)):"–"}</dd><dt>Viviendas habitadas (Censo 2018)</dt><dd class="num">${x.cen?fmt(x.cen):"–"}</dd>${x.ahU!=null?`<dt>Ayuda humanitaria entregada</dt><dd class="num">${x.ahU?fmt(x.ahU)+" unidades":"Sin entregas registradas"}</dd>`:""}${r.costoIntervenciones?`<dt>Intervenciones reportadas</dt><dd class="num">${moneyM(r.costoIntervenciones)}</dd>`:""}<dt>Proyectos en Fase III</dt><dd class="num">${x.f3.length}</dd><dt>Obras por Impuestos</dt><dd class="num">${x.oxi.length}</dd></dl>
   ${lst.length?"<ul></ul>":""}
   <div class="acts">${con?`<button class="btn small" type="button" data-go="tab">Ver su tablero</button>`:""}${x.f3.length?`<a class="btn ghost small" href="#fase3">Proyectos Fase III</a>`:""}${x.oxi.length?`<a class="btn ghost small" href="#oxi">Obras por Impuestos</a>`:""}<button class="btn ghost small" type="button" data-go="clr">Ver Caldas</button></div>`;
   const ul=el.querySelector("ul");if(ul)ul.innerHTML=lst.map(t=>`<li>${t}</li>`).join("")+(x.f3.length>4?`<li class="muted">y ${x.f3.length-4} más en Fase III</li>`:"");
@@ -1330,7 +1347,33 @@ function lineChart(el,serie,fmtV,extra){
    <p class="sub" style="margin:4px 0 0">Fuentes: ${esc([...new Set(serie.map(x=>x.fuente))].join(", "))}</p>`;
   const tip=dbTip();el.querySelectorAll(".pt").forEach(c=>{c.addEventListener("mousemove",ev=>{tip.textContent=c.dataset.t;tip.style.display="block";tip.style.left=(ev.clientX+14)+"px";tip.style.top=(ev.clientY+12)+"px"});c.addEventListener("mouseleave",()=>tip.style.display="none")});
 }
+/* ================= AYUDA HUMANITARIA POR MUNICIPIO ================= */
+const ahTotal=()=>{const A=window.PAE_AH;if(!A)return 0;return Object.values(A.m).reduce((a,x)=>a+x.u,0)+(A.varios?A.varios.u:0)+(A.plasticos||0)};
+function renderAH(){
+  const A=window.PAE_AH,el=$("#ahCard");if(!el)return;if(!A){el.remove();return}
+  const ED=window.PAE_VIV_EDAN||{},T=ahTotal();
+  const rows=MUN.map(m=>{const x=A.m[m.dane]||{u:0},v=ED[m.nombre];return{k:m.nombre,v:x.u,viv:v,r:v?x.u/v:null}}).sort((a,b)=>b.v-a.v);
+  const don={},cat={};[...Object.values(A.m),A.varios||{don:{},cat:{}}].forEach(x=>{for(const k in x.don)don[k]=(don[k]||0)+x.don[k];for(const k in x.cat)cat[k]=(cat[k]||0)+x.cat[k]});
+  if(A.plasticos){don["Sin aliado registrado (plásticos)"]=A.plasticos;cat["Techo y refugio"]=(cat["Techo y refugio"]||0)+A.plasticos}
+  const ceros=rows.filter(r=>!r.v),baja=rows.filter(r=>r.v&&r.r!=null&&r.r<1.3).sort((a,b)=>a.r-b.r);
+  const top=[...A.items].sort((a,b)=>b[3]-a[3]).slice(0,8);
+  el.innerHTML=`<h3>Ayuda humanitaria por municipio y por aliado</h3><p class="sub">${fmt(T)} unidades entregadas y ${A.kgAnimales.toLocaleString("es-CO")} kg de alimento para animales · consolidado del centro de acopio, corte ${fcorte(A.corte)}</p>
+  <div class="ahalert">${ceros.length?`<b>${ceros.map(r=>r.k).join(", ")}</b> no tienen entregas registradas en el consolidado, aunque reportan ${fmt(ceros.reduce((a,r)=>a+(r.viv||0),0))} viviendas afectadas. `:""}${baja.length?`Donde menos ayuda llegó frente al daño: ${baja.map(r=>`${r.k} (${r.r.toLocaleString("es-CO",{maximumFractionDigits:1})})`).join(", ")} unidades por vivienda afectada.`:""}</div>
+  <div class="ahgrid">
+    <div><h4>Unidades entregadas por municipio</h4><div class="dbars" id="ahMun"></div>${A.varios&&A.varios.u?`<p class="sub" style="margin-top:8px">Además, ${fmt(A.varios.u)} unidades registradas como «varios» sin municipio${A.plasticos?` y ${fmt(A.plasticos)} plásticos sin desagregar`:""}.</p>`:""}</div>
+    <div><h4>Por aliado</h4><div class="donutbox sm" id="ahDon"></div><h4 style="margin-top:18px">Por tipo de ayuda</h4><div class="donutbox sm" id="ahCat"></div></div>
+  </div>
+  <h4 style="margin-top:18px">Lo que más se entregó</h4>
+  <div class="scroll"><table class="t"><thead><tr><th>Elemento</th><th>Aliado</th><th class="r">Unidades</th></tr></thead><tbody>${top.map(i=>`<tr><td>${esc(i[0])}</td><td>${esc(i[1])}</td><td class="r num">${fmt(i[3])}</td></tr>`).join("")}</tbody></table></div>
+  <p class="sub" style="margin-top:10px">Fuente: ${esc(A.fuente)}. Los kits de la Gobernación y las colchonetas de la UNGRD se entregaron a través del centro de acopio. Las unidades suman elementos de distinto tipo (un kit, una teja, una frazada) y no equivalen a familias atendidas.</p>`;
+  dbars($("#ahMun"),rows.filter(r=>r.v).map(r=>({k:r.k,v:r.v,t:r.k+(r.r!=null?" · "+r.r.toLocaleString("es-CO",{maximumFractionDigits:1})+" por vivienda afectada":"")})),v=>fmt(v),"var(--teal)");
+  const pal=[...PAL,"#4d7c8a","#9a8c6a","#6b8f3c"];
+  donut($("#ahDon"),Object.entries(don).sort((a,b)=>b[1]-a[1]).map(([k,v],i)=>({k,v,c:k.startsWith("Sin aliado")?GRIS:pal[i%pal.length]})),fmt(T),"unidades",v=>fmt(v));
+  donut($("#ahCat"),Object.entries(cat).sort((a,b)=>b[1]-a[1]).map(([k,v],i)=>({k,v,c:pal[i%pal.length]})),String(Object.keys(cat).length),"tipos",v=>fmt(v));
+}
 function renderGob(C){
+  {const A=window.PAE_AH;C=(C||[]).slice();if(A&&!C.some(x=>x.ind==="ahe"&&x.fecha>=A.corte))C.push({ind:"ahe",valor:ahTotal(),fecha:A.corte,fuente:"Centro de acopio humanitario",nota:"Consolidado por municipio y aliado"})}
+  renderAH();
   if(!C||!C.length){$("#gobKpis").innerHTML='<p class="muted">El equipo coordinador aún no ha registrado cifras.</p>';return}
   const u=k=>cifUlt(C,k),kp=[];
   const add=(k,txt,sub)=>{const x=u(k);if(x)kp.push(`<div class="gk"><b class="num">${esc(cifFmt(k,x.valor))}</b><span>${txt(x)}</span><small>${esc(fcorte(x.fecha))} · ${esc(x.fuente)}${sub?" · "+sub(x):""}</small></div>`)};
