@@ -521,6 +521,24 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
 .xtabs button[aria-selected="true"]{background:var(--teal);color:#fff;border-color:var(--teal)}
 .xtabs button:focus-visible{outline:3px solid var(--gold-2);outline-offset:2px}
 [data-tab][hidden]{display:none!important}
+.bmk{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:22px}
+.bmk .stat small{display:block}
+.bmfases{display:grid;grid-template-columns:1fr 1.4fr 1fr;gap:0;border-radius:16px;overflow:hidden;border:1px solid var(--line)}
+.bmfases>div{padding:16px 18px;background:#fff;display:grid;gap:4px;align-content:start}
+.bmfases>div span{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.bmfases>div b{font-size:17px;color:var(--ink)} .bmfases>div p{font-size:14px;line-height:1.5;color:var(--muted)}
+.bmfases .aqui{background:var(--teal);} .bmfases .aqui span{color:var(--gold-2)} .bmfases .aqui b{color:#fff;font-size:19px} .bmfases .aqui p{color:#d4e5e3}
+.bmruta{list-style:none;padding:0;margin:12px 0 0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;counter-reset:r}
+.bmruta li{counter-increment:r;background:#fff;border:1px solid var(--line);border-top:4px solid var(--gold);border-radius:12px;padding:14px 12px;display:grid;gap:4px;align-content:start}
+.bmruta li::before{content:counter(r);width:28px;height:28px;border-radius:50%;background:var(--teal);color:#fff;display:grid;place-items:center;font-weight:800;font-size:14px}
+.bmruta b{font-size:15px;color:var(--ink)} .bmruta span{font-size:13px;line-height:1.4;color:var(--muted)}
+.bmcomp{list-style:none;padding:0;margin:10px 0 0;display:grid;gap:10px;font-size:14.5px;line-height:1.5;color:var(--muted)} .bmcomp b{color:var(--ink)}
+.bmcmp{table-layout:fixed;width:100%}.bmcmp td{overflow-wrap:anywhere}.bmcmp td:first-child{color:var(--muted)} .bmcmp td:last-child{font-weight:600;color:var(--ink)}
+.bmhome:empty{display:none}
+.bmhome{display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:22px;padding:16px 20px;border-radius:14px;background:var(--cream);border:1px solid var(--line)}
+.bmhome b{font-size:17px;color:var(--teal)} .bmhome p{font-size:14.5px;color:var(--muted);margin-top:2px}
+@media (max-width:900px){.bmruta{grid-template-columns:1fr 1fr}.bmfases{grid-template-columns:1fr}.bmk{grid-template-columns:1fr}}
+
 .gl{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:help;border-bottom:1.5px dotted currentColor;text-decoration:none}
 .glpop{position:absolute;z-index:80;max-width:320px;background:#0b2b2e;color:#fff;border-radius:12px;padding:12px 14px;font-size:14px;line-height:1.5;box-shadow:0 10px 30px rgba(0,0,0,.25)}
 .glpop b{display:block;color:var(--gold-2);font-size:13px;margin-bottom:2px}
@@ -569,6 +587,7 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
       <p class="sub">Así avanza la información que reportan los municipios: de cada daño identificado a un proyecto con plata asegurada.</p>
       <div class="funnel" id="funnel" aria-label="Embudo de la reconstrucción"></div>
       <p class="srcnote" id="resNota"></p>
+      <div class="bmhome" id="bmHome"></div>
     </div>
   </section>
 
@@ -702,6 +721,46 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
         </div>
       </div>
       <div class="note info" style="margin-top:18px"><b class="t">Eje 3 · Reducción del riesgo y reconstrucción segura</b>Es transversal: no tiene líneas ni valores propios. Sus medidas se registran dentro de las intervenciones de los ejes 1 y 2, marcando la casilla correspondiente.</div>
+    </div>
+  </section>
+
+  <section class="band cream" id="banco" data-tab="respuesta" aria-labelledby="h-bm" style="scroll-margin-top:90px">
+    <div class="wrap">
+      <div class="shead"><div><small class="eyebrow">Iniciativa destacada de la Gobernación</small><h2 id="h-bm">Banco de Materiales: de la ayuda humanitaria a la vivienda reforzada</h2><p>Materiales homologados que llegan a cada vivienda según el daño real, con un recorrido trazable desde la ficha EDAN hasta la obra revisada por una cuadrilla técnica.</p><div class="bar4" style="margin-top:10px"></div></div></div>
+      <div class="bmk" id="bmKpis"></div>
+      <div class="bmfases" aria-label="Dónde actúa el Banco de Materiales">
+        <div><span>Fase 1</span><b>Atención inmediata</b><p>Respuesta en las primeras horas y días tras el sismo.</p></div>
+        <div class="aqui"><span>Fase intermedia · aquí actúa</span><b>Banco de Materiales</b><p>Estabilización, apuntalamiento y reforzamiento de viviendas con materiales homologados y acompañamiento técnico.</p></div>
+        <div><span>Fase 3</span><b>Soluciones definitivas</b><p>Reubicación o reposición de la vivienda.</p></div>
+      </div>
+      <h3 style="margin-top:30px;font-size:20px">El recorrido de un kit de materiales, paso a paso</h3>
+      <ol class="bmruta">
+        <li><b>Evaluación del daño</b><span>Ficha EDAN de la vivienda</span></li>
+        <li><b>Registro</b><span>Registro Único de Damnificados (RUD)</span></li>
+        <li><b>Validación</b><span>El CMGRD verifica que el predio sea elegible</span></li>
+        <li><b>Orden de despacho</b><span>Digital y georreferenciada</span></li>
+        <li><b>Entrega</b><span>En un nodo subregional o en una ferretería en convenio</span></li>
+        <li><b>Obra acompañada</b><span>Una cuadrilla técnica valida la instalación</span></li>
+      </ol>
+      <div class="grid2" style="margin-top:24px;align-items:start">
+        <div class="card"><h3>Cuatro componentes</h3>
+          <ul class="bmcomp">
+            <li><b>Logística descentralizada.</b> Centros de acopio en nodos subregionales y convenios con ferreterías locales, para no saturar Manizales.</li>
+            <li><b>Recursos blindados.</b> Subcuentas del Fondo Departamental de Gestión del Riesgo o esquemas fiduciarios con apoyo de InfiCaldas.</li>
+            <li><b>Focalización y control digital.</b> Tablero georreferenciado que cruza el EDAN, el RUD y las órdenes de despacho.</li>
+            <li><b>Acompañamiento de obra.</b> Arquitectos, ingenieros y maestros de obra que revisan que el material quede bien instalado.</li>
+          </ul></div>
+        <div class="card"><h3>Qué cambia frente a la ayuda tradicional</h3>
+          <div class="scroll"><table class="t bmcmp"><thead><tr><th>Respuesta tradicional</th><th>Banco de Materiales</th></tr></thead><tbody>
+            <tr><td>Subsidios en dinero fragmentados</td><td>Materiales según la severidad real del daño</td></tr>
+            <tr><td>Materiales sin estándar técnico</td><td>Insumos homologados según la NSR-10 y la vivienda tradicional caldense</td></tr>
+            <tr><td>Precios expuestos a la especulación</td><td>Tarifas de emergencia pactadas con cementeras, ladrilleras y ferreterías</td></tr>
+            <tr><td>Sin rastro de la entrega</td><td>Trazabilidad digital del EDAN a la entrega</td></tr>
+            <tr><td>Autoconstrucción sin apoyo</td><td>Obra validada por cuadrillas técnicas</td></tr>
+          </tbody></table></div></div>
+      </div>
+      <div class="ctas" style="margin-top:20px"><a class="btn gold" href="documentos/Banco_de_Materiales_Caldas.pdf" target="_blank" rel="noopener">Ver la ficha del Banco de Materiales (PDF)</a></div>
+      <p class="srcnote">Fuente: Gobernación de Caldas, «Banco de Materiales para la Reconstrucción y Recuperación Post-Sismo». Lideran la Secretaría de Vivienda y Territorio y la UDEGERD; los CMGRD y las alcaldías ejecutan en terreno. Las cifras de avance muestran su fuente y su fecha de corte.</p>
     </div>
   </section>
 
@@ -1208,7 +1267,7 @@ function renderResumen(d){
   bindGo($("#resumen"));glosarioAuto($("#resumen"));
 }
 /* Pestañas de exploración: una sección a la vez */
-const TAB_DE={mapa:"mapa",consolidado:"municipios",tablero:"municipios",cartera:"plata",pais:"danos",danos:"danos",acciones:"respuesta",cronologia:"respuesta",documento:"documento",glosario:"documento"};
+const TAB_DE={banco:"respuesta",mapa:"mapa",consolidado:"municipios",tablero:"municipios",cartera:"plata",pais:"danos",danos:"danos",acciones:"respuesta",cronologia:"respuesta",documento:"documento",glosario:"documento"};
 function setTab(t,scroll){
   if(!$("#xtabs"))return;t=t||"mapa";
   $$("#xtabs [data-t]").forEach(b=>b.setAttribute("aria-selected",String(b.dataset.t===t)));
@@ -1545,6 +1604,10 @@ function renderGob(C){
   add("portafolio_monto",()=>{const n=cifCats(C)("portafolio_tipo").reduce((a,x)=>a+x.valor,0);return`en el portafolio inicial de reconstrucción${n?" · "+fmt(n)+" proyectos":""}`});
   add("animales_kg",()=>"kilogramos de alimento para animales");
   $("#gobKpis").innerHTML=kp.join("");
+  {const bv=u("banco_viviendas"),bm=u("banco_municipios"),bc=u("banco_contrato"),ce=x=>`<span class="sello">${esc(fcorte(x.fecha))} · ${esc(x.fuente)}</span>`;
+   const k=[bv&&[fmt(bv.valor),"viviendas incluidas en el banco de materiales",bv],bm&&[fmt(bm.valor),"municipios incluidos",bm],bc&&[moneyM(bc.valor),"valor del contrato de suministro",bc]].filter(Boolean);
+   $("#bmKpis").innerHTML=k.map(([b,t,x])=>`<div class="stat g"><b class="num">${b}</b><span>${t}</span>${x.nota?`<em class="det">${esc(x.nota)}</em>`:""}${ce(x)}</div>`).join("");
+   const bh=$("#bmHome");if(bh&&bv)bh.innerHTML=`<div><b>Banco de Materiales: ${fmt(bv.valor)} viviendas${bm?" en "+fmt(bm.valor)+" municipios":""}</b><p>Materiales homologados y trazables, de la ficha EDAN a la obra revisada por una cuadrilla técnica.</p></div><a class="btn ghost small" href="#banco">Ver cómo funciona →</a>`;}
   lineChart($("#gobAhe"),cifSerie(C,"ahe"),v=>fmt(v));
   const am=cifSerie(C,"arriendo_monto");lineChart($("#gobArr"),cifSerie(C,"arriendo_familias"),v=>fmt(v)+" familias",d=>{const m=am.find(x=>x.fecha===d.fecha);return m?" · "+moneyM(m.valor):""});
   // Torta: giros cobrados vs pendientes (por porcentaje)
