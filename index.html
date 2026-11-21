@@ -484,6 +484,52 @@ footer .wrap{padding-block:30px;display:grid;grid-template-columns:minmax(0,1fr)
 footer img{height:38px;width:auto}
 footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
 @media (max-width:700px){footer .wrap{grid-template-columns:1fr}}
+
+/* ===================== REDISEÑO PÚBLICO: claro y contundente ===================== */
+.hero.v2 .wrap{grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);align-items:stretch}
+.hero.v2 h1{font-size:clamp(30px,4vw,48px)}
+.h4n{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-content:center}
+.h4n .n{background:rgba(5,25,27,.6);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:16px 16px 12px;display:grid;gap:4px;align-content:start}
+.h4n .n b{font:800 clamp(30px,3.4vw,44px)/1 var(--head,inherit);color:#fff;letter-spacing:-.02em}
+.h4n .n.g b{color:var(--gold-2)} .h4n .n.r b{color:#ff9d86} .h4n .n.v b{color:#9fe0a4}
+.h4n .n span{font-size:14px;line-height:1.35;color:#e3efed;font-weight:600}
+.h4n .n small{font-size:11.5px;color:#a9c4c1;line-height:1.35}
+.sello{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;line-height:1.2;color:var(--muted);margin-top:4px}
+.sello::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--sc,#8a9a9a);flex:none}
+.sello.o{--sc:#2f7a3c} .sello.m{--sc:#c8902a} .sello.i{--sc:#2a6fb0}
+.h4n .sello{color:#c9dcda}
+.q30{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.q30 .card{display:grid;gap:10px;align-content:start;border-top:5px solid var(--qc,var(--teal));padding:22px}
+.q30 .card:nth-child(1){--qc:var(--crit)} .q30 .card:nth-child(2){--qc:var(--gold)} .q30 .card:nth-child(3){--qc:var(--green)}
+.q30 h3{font-size:14px;letter-spacing:.12em;text-transform:uppercase;color:var(--qc)}
+.q30 .big{font-size:clamp(19px,1.9vw,23px);line-height:1.35;font-weight:700;color:var(--ink)}
+.q30 .big strong{color:var(--qc)}
+.q30 p{font-size:15px;line-height:1.55;color:var(--muted)}
+.q30 a.more{font-weight:700;font-size:14px;color:var(--teal);text-decoration:none}
+.funnel{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0;margin-top:22px;border-radius:18px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.funnel>div{padding:18px 16px 16px;display:grid;gap:4px;align-content:start;position:relative;background:var(--fb);color:var(--fc,#fff)}
+.funnel>div:nth-child(1){--fb:#0b2b2e} .funnel>div:nth-child(2){--fb:#0f4f50} .funnel>div:nth-child(3){--fb:#137070} .funnel>div:nth-child(4){--fb:#2f7a3c} .funnel>div:nth-child(5){--fb:#fff3ef;--fc:var(--crit);box-shadow:inset 0 0 0 2px var(--crit)}
+.funnel>div:not(:last-child)::after{content:"";position:absolute;right:-10px;top:50%;transform:translateY(-50%);border:10px solid transparent;border-left-color:var(--fb);border-right:0;z-index:2}
+.funnel .k{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;opacity:.8}
+.funnel b{font-size:clamp(22px,2.3vw,30px);line-height:1.05;font-weight:800}
+.funnel span{font-size:13.5px;line-height:1.4;opacity:.92}
+.funnel em{font-style:normal;font-size:12.5px;opacity:.8}
+.xtabs{position:sticky;top:0;z-index:30;background:rgba(250,247,240,.96);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.xtabs .wrap{display:flex;gap:6px;overflow-x:auto;padding-block:10px;scrollbar-width:thin;align-items:center}
+.xtabs .lbl{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);white-space:nowrap;margin-right:6px}
+.xtabs button{flex:none;font:inherit;font-size:14.5px;font-weight:700;color:var(--teal);background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:9px 16px;cursor:pointer;white-space:nowrap}
+.xtabs button[aria-selected="true"]{background:var(--teal);color:#fff;border-color:var(--teal)}
+.xtabs button:focus-visible{outline:3px solid var(--gold-2);outline-offset:2px}
+[data-tab][hidden]{display:none!important}
+.gl{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:help;border-bottom:1.5px dotted currentColor;text-decoration:none}
+.glpop{position:absolute;z-index:80;max-width:320px;background:#0b2b2e;color:#fff;border-radius:12px;padding:12px 14px;font-size:14px;line-height:1.5;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.glpop b{display:block;color:var(--gold-2);font-size:13px;margin-bottom:2px}
+.glosario{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px 22px;margin-top:14px}
+.glosario div{font-size:14.5px;line-height:1.5;color:var(--muted)} .glosario b{color:var(--ink)}
+.grid2>*,.grid3>*,.grid4>*{min-width:0}
+@media (max-width:900px){.hero.v2 .wrap{grid-template-columns:1fr}.q30{grid-template-columns:1fr}.funnel{grid-template-columns:1fr 1fr}.funnel>div::after{display:none}.funnel>div:last-child{grid-column:1/-1}}
+@media (max-width:700px){.dbars.wide .r{grid-template-columns:1fr;gap:4px}.dbars .bar em{white-space:normal}}
+@media (max-width:520px){.h4n{grid-template-columns:1fr 1fr;gap:8px}.h4n .n{padding:12px}.h4n .n span{font-size:13px}}
 </style>
 </head>
 <body>
@@ -499,35 +545,71 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
 <main id="main">
 <!-- =================== PÚBLICO =================== -->
 <div id="v-inicio" data-view>
-  <section class="hero photo" style="--img:url(img/sismo-catedral.jpg)"><div class="wrap">
+  <section class="hero photo v2" style="--img:url(img/sismo-catedral.jpg)"><div class="wrap">
     <div>
-      <span class="eyebrow">Plan de Acción Específico · PAE departamental</span>
-      <h1>Plataforma Departamental de Consolidación del PAE</h1>
-      <p class="lead">Los 27 municipios de Caldas reportan aquí, con un mismo formato, qué se dañó, qué se va a hacer, cuánto cuesta y qué tan listo está cada proyecto. Con esa información la Gobernación construye la Cartera Única y la traduce a la taxonomía del PAE Nacional.</p>
-      <div class="ctas"><a class="btn gold" href="#ingresar">Ingresar a reportar</a><a class="btn ghost" href="#consolidado">Ver el consolidado</a><a class="btn ghost" href="#documento">Documento PAE (PDF)</a><a class="btn ghost" href="instructivo-pae-caldas.pdf" target="_blank" rel="noopener">Instructivo (PDF)</a></div>
+      <span class="eyebrow">Sismo del 10 de agosto de 2026 · Reconstrucción de Caldas</span>
+      <h1>¿Cómo va la reconstrucción de Caldas?</h1>
+      <p class="lead">Aquí los 27 municipios reportan, con un mismo formato, qué se dañó, qué hay que hacer, cuánto cuesta y cuánto dinero ya está asegurado. La Gobernación revisa cada reporte y publica el consolidado con su fuente y su fecha.</p>
+      <div class="ctas"><a class="btn gold" href="#resumen">Ver cómo vamos</a><a class="btn ghost" href="#documento">Descargar el documento PAE</a><a class="btn ghost" href="#ingresar">Ingreso de alcaldías</a></div>
       <span class="pill">Sismo M 7,4 · 10 de agosto de 2026</span><span class="pill">Decreto 392 · calamidad pública</span>
     </div>
-    <div class="onepage" aria-label="En una página">
-      <span class="eyebrow">En una página</span>
-      <div class="r"><b>27</b><span>municipios reportan con usuario propio</span></div>
-      <div class="r"><b>3 · 17</b><span>ejes y líneas del PAE departamental</span></div>
-      <div class="r"><b>5</b><span>pasos: identificación, necesidades, intervenciones, proyectos y envío</span></div>
-      <div class="r"><b>6</b><span>productos para decidir y gestionar recursos</span></div>
+    <div class="h4n" id="h4n" aria-label="Las cifras clave">
+      <div class="n r"><b>23.492</b><span>viviendas afectadas, 2.989 de ellas destruidas</span><span class="sello o">Oficial · EDAN · corte 14-sep-2026</span></div>
+      <div class="n g"><b>…</b><span>cuestan los proyectos que reportan los municipios</span></div>
+      <div class="n v"><b>…</b><span>ya tienen recursos asegurados</span></div>
+      <div class="n"><b>…</b><span>municipios enviaron su reporte</span></div>
     </div>
   </div></section>
 
-  <section class="band cream" id="documento" aria-labelledby="h-doc" style="scroll-margin-top:90px">
+  <section class="band white" id="resumen" aria-labelledby="h-res" style="scroll-margin-top:20px">
     <div class="wrap">
-      <div class="shead"><div><small class="eyebrow">Seguimiento al PAE Caldas</small><h2 id="h-doc">Documento del PAE Caldas</h2><p>Descargue el Plan de Acción Específico con la Cartera Única a la última fecha de corte. Cada versión conserva su corte, así puede ver cómo avanza el plan.</p><div class="bar4" style="margin-top:10px"></div></div></div>
-      <div class="docgrid">
-        <div class="card docnow" id="docNow"></div>
-        <div class="card"><h3>Versiones anteriores</h3><p class="sub">Todas siguen disponibles para consulta.</p><ul class="doclist" id="docList"></ul></div>
-      </div>
-      <p class="srcnote">El documento es preliminar. Las cifras municipales reproducen lo que cada municipio envió a esta plataforma y pueden cambiar con la validación técnica de la Gobernación; no constituyen aprobación de proyectos ni disponibilidad de recursos. Las cifras del consolidado de esta página se actualizan en tiempo real y pueden ser más recientes que la última versión del documento.</p>
+      <div class="shead"><div><small class="eyebrow">En 30 segundos</small><h2 id="h-res">Lo que hay que saber</h2><p>Tres preguntas, tres respuestas. Toque los términos subrayados para ver qué significan.</p></div></div>
+      <div class="q30" id="q30"></div>
+      <h3 style="margin-top:34px;font-size:20px">Del daño al proyecto financiado</h3>
+      <p class="sub">Así avanza la información que reportan los municipios: de cada daño identificado a un proyecto con plata asegurada.</p>
+      <div class="funnel" id="funnel" aria-label="Embudo de la reconstrucción"></div>
+      <p class="srcnote" id="resNota"></p>
     </div>
   </section>
 
-  <section class="band white" id="pais" aria-labelledby="h-pais" style="scroll-margin-top:90px">
+  <nav class="xtabs" aria-label="Explorar los datos" id="xtabs"><div class="wrap" role="tablist">
+    <span class="lbl">Explore</span>
+    <button type="button" role="tab" data-t="mapa">Mapa</button>
+    <button type="button" role="tab" data-t="municipios">Municipio por municipio</button>
+    <button type="button" role="tab" data-t="plata">La plata y lo que falta</button>
+    <button type="button" role="tab" data-t="danos">Los daños</button>
+    <button type="button" role="tab" data-t="respuesta">Lo que ha hecho la Gobernación</button>
+    <button type="button" role="tab" data-t="documento">Documento y glosario</button>
+  </div></nav>
+
+  <section class="band white" id="danos" data-tab="danos" aria-labelledby="h-lb">
+    <div class="wrap">
+      <div class="shead"><div><small class="eyebrow">Línea base de afectaciones</small><h2 id="h-lb">Caldas tiene 23.492 viviendas afectadas, y casi la mitad están en Manizales</h2><p>Cada cifra se muestra con su fuente y su fecha de corte; las series no se suman ni se promedian entre sí.</p></div></div>
+      <div class="grid3">
+        <div class="stat"><small>EDAN 14-sep</small><b class="num">22.469</b><span>familias afectadas</span></div>
+        <div class="stat"><small>EDAN 14-sep</small><b class="num">23.492</b><span>viviendas averiadas (20.503) o destruidas (2.989)</span></div>
+        <div class="stat"><small>EDAN 14-sep</small><b class="num">7 · 334</b><span>personas fallecidas · heridas</span></div>
+        <div class="stat"><small>EDAN 14-sep</small><b class="num">436</b><span>centros educativos afectados</span></div>
+        <div class="stat g"><small>DPN EDANPRI 11-oct</small><b class="num">$2,88 b</b><span>daños valorados (billones)</span></div>
+        <div class="stat g"><small>PAE 19-oct</small><b class="num">$2,23 b</b><span>necesidad estimada PAE (26 municipios)</span></div>
+      </div>
+      <div class="grid2" style="margin-top:22px">
+        <div class="card"><h3>Viviendas afectadas por municipio</h3><p class="sub">EDAN, corte 14-sep-2026 · Manizales: 11.513 (49 %), se muestra aparte</p><div class="hb" id="pubViv" style="margin-top:12px;--lw:110px"></div></div>
+        <div>
+          <div class="card"><h3>Por subregión</h3><p class="sub">EDAN, corte 14-sep-2026</p><div class="hb" id="pubSub" style="margin-top:12px;--lw:140px"></div></div>
+          <div class="scroll" style="margin-top:16px"><table class="t"><thead><tr><th>Indicador</th><th class="r">Cifra</th><th>Fuente y corte</th></tr></thead><tbody>
+            <tr><td>Centros de salud afectados</td><td class="r">18</td><td>EDAN, 14-sep-2026</td></tr>
+            <tr><td>Sistemas de acueducto afectados</td><td class="r">53 (20 municipales, 33 veredales)</td><td>EDAN; Fondo Milagro ambiental, 27-oct</td></tr>
+            <tr><td>Centros comunitarios afectados</td><td class="r">171</td><td>EDAN, 14-sep-2026</td></tr>
+            <tr><td>Familias inscritas en el RUD</td><td class="r">22.132 (45.324 personas)</td><td>RUD UNGRD, 27-oct-2026</td></tr>
+          </tbody></table></div>
+        </div>
+      </div>
+      <div class="note" style="margin-top:18px"><b class="t">Atención con las cifras</b>El reporte del día cero (Decreto 392), el EDAN, el RUD y el EDANPRI tienen cortes y métodos distintos; por ejemplo, el Decreto 392 registraba 124 viviendas destruidas, el RUD registra 573 y el EDAN/CMGRD 2.673. La plataforma muestra cada cifra con su fuente y su fecha, nunca las promedia.</div>
+    </div>
+  </section>
+
+  <section class="band cream" id="pais" data-tab="danos" aria-labelledby="h-pais" style="scroll-margin-top:90px">
     <div class="wrap">
       <div class="shead"><div><small class="eyebrow">Caldas en el PAE nacional</small><h2 id="h-pais">Caldas reúne el 6 % de las personas afectadas del país y el 8,2 % del valor del plan nacional</h2><p>El sismo del 10 de agosto afectó a 778.281 personas en 16 departamentos. Así se ve Caldas dentro del Plan de Acción Específico nacional de la UNGRD, que suma $58,29 billones para 2026–2030.</p><div class="bar4" style="margin-top:10px"></div></div></div>
       <div class="natgrid">
@@ -544,7 +626,7 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
     </div>
   </section>
 
-  <section class="band cream" id="mapa" aria-labelledby="h-mapa" style="scroll-margin-top:90px">
+  <section class="band cream" id="mapa" data-tab="mapa" aria-labelledby="h-mapa" style="scroll-margin-top:90px">
     <div class="wrap">
       <div class="shead"><div><small class="eyebrow">Caldas en el mapa</small><h2 id="h-mapa">Caldas en el mapa</h2><p>Dónde golpeó el sismo, cómo va el reporte de cada municipio y dónde están los proyectos listos para financiar. Haga clic en un municipio para ver su detalle.</p><div class="bar4" style="margin-top:10px"></div></div></div>
       <div class="mapctl">
@@ -558,9 +640,9 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
     </div>
   </section>
 
-  <section class="band white" id="consolidado" aria-labelledby="h-av">
+  <section class="band white" id="consolidado" data-tab="municipios" aria-labelledby="h-av">
     <div class="wrap">
-      <div class="shead"><span class="n">01</span><div><small class="eyebrow">Avance del reporte municipal</small><h2 id="h-av">Avance del reporte municipal</h2><p>Estado de cada municipio en la plataforma. Las cifras son agregadas; los detalles de cada reporte son de uso de la Gobernación.</p><div class="bar4" style="margin-top:10px"></div></div></div>
+      <div class="shead"><div><small class="eyebrow">Avance del reporte municipal</small><h2 id="h-av">Avance del reporte municipal</h2><p>Estado de cada municipio en la plataforma. Las cifras son agregadas; los detalles de cada reporte son de uso de la Gobernación.</p><div class="bar4" style="margin-top:10px"></div></div></div>
       <div class="grid4" id="pubKpis"></div>
       <div style="display:flex;gap:10px;flex-wrap:wrap;margin:20px 0 12px;align-items:center"><span class="chip sin">Sin iniciar</span><span class="chip dil">En diligenciamiento</span><span class="chip env">Enviado</span><span class="chip val">Validado</span><span class="muted" id="pubCorte" style="margin-left:auto;font-size:13px"></span></div>
       <div class="mgrid" id="pubMunis"></div>
@@ -583,7 +665,7 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
     </div>
   </section>
 
-  <section class="band cream" aria-labelledby="h-fotos">
+  <section class="band white" data-tab="danos" aria-labelledby="h-fotos">
     <div class="wrap">
       <div class="shead"><div><h2 id="h-fotos">Lo que estamos reconstruyendo</h2><p>Detrás de cada cifra de esta plataforma hay una vereda, una plaza o una casa que hay que levantar de nuevo.</p></div></div>
       <div class="photos">
@@ -594,9 +676,9 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
     </div>
   </section>
 
-  <section class="band" aria-labelledby="h-pae">
+  <section class="band" id="cartera" data-tab="plata" aria-labelledby="h-pae">
     <div class="wrap">
-      <div class="shead"><span class="n">02</span><div><small class="eyebrow">Cartera reportada frente al PAE</small><h2 id="h-pae">Cartera reportada frente al PAE</h2><p>Costo de las intervenciones reportadas por los 26 municipios distintos de Manizales, comparado con la necesidad estimada por línea en el PAE departamental (19-oct-2026). Manizales se lee aparte porque el dimensionamiento departamental cubre a los otros 26.</p></div></div>
+      <div class="shead"><div><small class="eyebrow">Cartera reportada frente al PAE</small><h2 id="h-pae">Cartera reportada frente al PAE</h2><p>Costo de las intervenciones reportadas por los 26 municipios distintos de Manizales, comparado con la necesidad estimada por línea en el PAE departamental (19-oct-2026). Manizales se lee aparte porque el dimensionamiento departamental cubre a los otros 26.</p></div></div>
       <div class="cov" id="cmpCov"></div>
       <div class="cmpctl">
         <div class="cmplg" aria-hidden="true"><span><i class="sw rep"></i>Reportado</span><span><i class="sw esp"></i>Esperable de los municipios que ya reportaron</span><span><i class="sw pen"></i>Pendiente de los que no han reportado</span></div>
@@ -623,36 +705,9 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
     </div>
   </section>
 
-  <section class="band white" aria-labelledby="h-lb">
+  <section class="band white" id="acciones" data-tab="respuesta" aria-labelledby="h-gob" style="scroll-margin-top:90px">
     <div class="wrap">
-      <div class="shead"><span class="n">03</span><div><small class="eyebrow">Línea base de afectaciones</small><h2 id="h-lb">Caldas tiene 23.492 viviendas afectadas, y casi la mitad están en Manizales</h2><p>Cada cifra se muestra con su fuente y su fecha de corte; las series no se suman ni se promedian entre sí.</p></div></div>
-      <div class="grid3">
-        <div class="stat"><small>EDAN 14-sep</small><b class="num">22.469</b><span>familias afectadas</span></div>
-        <div class="stat"><small>EDAN 14-sep</small><b class="num">23.492</b><span>viviendas averiadas (20.503) o destruidas (2.989)</span></div>
-        <div class="stat"><small>EDAN 14-sep</small><b class="num">7 · 334</b><span>personas fallecidas · heridas</span></div>
-        <div class="stat"><small>EDAN 14-sep</small><b class="num">436</b><span>centros educativos afectados</span></div>
-        <div class="stat g"><small>DPN EDANPRI 11-oct</small><b class="num">$2,88 b</b><span>daños valorados (billones)</span></div>
-        <div class="stat g"><small>PAE 19-oct</small><b class="num">$2,23 b</b><span>necesidad estimada PAE (26 municipios)</span></div>
-      </div>
-      <div class="grid2" style="margin-top:22px">
-        <div class="card"><h3>Viviendas afectadas por municipio</h3><p class="sub">EDAN, corte 14-sep-2026 · Manizales: 11.513 (49 %), se muestra aparte</p><div class="hb" id="pubViv" style="margin-top:12px;--lw:110px"></div></div>
-        <div>
-          <div class="card"><h3>Por subregión</h3><p class="sub">EDAN, corte 14-sep-2026</p><div class="hb" id="pubSub" style="margin-top:12px;--lw:140px"></div></div>
-          <div class="scroll" style="margin-top:16px"><table class="t"><thead><tr><th>Indicador</th><th class="r">Cifra</th><th>Fuente y corte</th></tr></thead><tbody>
-            <tr><td>Centros de salud afectados</td><td class="r">18</td><td>EDAN, 14-sep-2026</td></tr>
-            <tr><td>Sistemas de acueducto afectados</td><td class="r">53 (20 municipales, 33 veredales)</td><td>EDAN; Fondo Milagro ambiental, 27-oct</td></tr>
-            <tr><td>Centros comunitarios afectados</td><td class="r">171</td><td>EDAN, 14-sep-2026</td></tr>
-            <tr><td>Familias inscritas en el RUD</td><td class="r">22.132 (45.324 personas)</td><td>RUD UNGRD, 27-oct-2026</td></tr>
-          </tbody></table></div>
-        </div>
-      </div>
-      <div class="note" style="margin-top:18px"><b class="t">Atención con las cifras</b>El reporte del día cero (Decreto 392), el EDAN, el RUD y el EDANPRI tienen cortes y métodos distintos; por ejemplo, el Decreto 392 registraba 124 viviendas destruidas, el RUD registra 573 y el EDAN/CMGRD 2.673. La plataforma muestra cada cifra con su fuente y su fecha, nunca las promedia.</div>
-    </div>
-  </section>
-
-  <section class="band white" id="acciones" aria-labelledby="h-gob" style="scroll-margin-top:90px">
-    <div class="wrap">
-      <div class="shead"><span class="n">04</span><div><h2 id="h-gob">Tablero de la respuesta departamental</h2><p>Lo que ha hecho la Gobernación de Caldas desde el 10 de agosto, en cifras. Cada dato muestra su fecha de corte y su fuente; el equipo coordinador las actualiza desde su panel.</p><div class="bar4" style="margin-top:10px"></div></div></div>
+      <div class="shead"><div><h2 id="h-gob">Tablero de la respuesta departamental</h2><p>Lo que ha hecho la Gobernación de Caldas desde el 10 de agosto, en cifras. Cada dato muestra su fecha de corte y su fuente; el equipo coordinador las actualiza desde su panel.</p><div class="bar4" style="margin-top:10px"></div></div></div>
       <figure class="gobfoto"><img src="img/respuesta-equipo-sm.jpg" srcset="img/respuesta-equipo-sm.jpg 900w, img/respuesta-equipo.jpg 1800w" sizes="(max-width:1240px) 100vw, 1200px" alt="Integrantes de la Cruz Roja, bomberos, grupos de rescate, Ejército, Policía y funcionarios posan con reconocimientos en un salón" loading="lazy"><figcaption>Organismos de socorro, Fuerza Pública y equipo de la respuesta departamental<small>Ilustración</small></figcaption></figure>
       <div class="gkpis" id="gobKpis"></div>
       <div class="grid2" style="margin-top:20px">
@@ -669,16 +724,33 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
     </div>
   </section>
 
-  <section class="band cream" id="cronologia" aria-labelledby="h-acc" style="scroll-margin-top:90px">
+  <section class="band cream" id="cronologia" data-tab="respuesta" aria-labelledby="h-acc" style="scroll-margin-top:90px">
     <div class="wrap grid2" style="align-items:start">
       <div>
-        <div class="shead"><span class="n">05</span><div><h2 id="h-acc">Acciones de la Gobernación</h2><p>Del día cero a hoy. El equipo coordinador mantiene esta cronología al día.</p></div></div>
+        <div class="shead"><div><h2 id="h-acc">Acciones de la Gobernación</h2><p>Del día cero a hoy. El equipo coordinador mantiene esta cronología al día.</p></div></div>
         <div class="tl" id="pubAcc"></div>
       </div>
       <div>
-        <div class="shead"><span class="n">06</span><div><h2>Calendario y vencimientos</h2><p>Días restantes de cada hito. Ritmo de reporte: actualización municipal cada quince días y corte consolidado mensual.</p></div></div>
+        <div class="shead"><div><h2>Calendario y vencimientos</h2><p>Días restantes de cada hito. Ritmo de reporte: actualización municipal cada quince días y corte consolidado mensual.</p></div></div>
         <div class="card"><div class="cal" id="pubCal"></div></div>
       </div>
+    </div>
+  </section>
+  <section class="band cream" id="documento" data-tab="documento" aria-labelledby="h-doc" style="scroll-margin-top:90px">
+    <div class="wrap">
+      <div class="shead"><div><small class="eyebrow">Seguimiento al PAE Caldas</small><h2 id="h-doc">Documento del PAE Caldas</h2><p>Descargue el Plan de Acción Específico con la Cartera Única a la última fecha de corte. Cada versión conserva su corte, así puede ver cómo avanza el plan.</p><div class="bar4" style="margin-top:10px"></div></div></div>
+      <div class="docgrid">
+        <div class="card docnow" id="docNow"></div>
+        <div class="card"><h3>Versiones anteriores</h3><p class="sub">Todas siguen disponibles para consulta.</p><ul class="doclist" id="docList"></ul></div>
+      </div>
+      <p class="srcnote">El documento es preliminar. Las cifras municipales reproducen lo que cada municipio envió a esta plataforma y pueden cambiar con la validación técnica de la Gobernación; no constituyen aprobación de proyectos ni disponibilidad de recursos. Las cifras del consolidado de esta página se actualizan en tiempo real y pueden ser más recientes que la última versión del documento.</p>
+    </div>
+  </section>
+
+  <section class="band white" id="glosario" data-tab="documento" aria-labelledby="h-glo">
+    <div class="wrap">
+      <div class="shead"><div><small class="eyebrow">Para leer sin enredos</small><h2 id="h-glo">Glosario</h2><p>Las siglas y términos que usa esta plataforma, en palabras simples.</p></div></div>
+      <div class="glosario" id="glosarioList"></div>
     </div>
   </section>
 </div>
@@ -972,8 +1044,8 @@ function renderNav(){
 const VIEWS=["inicio","fase3","oxi","ingresar","municipio","gobernacion"];
 function route(){
   let v=(location.hash||"#inicio").slice(1);
-  const anc=["consolidado","acciones","documento"].includes(v)?v:null;
-  if(anc){v="inicio";setTimeout(()=>$("#"+anc).scrollIntoView({behavior:"smooth"}),60)}
+  const anc=["resumen",...Object.keys(TAB_DE)].includes(v)?v:null;
+  if(anc){v="inicio";setTimeout(()=>{if(TAB_DE[anc]){setTab(TAB_DE[anc],false)}const el=$("#"+anc);if(el)el.scrollIntoView({behavior:"smooth"})},60)}
   if(!VIEWS.includes(v))v="inicio";
   if(v==="municipio"&&!(SES&&SES.rol==="municipio"))v=SES?"gobernacion":"ingresar";
   if(v==="municipio"&&(SES&&(SES.rol==="gobernacion"||SES.rol==="aliado")))v="gobernacion";
@@ -983,7 +1055,7 @@ function route(){
   if(!anc&&("#"+v)!==location.hash)history.replaceState(null,"","#"+v);
   $$("[data-view]").forEach(el=>el.hidden=el.id!=="v-"+v);
   renderNav();
-  if(v==="inicio"){renderDocs();loadPublic();}
+  if(v==="inicio"){renderDocs();initTabs();renderGlosario();loadPublic();}
   if(v==="fase3")loadFase3();
   if(v==="oxi")renderOxi();
   if(v==="ingresar")initLogin();
@@ -1098,8 +1170,96 @@ async function loadPublic(){
   hbars($("#pubViv"),viv);
   hbars($("#pubSub"),[["Centro Sur",13984,"· 59,5 %"],["Bajo Occidente",3996,"· 17,0 %"],["Alto Occidente",2310,"· 9,8 %"],["Norte",1977,"· 8,4 %"],["Alto Oriente",685,"· 2,9 %"],["Magdalena Caldense",540,"· 2,3 %"]],"var(--gold)");
   renderAcciones(d.acciones||[],$("#pubAcc"));
+  renderResumen(d);
   initTablero(M);MP.M=M;MP.F3=d.fase3||[];renderMapa();renderGob(Array.isArray(d.cifras)?d.cifras:(window.PAE_CIFRAS||[]));  // servidor sin «cifras» (versión anterior): usa las iniciales
 }
+
+/* ================= RESUMEN EN 30 SEGUNDOS, PESTAÑAS Y GLOSARIO ================= */
+const bigMoney=n=>n>=1e12?"$"+(n/1e12).toLocaleString("es-CO",{maximumFractionDigits:2})+" billones":n>=1e9?"$"+fmt(n/1e6)+" millones":moneyM(n);
+const shortMoney=n=>n>=1e12?"$"+(n/1e12).toLocaleString("es-CO",{maximumFractionDigits:2})+" b":"$"+fmt(n/1e6)+" M";
+function renderResumen(d){
+  const M=d.municipios||[],c=e=>M.filter(m=>m.estado===e).length,env=c("enviado"),val=c("validado"),ini=27-c("sin iniciar");
+  const nN=M.reduce((a,m)=>a+m.necesidades,0),nI=M.reduce((a,m)=>a+m.intervenciones,0),cI=M.reduce((a,m)=>a+m.costoIntervenciones,0);
+  const nP=M.reduce((a,m)=>a+m.proyectos,0),cP=M.reduce((a,m)=>a+m.costoProyectos,0),conf=Math.min(cP,M.reduce((a,m)=>a+m.confirmado,0)),gap=Math.max(0,cP-conf);
+  const man=M.find(m=>m.dane==="17001")||{costoProyectos:0},pc=cP?conf/cP*100:0,mP=M.filter(m=>m.proyectos).length;
+  const corte=d.corte?new Date(d.corte).toLocaleDateString("es-CO",{day:"numeric",month:"short",year:"numeric"}):"";
+  const selloM=`<span class="sello m">Reportado por los municipios · ${val?val+" validados":"sin validar aún"} · ${esc(corte)}</span>`;
+  const h=$("#h4n");if(h){const n=h.querySelectorAll(".n");
+    n[1].innerHTML=`<b>${shortMoney(cP)}</b><span>${cP>=1e12?"billones de pesos ":""}cuestan los ${fmt(nP)} proyectos que reportan ${mP} municipios</span>${selloM}`;
+    n[2].innerHTML=`<b>${pctTxt(pc)}</b><span>del costo tiene la plata asegurada: ${bigMoney(conf)}. Faltan ${bigMoney(gap)}</span>${selloM}`;
+    n[3].innerHTML=`<b>${env+val} de 27</b><span>municipios enviaron su reporte; ${val?`${val} ya ${val===1?"está validado":"están validados"}`:"la Gobernación los está revisando"}</span><span class="sello i">Plataforma en línea · ${esc(corte)}</span>`;}
+  $("#q30").innerHTML=`
+    <div class="card"><h3>¿Qué pasó?</h3><p class="big">Un sismo de magnitud 7,4 dejó <strong>23.492 viviendas afectadas</strong> en Caldas, 2.989 de ellas destruidas.</p>
+      <p>Hay 22.469 familias afectadas, 7 personas fallecidas y 334 heridas. La mitad de las viviendas afectadas está en Manizales; en proporción a su tamaño, los más golpeados son Belalcázar y San José.</p>
+      <span class="sello o">Oficial · EDAN · corte 14-sep-2026</span><a class="more" href="#danos" data-go="danos">Ver los daños →</a></div>
+    <div class="card"><h3>¿Qué se necesita?</h3><p class="big">Los municipios han propuesto <strong>${fmt(nP)} proyectos por ${bigMoney(cP)}</strong>.</p>
+      <p>${man.costoProyectos?`De eso, Manizales concentra ${bigMoney(man.costoProyectos)}. `:""}Para los otros 26 municipios, el PAE departamental estima una necesidad de $2,23 billones. El PAE nacional de la UNGRD programa $4,80 billones para Caldas entre 2026 y 2030.</p>
+      ${selloM}<a class="more" href="#cartera" data-go="plata">Ver en qué se gastaría →</a></div>
+    <div class="card"><h3>¿Cómo vamos?</h3><p class="big"><strong>${env+val} de 27 municipios</strong> ya enviaron su reporte y hay <strong>${bigMoney(conf)}</strong> asegurados.</p>
+      <p>Eso es el ${pctTxt(pc)} del costo de los proyectos: falta gestionar ${bigMoney(gap)} con la Nación, el Fondo Milagro, regalías, Obras por Impuestos, cooperación o privados. ${27-ini?`${27-ini} municipios aún no inician su reporte.`:""}</p>
+      ${selloM}<a class="more" href="#consolidado" data-go="municipios">Ver municipio por municipio →</a></div>`;
+  const st=[["1 · Daños identificados",fmt(nN),"necesidades reportadas",`${mP?ini:0} municipios con reporte`],
+    ["2 · Soluciones propuestas",fmt(nI),"intervenciones",bigMoney(cI)],
+    ["3 · Proyectos formulados",fmt(nP),"proyectos con ficha",bigMoney(cP)],
+    ["4 · Con plata asegurada",shortMoney(conf).replace(" M"," millones"),"recursos confirmados",pctTxt(pc)+" del costo"],
+    ["Lo que falta conseguir",bigMoney(gap),"brecha de financiación","Lo que se gestiona con la Nación y aliados"]];
+  $("#funnel").innerHTML=st.map(([k,b,sp,em])=>`<div><span class="k">${k}</span><b>${b}</b><span>${sp}</span><em>${esc(em)}</em></div>`).join("");
+  $("#resNota").innerHTML=`Cifras de los reportes que los municipios enviaron a esta plataforma, corte ${esc(corte)}. ${val?`${val} de ellos están validados por la Gobernación.`:"Ninguno ha sido validado todavía por la Gobernación: pueden cambiar con la revisión técnica."} No constituyen aprobación de proyectos ni disponibilidad de recursos. Los recursos asegurados se cuentan hasta el costo de cada proyecto.`;
+  bindGo($("#resumen"));glosarioAuto($("#resumen"));
+}
+/* Pestañas de exploración: una sección a la vez */
+const TAB_DE={mapa:"mapa",consolidado:"municipios",tablero:"municipios",cartera:"plata",pais:"danos",danos:"danos",acciones:"respuesta",cronologia:"respuesta",documento:"documento",glosario:"documento"};
+function setTab(t,scroll){
+  if(!$("#xtabs"))return;t=t||"mapa";
+  $$("#xtabs [data-t]").forEach(b=>b.setAttribute("aria-selected",String(b.dataset.t===t)));
+  $$("#v-inicio [data-tab]").forEach(el=>el.hidden=el.dataset.tab!==t);
+  try{sessionStorage.setItem("pae.tab",t)}catch(e){}
+  glosarioAuto($("#v-inicio"));
+  if(scroll){const y=$("#xtabs").getBoundingClientRect().top+scrollY+1;scrollTo({top:y,behavior:"smooth"})}
+}
+function bindGo(root){if(!root)return;[...root.querySelectorAll("[data-go]")].forEach(a=>{if(a._go)return;a._go=1;a.addEventListener("click",e=>{e.preventDefault();setTab(a.dataset.go,true)})})}
+function initTabs(){
+  const x=$("#xtabs");if(!x||x._ok)return;x._ok=1;
+  [...x.querySelectorAll("[data-t]")].forEach(b=>b.addEventListener("click",()=>setTab(b.dataset.t,true)));
+  let t="mapa";try{t=sessionStorage.getItem("pae.tab")||t}catch(e){}
+  setTab(t,false);
+}
+/* Glosario: definiciones al tocar cada término */
+const GLOS={
+  "PAE":"Plan de Acción Específico. El plan que ordena la recuperación después de una calamidad: qué se va a hacer, quién lo hace, cuánto cuesta y en qué plazo (Ley 1523 de 2012).",
+  "EDAN":"Evaluación de Daños y Análisis de Necesidades. El conteo oficial, en terreno, de viviendas, personas e infraestructura afectadas.",
+  "RUD":"Registro Único de Damnificados de la UNGRD. La lista de hogares afectados que pueden recibir ayudas del Gobierno nacional.",
+  "UNGRD":"Unidad Nacional para la Gestión del Riesgo de Desastres. La entidad nacional que coordina la atención y la reconstrucción.",
+  "EDANPRI":"Evaluación de daños y necesidades para la recuperación, que valora en pesos los daños por sector.",
+  "Cartera Única":"La lista consolidada de todos los proyectos de reconstrucción de Caldas, con un mismo formato, que la Gobernación arma a partir de los reportes municipales.",
+  "Fase III":"Proyectos que ya tienen estudios o diseños, o que solo esperan recursos: los más cercanos a poder contratarse.",
+  "Obras por Impuestos":"Mecanismo por el que una empresa paga parte de su impuesto de renta construyendo directamente una obra pública.",
+  "Fondo Milagro":"Fondo del Gobierno nacional para financiar la recuperación y la reconstrucción de las zonas afectadas por el sismo de 2026.",
+  "SGR":"Sistema General de Regalías: recursos de la explotación minera y petrolera que se invierten en proyectos de las regiones.",
+  "brecha":"La diferencia entre lo que cuesta un proyecto y la plata que ya tiene asegurada. Es lo que falta conseguir.",
+  "intervenciones":"Las soluciones que propone cada municipio para atender un daño, con su costo estimado.",
+  "validado":"El reporte fue revisado por la Gobernación y sus cifras quedaron confirmadas para la Cartera Única."
+};
+function glosarioAuto(root){
+  if(!root)return;const keys=Object.keys(GLOS).sort((a,b)=>b.length-a.length);
+  const re=new RegExp("(^|[^\\wÁÉÍÓÚáéíóúñÑ])("+keys.map(k=>k.replace(/ /g,"\\s")).join("|")+")(?![\\wÁÉÍÓÚáéíóúñÑ])");
+  [...root.querySelectorAll("section:not([hidden]) .shead p, .q30 p, .funnel span, .srcnote, .note")].forEach(el=>{
+    if(el._gl)return;el._gl=1;const seen=new Set();
+    const w=document.createTreeWalker(el,NodeFilter.SHOW_TEXT,{acceptNode:n=>n.parentElement.closest("a,button,.gl,b.t")?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT});
+    const nodes=[];while(w.nextNode())nodes.push(w.currentNode);
+    nodes.forEach(n=>{const m=n.nodeValue.match(re);if(!m)return;const term=m[2].replace(/\s/g," "),key=keys.find(k=>k===term);if(!key||seen.has(key))return;seen.add(key);
+      const at=m.index+m[1].length,after=n.splitText(at);after.nodeValue=after.nodeValue.slice(m[2].length);
+      const b=document.createElement("button");b.type="button";b.className="gl";b.textContent=m[2];b.dataset.g=key;b.setAttribute("aria-label",m[2]+": ver definición");n.parentNode.insertBefore(b,after)});
+  });
+}
+document.addEventListener("click",e=>{
+  const b=e.target.closest(".gl"),old=$(".glpop");if(old)old.remove();if(!b)return;
+  const p=document.createElement("div");p.className="glpop";p.setAttribute("role","tooltip");p.innerHTML=`<b>${esc(b.dataset.g)}</b>${esc(GLOS[b.dataset.g])}`;document.body.appendChild(p);
+  const r=b.getBoundingClientRect(),w=Math.min(320,innerWidth-24);p.style.maxWidth=w+"px";
+  p.style.left=Math.max(12,Math.min(r.left+scrollX,scrollX+innerWidth-w-12))+"px";p.style.top=(r.bottom+scrollY+8)+"px";
+});
+addEventListener("keydown",e=>{if(e.key==="Escape"){const o=$(".glpop");if(o)o.remove()}});
+function renderGlosario(){const el=$("#glosarioList");if(el&&!el.innerHTML)el.innerHTML=Object.entries(GLOS).map(([k,v])=>`<div><b>${esc(k)}.</b> ${esc(v)}</div>`).join("")}
 
 /* ================= BRECHA DE FINANCIACIÓN ================= */
 function pctTxt(p){return(p>0&&p<1?p.toLocaleString("es-CO",{maximumFractionDigits:1}):Math.round(p).toLocaleString("es-CO"))+" %"}
