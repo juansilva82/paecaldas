@@ -21,6 +21,7 @@
 <script src="ayuda-humanitaria.js"></script>
 <script src="educacion.js"></script>
 <script src="vivienda.js"></script>
+<script src="recursos-gob.js"></script>
 <script src="xlsx.js"></script>
 <style>
 :root{
@@ -250,6 +251,7 @@ section.band.cream{background:var(--cream)}
 .card h3{font-size:18px}
 .card .sub{color:var(--muted);font-size:13.5px;margin-top:4px}
 #vivienda .scroll td.num{white-space:nowrap}#vivienda .scroll{overflow-x:auto;max-width:100%}#vivienda .grid2>*{min-width:0}
+#recursos .grid2>*{min-width:0}#recursos td{overflow-wrap:anywhere}@media (max-width:560px){#recursos .t td{padding:8px 6px;font-size:13px}}
 .vivcomp{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:14px}.vivc{border:1px solid var(--line);border-radius:14px;padding:14px;display:grid;gap:6px;align-content:start;background:var(--white,#fff)}
 .vivc h4{margin:0;font-size:15px;line-height:1.25}.vivc small{color:var(--muted);font-size:12.5px;line-height:1.35}.vivc .vb{display:flex;height:12px;border-radius:99px;overflow:hidden;background:#eef1ee;gap:1px}.vivc .vb i{display:block}
 .vivc .vn{font-size:13px}.vivc b.m{font:800 22px var(--head);color:var(--dark)}.vivc .lb{font-size:11.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
@@ -707,6 +709,17 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
         <figure><img src="img/sismo-policia-sm.jpg" srcset="img/sismo-policia-sm.jpg 900w, img/sismo-policia.jpg 1800w" sizes="(max-width:800px) 100vw, 30vw" alt="Un policía recorre una calle con una edificación colapsada" loading="lazy"><figcaption>Seguridad en las zonas afectadas<small>Ilustración</small></figcaption></figure>
         <figure><img src="img/sismo-rescate-sm.jpg" srcset="img/sismo-rescate-sm.jpg 900w, img/sismo-rescate.jpg 1800w" sizes="(max-width:800px) 100vw, 30vw" alt="Rescatistas caminan entre las ruinas de una iglesia y casas derrumbadas" loading="lazy"><figcaption>Búsqueda, rescate y evaluación de daños<small>Ilustración</small></figcaption></figure>
       </div>
+    </div>
+  </section>
+
+  <section class="band white" id="recursos" data-tab="plata" aria-labelledby="h-rec" style="scroll-margin-top:90px">
+    <div class="wrap">
+      <div class="shead"><div><small class="eyebrow">Recursos de la Gobernación · 26 municipios</small><h2 id="h-rec">Lo que pone la Gobernación: $222.500 millones</h2><p>Recursos del Departamento para atender a los 26 municipios distintos de Manizales, que atiende su emergencia de forma independiente. Distribución preliminar del PAE departamental por línea estratégica.</p><div class="bar4" style="margin-top:10px"></div></div></div>
+      <div class="grid2" style="align-items:start">
+        <div class="card"><h3>¿De dónde sale la plata?</h3><p class="sub">Cinco fuentes de financiación</p><div class="edustack" id="recF" style="height:40px"></div><table class="t" id="recFt" style="width:100%;margin-top:14px;table-layout:fixed"></table></div>
+        <div class="card"><h3>¿En qué se invierte?</h3><p class="sub">Siete líneas estratégicas del PAE</p><div class="edustack" id="recL" style="height:40px"></div><table class="t" id="recLt" style="width:100%;margin-top:14px;table-layout:fixed"></table></div>
+      </div>
+      <p class="srcnote" id="recSrc"></p>
     </div>
   </section>
 
@@ -1323,7 +1336,7 @@ function renderResumen(d){
   bindGo($("#resumen"));glosarioAuto($("#resumen"));
 }
 /* Pestañas de exploración: una sección a la vez */
-const TAB_DE={banco:"respuesta",vivienda:"respuesta",educacion:"respuesta",mapa:"mapa",consolidado:"municipios",tablero:"municipios",cartera:"plata",pais:"danos",danos:"danos",acciones:"respuesta",cronologia:"respuesta",documento:"documento",glosario:"documento"};
+const TAB_DE={banco:"respuesta",vivienda:"respuesta",educacion:"respuesta",mapa:"mapa",consolidado:"municipios",tablero:"municipios",cartera:"plata",recursos:"plata",pais:"danos",danos:"danos",acciones:"respuesta",cronologia:"respuesta",documento:"documento",glosario:"documento"};
 function setTab(t,scroll){
   if(!$("#xtabs"))return;t=t||"mapa";
   $$("#xtabs [data-t]").forEach(b=>b.setAttribute("aria-selected",String(b.dataset.t===t)));
@@ -1405,6 +1418,17 @@ hbx($("#natPae"),[["Valle del Cauca",20.43],["Risaralda",8.50],["Chocó",6.17],[
 
 
 
+
+
+/* ================= RECURSOS DE LA GOBERNACIÓN ================= */
+function renderRec(){const R=window.PAE_REC;if(!R||!$("#recF"))return;const M=v=>"$"+v.toLocaleString("es-CO")+" M",P=v=>(v/R.total*100).toLocaleString("es-CO",{maximumFractionDigits:1})+" %";
+  const bar=(L,id)=>{$(id).innerHTML=L.map(x=>`<i style="flex:${x[1]};background:${x[2]}" title="${esc(x[0])}: ${M(x[1])}">${x[1]/R.total>=.12?P(x[1]):""}</i>`).join("")};
+  bar(R.fuentes,"#recF");bar(R.lineas,"#recL");
+  const tab=(L,id,d)=>{$(id).innerHTML=`<colgroup><col><col style="width:108px"><col style="width:62px"></colgroup><tbody>${L.map(x=>`<tr><td><span style="display:inline-block;width:11px;height:11px;border-radius:3px;background:${x[2]};margin-right:8px;vertical-align:-1px"></span><b style="white-space:normal">${esc(x[0])}</b>${d&&x[3]?`<small class="muted" style="display:block;white-space:normal">${esc(x[3])}</small>`:""}</td><td class="r num" style="white-space:nowrap">${M(x[1])}</td><td class="r num muted" style="white-space:nowrap">${P(x[1])}</td></tr>`).join("")}<tr style="font-weight:700"><td>Total</td><td class="r num" style="white-space:nowrap">${M(R.total)}</td><td class="r num" style="white-space:nowrap">100 %</td></tr></tbody>`};
+  tab(R.fuentes,"#recFt",1);tab(R.lineas,"#recLt",0);
+  $("#recSrc").textContent="Fuente: Gobernación de Caldas, PAE departamental · distribución preliminar de la inversión por línea estratégica y fuentes de financiación (noviembre de 2026). Cifras preliminares, sujetas a ajustes en la estructuración de proyectos, la concurrencia de fuentes y la validación técnica. No incluye los recursos del Fondo Milagro para Manizales.";
+}
+renderRec();
 /* ================= VIVIENDA Y DEMOLICIONES (Secretaría de Vivienda) ================= */
 function renderViv(){const V=window.PAE_VIV;if(!V||!$("#vivKpis"))return;const M=v=>"$"+v.toLocaleString("es-CO",{maximumFractionDigits:1})+" M";
   const C=V.comp,rur=C[0],mej=C[3],dem=V.dem.reduce((a,d)=>a+d[1],0),crit=V.dem.reduce((a,d)=>a+(d[7]||0),0),ya=V.dem.reduce((a,d)=>a+d[8],0);
