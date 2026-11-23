@@ -1816,7 +1816,7 @@ $("#f3Tabs").addEventListener("click",e=>{const b=e.target.closest("[data-t]");i
 
 /* ================= LOGIN ================= */
 function initLogin(){
-  const s=$("#lgUser");if(!s.options.length)s.innerHTML=`<option value="">Seleccione…</option><option value="gobernacion">Gobernación de Caldas · equipo coordinador</option><option value="pnud-ungrd">PNUD · Enlace UNGRD (gestión)</option><option value="pnud">PNUD · Naciones Unidas (consulta)</option><optgroup label="Municipios">${[...MUN].sort((a,b)=>a.nombre.localeCompare(b.nombre,"es")).map(m=>`<option value="${m.dane}">${esc(m.nombre)} (${m.dane})</option>`).join("")}</optgroup>`;
+  const s=$("#lgUser");if(!s.options.length)s.innerHTML=`<option value="">Seleccione…</option><option value="gobernacion">Gobernación de Caldas · equipo coordinador</option><option value="pnud-ungrd">PNUD · Enlace UNGRD (gestión)</option><option value="pnud">PNUD · Naciones Unidas (consulta)</option><option value="soporte.wai">Wai Group · soporte (consulta)</option><optgroup label="Municipios">${[...MUN].sort((a,b)=>a.nombre.localeCompare(b.nombre,"es")).map(m=>`<option value="${m.dane}">${esc(m.nombre)} (${m.dane})</option>`).join("")}</optgroup>`;
   $("#demoHint").hidden=!DEMO;
 }
 $("#loginForm").addEventListener("submit",async e=>{
