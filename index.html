@@ -728,6 +728,7 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
   <section class="band" id="cartera" data-tab="plata" aria-labelledby="h-pae">
     <div class="wrap">
       <div class="shead"><div><small class="eyebrow">Cartera reportada frente al PAE</small><h2 id="h-pae">Cartera reportada frente al PAE</h2><p>Costo de las intervenciones reportadas por los 26 municipios distintos de Manizales, comparado con la necesidad estimada por línea en el PAE departamental (19-oct-2026). Manizales se lee aparte porque el dimensionamiento departamental cubre a los otros 26.</p></div></div>
+      <div class="note" style="margin-bottom:18px"><b class="t">Por qué la necesidad cambia según la fuente</b>El PAE departamental (19-oct) estima la necesidad por línea; las secretarías la calculan después, componente por componente, y el PAE nacional de la UNGRD usa su propio método. Por eso no coinciden ni se suman: <b>vivienda</b>, $575.000 M en el PAE departamental frente a $407.722 M en el balance de la Secretaría de Vivienda (17-nov); <b>colegios</b>, $300.000 M en el PAE departamental, $120.000 M estimados por la Secretaría de Educación (23-nov) y $1,39 billones en daños del sector en el PAE nacional; <b>sedes afectadas</b>, 436 en el EDAN (14-sep), 711 en la revisión de la Secretaría de Educación (26 municipios) y 742 en el PAE nacional.</div>
       <div class="cov" id="cmpCov"></div>
       <div class="cmpctl">
         <div class="cmplg" aria-hidden="true"><span><i class="sw rep"></i>Reportado</span><span><i class="sw esp"></i>Esperable de los municipios que ya reportaron</span><span><i class="sw pen"></i>Pendiente de los que no han reportado</span></div>
@@ -1301,7 +1302,7 @@ async function loadPublic(){
   const viv=M.filter(m=>m.dane!=="17001"&&m.lineaBase&&m.lineaBase.viviendasAfectadas!=null).map(m=>[m.municipio,num(m.lineaBase.viviendasAfectadas)]).sort((a,b)=>b[1]-a[1]);
   hbars($("#pubViv"),viv);
   hbars($("#pubSub"),[["Centro Sur",13984,"· 59,5 %"],["Bajo Occidente",3996,"· 17,0 %"],["Alto Occidente",2310,"· 9,8 %"],["Norte",1977,"· 8,4 %"],["Alto Oriente",685,"· 2,9 %"],["Magdalena Caldense",540,"· 2,3 %"]],"var(--gold)");
-  renderAcciones(d.acciones||[],$("#pubAcc"));
+  renderAcciones(accMerge(d.acciones),$("#pubAcc"));
   renderResumen(d);
   initTablero(M);MP.M=M;MP.F3=d.fase3||[];renderMapa();renderEdu();renderViv();renderGob(Array.isArray(d.cifras)?d.cifras:(window.PAE_CIFRAS||[]));  // servidor sin «cifras» (versión anterior): usa las iniciales
 }
@@ -1442,7 +1443,7 @@ renderRec();
 /* ================= VIVIENDA Y DEMOLICIONES (Secretaría de Vivienda) ================= */
 function renderViv(){const V=window.PAE_VIV;if(!V||!$("#vivKpis"))return;const M=v=>"$"+v.toLocaleString("es-CO",{maximumFractionDigits:1})+" M";
   const C=V.comp,rur=C[0],mej=C[3],dem=V.dem.reduce((a,d)=>a+d[1],0),crit=V.dem.reduce((a,d)=>a+(d[7]||0),0),ya=V.dem.reduce((a,d)=>a+d[8],0);
-  const k=[[M(V.necesidadTotal),"necesidad total de vivienda","sin contar demoliciones",""],[M(V.pendienteTotal),"pendiente de financiación","se gestiona ante el Fondo Milagro","r"],[`${fmt(rur.at)} de ${fmt(rur.u)}`,"casas rurales con fuente","empréstito, Grupo Argos y Departamento","g"],[fmt(V.bancoInicial.familias),"familias ya atendidas","con el banco de materiales","b"],[fmt(dem),"edificaciones por demoler",`${fmt(crit)} con prioridad crítica o alta`,""]];
+  const k=[[M(V.necesidadTotal),"necesidad total de vivienda","sin contar demoliciones",""],[M(V.pendienteTotal),"pendiente de financiación","se gestiona ante el Fondo Milagro","r"],[`${fmt(rur.at)} de ${fmt(rur.u)}`,"casas rurales con fuente","empréstito, Grupo Argos y Departamento","g"],[fmt(V.bancoInicial.familias),"familias ya atendidas","con el banco de materiales, según la carta de la Secretaría","b"],[fmt(dem),"edificaciones por demoler",`${fmt(crit)} con prioridad crítica o alta`,""]];
   $("#vivKpis").innerHTML=k.map(([b,t,x,c])=>`<div class="stat ${c==="r"?"":c}"${c==="r"?' style="border-top-color:var(--crit)"':""}><b class="num">${b}</b><span>${t}</span><small style="text-transform:none;letter-spacing:0;font-weight:600">${x}</small></div>`).join("");
   $("#vivComp").innerHTML=C.map(c=>`<div class="vivc"><h4>${esc(c.t)}</h4><small>${esc(c.d)}</small><div class="vb" role="img" aria-label="${c.at} atendidas y ${c.pe} pendientes de ${c.u}"><i style="flex:${c.at};background:var(--green)"></i><i style="flex:${c.pe};background:var(--gold)"></i></div><span class="vn"><b class="num">${fmt(c.u)}</b> unidades · <b class="num" style="color:var(--green)">${fmt(c.at)}</b> atendidas · <b class="num" style="color:#b06a00">${fmt(c.pe)}</b> pendientes</span><span class="lb">Falta financiar</span><b class="m num">${M(c.pen)}</b></div>`).join("");
   const rc=["#1b5e3a","var(--green)","#6fb07f","var(--gold)"];
@@ -1476,7 +1477,7 @@ let EDU_SORT={k:"pa",d:-1};
 function renderEdu(){const E=window.PAE_EDU;if(!E||!$("#eduKpis"))return;
   const A=E.act;if(A&&$("#eduAct"))$("#eduAct").innerHTML=`<small class="eyebrow" style="font:700 11px var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--gold)">Actualización · ${fcorte(A.corte)}</small><div style="display:flex;flex-wrap:wrap;gap:12px 28px;align-items:baseline;margin-top:6px"><div><span class="sub" style="display:block;margin:0">Valor estimado de la reconstrucción de las sedes</span><b class="num" style="font:800 30px var(--head);color:var(--dark)">$${A.valor.toLocaleString("es-CO")} millones</b></div><p style="margin:0;flex:1;min-width:260px"><b>${fmt(A.fuera)} sedes</b> tienen a sus estudiantes fuera de su aula (<b>${fmt(A.estFuera)} estudiantes</b>). <b>${fmt(A.grave)}</b> están en riesgo grave (${fmt(A.estGrave)} estudiantes) y <b>${fmt(A.porAtender)}</b> aún esperan inspección, estudios y diseños.</p></div><p class="sub" style="margin:8px 0 0">Secretaría de Educación de Caldas, plan de acción de reconstrucción de sedes educativas. Estimación. El detalle por nivel y por municipio que sigue corresponde al corte del ${fcorte(E.corte)}.</p>`;const T=E.tot,N=E.nivel,ES=E.estado,mo=E.modalidad;
   const af=T.sedes-(N["5"]||0),n12=(N["1"]||0)+(N["2"]||0),fuera=T.sedes-(mo["Presencial 100 %"]||0);
-  const k=[[fmt(T.sedes),`sedes revisadas en ${T.mun} municipios`,`${fmt(T.est)} estudiantes · ${fmt(T.rur)} rurales`,""],[fmt(af),"sedes con algún daño",`${fmt(T.estAf)} estudiantes`,""],[fmt(n12),"en colapso o riesgo inminente",`${N["1"]||0} colapsadas y ${N["2"]||0} en riesgo`,"r"],[fmt(fuera),"sedes con clases fuera de su aula",`${mo["Remota"]||0} remotas y ${fuera-(mo["Remota"]||0)} en otra sede`,"b"],[fmt(ES["Por atender"]||0),"sedes esperan estudios y diseños","aún sin intervención","g"]];
+  const k=[[fmt(T.sedes),`sedes revisadas en ${T.mun} municipios`,`${fmt(T.est)} estudiantes · ${fmt(T.rur)} rurales`,""],[fmt(af),"sedes con algún daño",`${fmt(T.estAf)} estudiantes`,""],[fmt(n12),"en colapso o riesgo inminente",`${N["1"]||0} colapsadas y ${N["2"]||0} en riesgo`,"r"],[fmt(fuera),"sedes con clases fuera de su aula",`${mo["Remota"]||0} remotas y ${fuera-(mo["Remota"]||0)} en otra sede`,"b"],[fmt(ES["Por atender"]||0),"sedes esperan estudios y diseños",`aún sin intervención · corte ${fcorte(E.corte)}`,"g"]];
   $("#eduKpis").innerHTML=k.map(([b,t,x,c])=>`<div class="stat ${c==="r"?"":c}"${c==="r"?' style="border-top-color:var(--crit)"':""}><b class="num">${b}</b><span>${t}</span><small style="text-transform:none;letter-spacing:0;font-weight:600">${x}</small></div>`).join("");
   $("#eduNiv").innerHTML=[1,2,3,4,5].map(n=>{const v=N[n]||0;return`<i style="flex:${v};background:${EDU_NIV[n][0]}" title="${EDU_NIV[n][1]}: ${v}">${v>=30?v:""}</i>`}).join("");
   $("#eduNivLg").innerHTML=[1,2,3,4,5].map(n=>`<span style="--c:${EDU_NIV[n][0]}">Nivel ${n} · ${EDU_NIV[n][1]}: <b class="num">${fmt(N[n]||0)}</b></span>`).join("");
@@ -1724,6 +1725,8 @@ const CIF_IND={
  fondo_milagro_amb:{n:"Estimación ambiental para el Fondo Milagro",u:"pesos",t:"$"}
 };
 const cifFmt=(ind,v)=>{const t=(CIF_IND[ind]||{}).t;return t==="$"?moneyM(v):t==="%"?fmt(v)+" %":(v%1?v.toLocaleString("es-CO",{maximumFractionDigits:1}):fmt(v))};
+const cifMerge=C=>{const r=(C||[]).slice(),k=x=>[x.ind,x.fecha,x.cat||""].join("|"),h=new Set(r.map(k));(window.PAE_CIFRAS_NUEVAS||[]).forEach(x=>{if(!h.has(k(x)))r.push(x)});return r};
+const accMerge=A=>{const r=(A||[]).slice(),k=x=>x.fecha+"|"+x.titulo,h=new Set(r.map(k));(window.PAE_ACC_NUEVAS||[]).forEach(x=>{if(!h.has(k(x)))r.push(x)});return r};
 const cifSerie=(C,ind)=>C.filter(x=>x.ind===ind&&!x.cat).sort((a,b)=>String(a.fecha).localeCompare(String(b.fecha)));
 const cifUlt=(C,ind)=>{const s=cifSerie(C,ind);return s[s.length-1]};
 const cifCats=C=>ind=>{const r=C.filter(x=>x.ind===ind&&x.cat);if(!r.length)return[];const f=r.map(x=>x.fecha).sort().pop();return r.filter(x=>x.fecha===f)};
@@ -1769,6 +1772,7 @@ function renderAH(){
   donut($("#ahCat"),Object.entries(cat).sort((a,b)=>b[1]-a[1]).map(([k,v],i)=>({k,v,c:pal[i%pal.length]})),String(Object.keys(cat).length),"tipos",v=>fmt(v));
 }
 function renderGob(C){
+  C=cifMerge(C);
   {const A=window.PAE_AH;C=(C||[]).slice();if(A&&!C.some(x=>x.ind==="ahe"&&x.fecha>=A.corte))C.push({ind:"ahe",valor:ahTotal(),fecha:A.corte,fuente:"Centro de acopio humanitario",nota:"Consolidado por municipio y aliado"})}
   renderAH();
   if(!C||!C.length){$("#gobKpis").innerHTML='<p class="muted">El equipo coordinador aún no ha registrado cifras.</p>';return}
@@ -1776,16 +1780,16 @@ function renderGob(C){
   const add=(k,txt,sub)=>{const x=u(k);if(x)kp.push(`<div class="gk"><b class="num">${esc(cifFmt(k,x.valor))}</b><span>${txt(x)}</span><small>${esc(fcorte(x.fecha))} · ${esc(x.fuente)}${sub?" · "+sub(x):""}</small></div>`)};
   add("ahe",()=>"unidades de ayuda humanitaria entregadas");
   add("arriendo_familias",()=>{const m=u("arriendo_monto"),mu=u("arriendo_municipios");return`familias con subsidio departamental de arrendamiento${m?" · "+moneyM(m.valor)+" girados":""}${mu?" en "+fmt(mu.valor)+" municipios":""}`});
-  add("banco_viviendas",()=>{const mu=u("banco_municipios"),c=u("banco_contrato");return`viviendas con banco de materiales${mu?" en "+fmt(mu.valor)+" municipios":""}${c?" · contrato por "+moneyM(c.valor):""}`});
+  add("banco_viviendas",()=>{const mu=u("banco_municipios"),c=u("banco_contrato");return`familias atendidas con el banco de materiales${mu?" en "+fmt(mu.valor)+" municipios":""}${c?" · contrato por "+moneyM(c.valor):""}`});
   add("ungrd_giros",()=>{const p=u("ungrd_cobrado_pct");return`en giros de la UNGRD acompañados${p?" · "+fmt(p.valor)+" % cobrados":""}`});
   add("contratos_n",()=>{const m=u("contratos_monto");return`contratos de emergencia de la Gobernación${m?" por "+moneyM(m.valor):""}`});
   add("portafolio_monto",()=>{const n=cifCats(C)("portafolio_tipo").reduce((a,x)=>a+x.valor,0);return`en el portafolio inicial de reconstrucción${n?" · "+fmt(n)+" proyectos":""}`});
   add("animales_kg",()=>"kilogramos de alimento para animales");
   $("#gobKpis").innerHTML=kp.join("");
   {const bv=u("banco_viviendas"),bm=u("banco_municipios"),bc=u("banco_contrato"),ce=x=>`<span class="sello">${esc(fcorte(x.fecha))} · ${esc(x.fuente)}</span>`;
-   const k=[bv&&[fmt(bv.valor),"viviendas incluidas en el banco de materiales",bv],bm&&[fmt(bm.valor),"municipios incluidos",bm],bc&&[moneyM(bc.valor),"valor del contrato de suministro",bc]].filter(Boolean);
+   const k=[bv&&[fmt(bv.valor),"familias atendidas con el banco de materiales",bv],bm&&[fmt(bm.valor),"municipios incluidos",bm],bc&&[moneyM(bc.valor),"valor del contrato de suministro",bc]].filter(Boolean);
    $("#bmKpis").innerHTML=k.map(([b,t,x])=>`<div class="stat g"><b class="num">${b}</b><span>${t}</span>${x.nota?`<em class="det">${esc(x.nota)}</em>`:""}${ce(x)}</div>`).join("");
-   const bh=$("#bmHome");if(bh&&bv)bh.innerHTML=`<div><b>Banco de Materiales: ${fmt(bv.valor)} viviendas${bm?" en "+fmt(bm.valor)+" municipios":""}</b><p>Materiales homologados y trazables, de la ficha EDAN a la obra revisada por una cuadrilla técnica.</p></div><a class="btn ghost small" href="#banco">Ver cómo funciona →</a>`;}
+   const bh=$("#bmHome");if(bh&&bv)bh.innerHTML=`<div><b>Banco de Materiales: ${fmt(bv.valor)} familias atendidas${bm?" en "+fmt(bm.valor)+" municipios":""}</b><p>Materiales homologados y trazables, de la ficha EDAN a la obra revisada por una cuadrilla técnica.</p></div><a class="btn ghost small" href="#banco">Ver cómo funciona →</a>`;}
   lineChart($("#gobAhe"),cifSerie(C,"ahe"),v=>fmt(v));
   const am=cifSerie(C,"arriendo_monto");lineChart($("#gobArr"),cifSerie(C,"arriendo_familias"),v=>fmt(v)+" familias",d=>{const m=am.find(x=>x.fecha===d.fecha);return m?" · "+moneyM(m.valor):""});
   // Torta: giros cobrados vs pendientes (por porcentaje)
