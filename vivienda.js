@@ -55,3 +55,9 @@ window.PAE_VIV = {
   },
   valoresDem: [["Villamaría", "1 de 45", "$1.711 millones", "Edificio Caracoles de Colores (22 apartamentos)"], ["Belalcázar", "37 de 37", "$1.110 a $1.850 millones", "Entre $30 y $50 millones por inmueble"], ["Pensilvania", "14 de 14", "$52 millones", "Cerca de $50.000 por m²"], ["Pácora", "1 de 8", "$38 millones", "Vivienda urbana"]]
 };
+
+/* Inventario de demoliciones por edificación (anexo del oficio S.V 1198): archivo de los municipios consolidado por la Secretaría de Vivienda.
+   tram: [municipio, registros, prioridad crítica o alta, con visita o informe técnico, con acta CMGRD, con resolución, responsable municipio, responsable particular, responsable sin definir, con seguro, ya demolidas].
+   Palestina reporta solo el listado de hogares y Viterbo el concepto técnico, sin los demás campos. */
+window.PAE_VIV.tram = [["San José", 105, 96, 105, 105, 0, 105, 0, 0, 0, 0], ["Palestina", 59, 0, 0, 0, 0, 0, 0, 59, 0, 0], ["Viterbo", 47, 0, 47, 0, 0, 0, 0, 47, 0, 5], ["Villamaría", 44, 44, 4, 4, 4, 0, 44, 0, 1, 0], ["Aguadas", 44, 44, 44, 0, 0, 0, 0, 44, 0, 0], ["Belalcázar", 37, 37, 4, 37, 0, 0, 0, 37, 0, 1], ["Anserma", 24, 22, 23, 0, 5, 13, 11, 0, 0, 0], ["Pensilvania", 14, 14, 14, 14, 14, 0, 14, 0, 0, 0], ["Pácora", 8, 7, 8, 7, 0, 6, 2, 0, 0, 1], ["Riosucio", 5, 5, 5, 5, 0, 0, 5, 0, 0, 0], ["Marulanda", 2, 1, 2, 2, 2, 0, 2, 0, 0, 1], ["Victoria", 1, 0, 1, 1, 0, 0, 1, 0, 0, 0]];
+window.PAE_VIV.tramArchivo = "documentos/Demoliciones_Caldas_inventario.xlsx";
