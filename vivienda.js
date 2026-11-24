@@ -33,7 +33,7 @@ window.PAE_VIV = {
   usos: [["Viviendas", 374, "En los 12 municipios"], ["Edificios multifamiliares", 6, "Villamaría (4, cerca de 64 apartamentos) y Riosucio (2)"], ["Escuelas", 7, "Anserma (6) y Riosucio (1)"], ["Institucionales", 4, "Viterbo (iglesia, Edificio Sorrento y Hotel María Alejandra) y Belalcázar (estación de bomberos)"], ["Comercio", 2, "Viterbo"]],
   /* Cruce con el empréstito: Ordenanza 1021 de 2026 (Asamblea de Caldas). Valores de los proyectos según la ordenanza y el banco del equipo estructurador. */
   emp: {
-    cupo: 100000, fecha: "19 de noviembre de 2026",
+    cupo: 100000, fecha: "18 de noviembre de 2026",
     comp: [
       ["Vivienda nueva rural", 13373.4, true, "$40.000 M para 400 de las 663 casas; con Grupo Argos (100) y el Departamento (29) quedan 134 pendientes"],
       ["Vivienda nueva urbana · 26 municipios", 86249.6, false, "Sin línea en el empréstito"],

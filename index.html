@@ -641,7 +641,7 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
           </tbody></table></div>
         </div>
       </div>
-      <div class="note" style="margin-top:18px"><b class="t">Atención con las cifras</b>El reporte del día cero (Decreto 392), el EDAN, el RUD y el EDANPRI tienen cortes y métodos distintos; por ejemplo, el Decreto 392 registraba 124 viviendas destruidas, el RUD registra 573 y el EDAN/CMGRD 2.673. La plataforma muestra cada cifra con su fuente y su fecha, nunca las promedia.</div>
+      <div class="note" style="margin-top:18px"><b class="t">Atención con las cifras</b>El reporte del día cero (Decreto 392), el EDAN, el RUD y el EDANPRI tienen cortes y métodos distintos; por ejemplo, el Decreto 392 registraba 124 viviendas destruidas, el RUD registra 573, el EDAN del 14 de septiembre 2.989 y el PAE nacional de la UNGRD 2.673. La plataforma muestra cada cifra con su fuente y su fecha, nunca las promedia.</div>
     </div>
   </section>
 
@@ -800,7 +800,7 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
       <div class="bmk" id="vivKpis"></div>
       <div class="card" style="margin-top:20px"><h3>Los cuatro componentes</h3><p class="sub">Verde: unidades atendidas o con fuente identificada. Naranja: pendientes de financiación.</p><div class="vivcomp" id="vivComp"></div></div>
       <div class="grid2" style="margin-top:20px;align-items:start">
-        <div class="card"><h3>Casas del campo: quién las paga</h3><p class="sub">663 viviendas rurales destruidas · $99,8 millones por vivienda</p><div class="edustack" id="vivRur"></div><div class="edulg" id="vivRurLg"></div>
+        <div class="card"><h3>Casas del campo: quién las paga</h3><p class="sub">663 viviendas rurales destruidas · $99,8 millones por vivienda</p><div class="edustack" id="vivRur"></div><div class="edulg" id="vivRurLg"></div><p class="sub" style="margin-top:10px;padding:8px 10px;background:#fff6e6;border-radius:8px;font-size:13px"><b>Valor por casa por aclarar:</b> la carta de la Secretaría usa $99,8 millones por vivienda; el proyecto de las 29 casas del Departamento (BPID AMB-E-260098, $1.926,7 millones) da unos $66,4 millones.</p>
           <h3 style="margin-top:22px">Casas averiadas: dos caminos</h3><p class="sub" id="vivMejSub"></p><div class="vivopt" id="vivMej"></div></div>
         <div class="card"><h3>Casas de los pueblos: dónde ya hay lote</h3><p class="sub" id="vivLotSub"></p><div class="scroll"><table class="t" id="vivLotes"></table></div><p class="sub muted" style="margin-top:10px" id="vivSM"></p></div>
       </div>
@@ -1047,7 +1047,7 @@ const fmt=n=>Math.round(n).toLocaleString("es-CO");
 const fmtM=n=>(n/1e6).toLocaleString("es-CO",{maximumFractionDigits:n/1e6<10?1:0});           // pesos -> millones
 const money=n=>n?("$"+fmt(n)):"—";
 const moneyM=n=>"$"+fmtM(n)+" M";
-const fdate=s=>{if(!s)return"";const d=new Date(s);return isNaN(d)?s:d.toLocaleDateString("es-CO",{day:"numeric",month:"short",year:"numeric"})};
+const fdate=s=>{if(!s)return"";const d=new Date(/^\d{4}-\d{2}-\d{2}$/.test(s)?s+"T12:00:00":s);return isNaN(d)?s:d.toLocaleDateString("es-CO",{day:"numeric",month:"short",year:"numeric"})};
 const fdt=s=>{if(!s)return"";const d=new Date(s);return isNaN(d)?s:d.toLocaleString("es-CO",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"})};
 function lsGet(k){try{return JSON.parse(localStorage.getItem(k)||"null")}catch(e){return null}}
 function lsSet(k,v){try{v==null?localStorage.removeItem(k):localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
@@ -1464,7 +1464,7 @@ function renderViv(){const V=window.PAE_VIV;if(!V||!$("#vivKpis"))return;const M
     const c=v=>`<td class="r num">${v?fmt(v):"–"}</td>`;
     $("#vivTr").innerHTML=`<thead><tr><th>Municipio</th><th class="r">Registros</th><th class="r">Prioridad crítica o alta</th><th class="r">Con visita o informe técnico</th><th class="r">Con acta del CMGRD</th><th class="r">Con resolución</th><th class="r">A cargo del municipio</th><th class="r">A cargo de particulares</th><th class="r">Sin responsable</th><th class="r">Ya demolidas</th></tr></thead><tbody>${T.map(r=>`<tr><td>${esc(r[0])}</td>${[1,2,3,4,5,6,7,8,10].map(i=>c(r[i])).join("")}</tr>`).join("")}<tr style="font-weight:700"><td>Total</td>${[1,2,3,4,5,6,7,8,10].map(i=>c(S(i))).join("")}</tr></tbody>`;
     $("#vivTrNota").textContent="Palestina reporta solo el listado de hogares y Viterbo el concepto técnico de cada vivienda, sin prioridad, acta ni responsable. El inventario suma 390 registros frente a 393 en el oficio (Villamaría 44 frente a 45 y Viterbo 47 frente a 49). La versión pública del Excel no incluye nombres, documentos, teléfonos, direcciones, matrículas ni fichas catastrales (Ley 1581 de 2012).";}
-  const E=V.emp;$("#vivEmpSub").textContent=`La Asamblea autorizó un empréstito de ${M(E.cupo)} (Ordenanza 1021 del ${E.fecha}). De la vivienda, solo financia casas rurales nuevas; las casas urbanas, Santa María, el mejoramiento y las demoliciones no tienen línea en el empréstito.`;
+  const E=V.emp;$("#vivEmpSub").textContent=`La Asamblea autorizó un empréstito de ${M(E.cupo)} (Ordenanza 1021, aprobada por la Asamblea el ${E.fecha}). De la vivienda, solo financia casas rurales nuevas; las casas urbanas, Santa María, el mejoramiento y las demoliciones no tienen línea en el empréstito.`;
   $("#vivEmpComp").innerHTML=`<thead><tr><th>Componente</th><th class="r">Falta financiar</th><th>¿Lo cubre el empréstito?</th></tr></thead><tbody>${E.comp.map(c=>`<tr><td>${esc(c[0])}</td><td class="r num">${c[1]==null?'<span class="muted">Por establecer</span>':M(c[1])}</td><td>${c[2]?`<span class="lv" style="background:var(--green)">Sí</span> ${esc(c[3])}`:`<span class="lv" style="background:#8a8f8c">No</span> ${esc(c[3])}`}</td></tr>`).join("")}</tbody>`;
   $("#vivEmpMun").innerHTML=`<thead><tr><th>Municipio</th><th class="r">Por demoler</th><th>Proyecto del empréstito</th><th class="r">Valor</th></tr></thead><tbody>${E.mun.map(r=>{const d=V.dem.find(x=>x[0]===r[0]);return r[1].map((pj,i)=>`<tr>${i?"":`<td rowspan="${r[1].length}"><b>${esc(r[0])}</b></td><td rowspan="${r[1].length}" class="r num">${d?fmt(d[1]):"–"}</td>`}<td>${esc(pj[0])}${pj[2]?` <span class="lv" style="background:var(--crit)">${esc(pj[2])}</span>`:""}</td><td class="r num">${M(pj[1])}</td></tr>`).join("")}).join("")}</tbody>`;
   $("#vivEmpNota").textContent=E.nota;

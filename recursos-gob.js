@@ -5,7 +5,7 @@
 window.PAE_REC = {
   total: 222500,
   fuentes: [
-    ["Empréstito (Ordenanza 1021 de 2026)", 100000, "#0f4a27", "Aprobado por la Asamblea el 19 de noviembre; falta firmarlo con la banca"],
+    ["Empréstito (Ordenanza 1021 de 2026)", 100000, "#0f4a27", "Aprobado por la Asamblea el 18 de noviembre; falta contratarlo con la banca"],
     ["Desahorro del FONPET", 64000, "#2f6fa8", "Recursos ahorrados del Fondo Nacional de Pensiones de las Entidades Territoriales"],
     ["Recursos propios", 37280, "#3d8b57", "Presupuesto departamental"],
     ["FOMAG", 19220, "#6a4fc4", "Recursos de educación destinados a infraestructura educativa"],
