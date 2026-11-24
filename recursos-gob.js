@@ -27,7 +27,7 @@ window.PAE_REC = {
 window.PAE_REC.fdgrd = { incorporado: 21350, acto: "Ordenanza 1016 de 2026" };
 window.PAE_REC.hecho = [
   ["Banco de materiales", 5245.4, "1.259 familias en 26 municipios: contrato inicial de $3.500 M (ejecutado al 99,99 %) y adición de $1.745 M", "En ejecución"],
-  ["Viviendas nuevas", 1900, "29 casas rurales en San José, Belalcázar, Viterbo, Neira y Manzanares, y 10 en Neira con Grupo Argos (Adopta un Hogar). Para 2027, 90 más con Argos", "En adjudicación"],
+  ["29 viviendas rurales nuevas", 1926.7, "San José 11, Belalcázar 7, Viterbo 5, Neira 4 y Manzanares 2 (BPID AMB-E-260098). Aparte, Grupo Argos construye 10 en Neira (Adopta un Hogar) y 90 más en 2027", "En adjudicación"],
   ["Kits alimentarios y de aseo", 1325, "6.400 familias afectadas; en recepción en el Centro Logístico Humanitario para distribuir con las alcaldías", "Contratado"],
   ["Subsidios de arrendamiento", 1108.5, "1.354 subsidios en 17 municipios, para familias con vivienda destruida o no habitable", "Transferido a los municipios"],
   ["Estudios y diseños de infraestructura educativa", 985, "Soluciones definitivas para sedes afectadas, entre ellas San José y Belalcázar", "Contratado"],
