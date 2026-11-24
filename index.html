@@ -21,6 +21,7 @@
 <script src="ayuda-humanitaria.js"></script>
 <script src="educacion.js"></script>
 <script src="vivienda.js"></script>
+<script src="salud.js"></script>
 <script src="recursos-gob.js"></script>
 <script src="xlsx.js"></script>
 <style>
@@ -251,7 +252,7 @@ section.band.cream{background:var(--cream)}
 .card h3{font-size:18px}
 .card .sub{color:var(--muted);font-size:13.5px;margin-top:4px}
 #vivienda .scroll td.num{white-space:nowrap}#vivienda .scroll{overflow-x:auto;max-width:100%}#vivienda .grid2>*{min-width:0}
-#recursos .grid2>*{min-width:0}#recursos td{overflow-wrap:anywhere}@media (max-width:560px){#recursos .t td{padding:8px 6px;font-size:13px}}
+#recursos .grid2>*{min-width:0}#salud .scroll{overflow-x:auto;max-width:100%}#salud td{overflow-wrap:anywhere}#recursos td{overflow-wrap:anywhere}@media (max-width:560px){#recursos .t td{padding:8px 6px;font-size:13px}}
 .vivcomp{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:14px}.vivc{border:1px solid var(--line);border-radius:14px;padding:14px;display:grid;gap:6px;align-content:start;background:var(--white,#fff)}
 .vivc h4{margin:0;font-size:15px;line-height:1.25}.vivc small{color:var(--muted);font-size:12.5px;line-height:1.35}.vivc .vb{display:flex;height:12px;border-radius:99px;overflow:hidden;background:#eef1ee;gap:1px}.vivc .vb i{display:block}
 .vivc .vn{font-size:13px}.vivc b.m{font:800 22px var(--head);color:var(--dark)}.vivc .lb{font-size:11.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
@@ -838,6 +839,17 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
     </div>
   </section>
 
+  <section class="band cream" id="salud" data-tab="respuesta" aria-labelledby="h-sal" style="scroll-margin-top:90px">
+    <div class="wrap">
+      <div class="shead"><div><small class="eyebrow">Red de salud · pública y privada</small><h2 id="h-sal">Salud: cómo quedaron hospitales y clínicas</h2><p>Estado de los hospitales públicos de los 27 municipios y de las clínicas privadas de Manizales tras el sismo, con el tipo de intervención que necesitan.</p><div class="bar4" style="margin-top:10px"></div></div></div>
+      <div class="grid4" id="salK"></div>
+      <div class="card" style="margin-top:20px"><h3>Red pública</h3><p class="sub" id="salPubSub"></p><div class="scroll" style="margin-top:12px"><table class="t" id="salPub"></table></div></div>
+      <div class="card" style="margin-top:20px"><h3>Red privada · Manizales</h3><div class="scroll" style="margin-top:12px"><table class="t" id="salPri"></table></div></div>
+      <div class="note" style="margin-top:18px" id="salNota"></div>
+      <p class="srcnote" id="salSrc"></p>
+    </div>
+  </section>
+
   <section class="band white" id="acciones" data-tab="respuesta" aria-labelledby="h-gob" style="scroll-margin-top:90px">
     <div class="wrap">
       <div class="shead"><div><h2 id="h-gob">Tablero de la respuesta departamental</h2><p>Lo que ha hecho la Gobernación de Caldas desde el 10 de agosto, en cifras. Cada dato muestra su fecha de corte y su fuente; el equipo coordinador las actualiza desde su panel.</p><div class="bar4" style="margin-top:10px"></div></div></div>
@@ -1304,7 +1316,7 @@ async function loadPublic(){
   hbars($("#pubSub"),[["Centro Sur",13984,"· 59,5 %"],["Bajo Occidente",3996,"· 17,0 %"],["Alto Occidente",2310,"· 9,8 %"],["Norte",1977,"· 8,4 %"],["Alto Oriente",685,"· 2,9 %"],["Magdalena Caldense",540,"· 2,3 %"]],"var(--gold)");
   renderAcciones(accMerge(d.acciones),$("#pubAcc"));
   renderResumen(d);
-  initTablero(M);MP.M=M;MP.F3=d.fase3||[];renderMapa();renderEdu();renderViv();renderGob(Array.isArray(d.cifras)?d.cifras:(window.PAE_CIFRAS||[]));  // servidor sin «cifras» (versión anterior): usa las iniciales
+  initTablero(M);MP.M=M;MP.F3=d.fase3||[];renderMapa();renderEdu();renderViv();renderSalud();renderGob(Array.isArray(d.cifras)?d.cifras:(window.PAE_CIFRAS||[]));  // servidor sin «cifras» (versión anterior): usa las iniciales
 }
 
 /* ================= RESUMEN EN 30 SEGUNDOS, PESTAÑAS Y GLOSARIO ================= */
@@ -1341,7 +1353,7 @@ function renderResumen(d){
   bindGo($("#resumen"));glosarioAuto($("#resumen"));
 }
 /* Pestañas de exploración: una sección a la vez */
-const TAB_DE={banco:"respuesta",vivienda:"respuesta",educacion:"respuesta",mapa:"mapa",consolidado:"municipios",tablero:"municipios",cartera:"plata",recursos:"plata",pais:"danos",danos:"danos",acciones:"respuesta",cronologia:"respuesta",documento:"documento",glosario:"documento"};
+const TAB_DE={banco:"respuesta",salud:"respuesta",vivienda:"respuesta",educacion:"respuesta",mapa:"mapa",consolidado:"municipios",tablero:"municipios",cartera:"plata",recursos:"plata",pais:"danos",danos:"danos",acciones:"respuesta",cronologia:"respuesta",documento:"documento",glosario:"documento"};
 function setTab(t,scroll){
   if(!$("#xtabs"))return;t=t||"mapa";
   $$("#xtabs [data-t]").forEach(b=>b.setAttribute("aria-selected",String(b.dataset.t===t)));
@@ -1432,7 +1444,7 @@ function renderRec(){const R=window.PAE_REC;if(!R||!$("#recF"))return;const M=v=
   const tab=(L,id,d)=>{$(id).innerHTML=`<colgroup><col><col style="width:108px"><col style="width:62px"></colgroup><tbody>${L.map(x=>`<tr><td><span style="display:inline-block;width:11px;height:11px;border-radius:3px;background:${x[2]};margin-right:8px;vertical-align:-1px"></span><b style="white-space:normal">${esc(x[0])}</b>${d&&x[3]?`<small class="muted" style="display:block;white-space:normal">${esc(x[3])}</small>`:""}</td><td class="r num" style="white-space:nowrap">${M(x[1])}</td><td class="r num muted" style="white-space:nowrap">${P(x[1])}</td></tr>`).join("")}<tr style="font-weight:700"><td>Total</td><td class="r num" style="white-space:nowrap">${M(R.total)}</td><td class="r num" style="white-space:nowrap">100 %</td></tr></tbody>`};
   tab(R.fuentes,"#recFt",1);tab(R.lineas,"#recLt",0);
   const H=R.hecho,ht=H.reduce((a,x)=>a+x[1],0),M1=v=>"$"+v.toLocaleString("es-CO",{maximumFractionDigits:1})+" M";
-  $("#recHsub").textContent=`${M1(ht)} en ${H.length} acciones. La Gobernación incorporó ${M1(R.fdgrd.incorporado)} al Fondo Departamental de Gestión del Riesgo de Desastres (${R.fdgrd.acto}) para atender la emergencia.`;
+  $("#recHsub").textContent=`${M1(ht)} en ${H.length} acciones. Se financian con el Fondo Departamental de Gestión del Riesgo de Desastres, al que la Gobernación incorporó ${M1(R.fdgrd.incorporado)} (${R.fdgrd.acto}); esa plata hace parte de los $222.500 millones.`;
   $("#recH").innerHTML=`<colgroup><col><col style="width:110px"><col style="width:150px"></colgroup><thead><tr><th>Acción</th><th class="r">Valor</th><th>Estado</th></tr></thead><tbody>${H.map(x=>`<tr><td><b style="white-space:normal">${esc(x[0])}</b><small class="muted" style="display:block;white-space:normal">${esc(x[2])}</small></td><td class="r num" style="white-space:nowrap">${M1(x[1])}</td><td style="white-space:normal">${esc(x[3])}</td></tr>`).join("")}</tbody>`;
   const U=R.ungrd;$("#recUsub").textContent=`Primer proceso de pagos a las familias registradas al 24 de agosto, con corte al ${U.corte} según SuperGiros. El convenio con SuperGiros se amplió a ${M1(U.convenio)} para pagar a las familias registradas al 4 de septiembre y el segundo y tercer pago.`;
   $("#recU").innerHTML=[[fmt(U.programados[0]),"giros programados",M1(U.programados[1]),""],[fmt(U.cobrados[0]),"giros cobrados",M1(U.cobrados[1]),"g"],[fmt(U.pendientes[0]),"pendientes de cobro",M1(U.pendientes[1]),"r"],[U.efectividad+" %","de efectividad","en el primer pago","b"]].map(([b,t,x,c])=>`<div class="stat ${c==="r"?"":c}"${c==="r"?' style="border-top-color:var(--crit)"':""}><b class="num">${b}</b><span>${t}</span><small style="text-transform:none;letter-spacing:0;font-weight:600">${x}</small></div>`).join("");
@@ -1440,6 +1452,20 @@ function renderRec(){const R=window.PAE_REC;if(!R||!$("#recF"))return;const M=v=
   $("#recSrc").textContent="Fuente: Gobernación de Caldas, PAE departamental · distribución preliminar de la inversión por línea estratégica y fuentes de financiación (noviembre de 2026). Cifras preliminares, sujetas a ajustes en la estructuración de proyectos, la concurrencia de fuentes y la validación técnica. No incluye los recursos del Fondo Milagro para Manizales. Acciones: balance de la Gobernación de Caldas (noviembre de 2026). Apoyo de la UNGRD: reporte de SuperGiros y convenio 07102026-1875.";
 }
 renderRec();
+
+/* ================= RED DE SALUD ================= */
+function renderSalud(){const S=window.PAE_SALUD;if(!S||!$("#salK"))return;
+  const g=r=>/mayores/i.test(r[3])?2:/leves/i.test(r[3])?1:0,P=S.pub,may=P.filter(r=>g(r)===2),lev=P.filter(r=>g(r)===1),rep=P.filter(r=>/reposici/i.test(r[5])),pol=P.filter(r=>/^si/i.test(r[7]));
+  const pm=S.pri.filter(r=>/mayores|reposici/i.test(r[3]+r[5]));
+  $("#salK").innerHTML=[[`${fmt(may.length+lev.length)} de ${fmt(P.length)}`,"sedes de la red pública con daño",`${fmt(lev.length)} leve, ${fmt(may.length)} mayor`,""],[fmt(may.length),"con daño estructural","necesitan adecuación mayor o reposición","r"],[fmt(rep.length),"para reponer",rep.map(r=>r[0]==="Manizales"?"Laboratorio de Salud Pública":"Hospital de "+r[0]).join(" y "),"r"],[fmt(pm.length),"clínicas privadas con daño mayor","en Manizales","b"]].map(([b,t,x,c])=>`<div class="stat ${c==="r"?"":c}"${c==="r"?' style="border-top-color:var(--crit)"':""}><b class="num">${b}</b><span>${t}</span><small style="text-transform:none;letter-spacing:0;font-weight:600">${esc(x)}</small></div>`).join("");
+  const lv=r=>{const k=g(r);return`<span class="lv" style="background:${k===2?"var(--crit)":k===1?"#c8930a":"#8a8f8c"}">${k===2?"Mayor":k===1?"Leve":"Sin daño"}</span>`};
+  const ord=[...P].sort((a,b)=>g(b)-g(a)||a[0].localeCompare(b[0]));
+  $("#salPubSub").textContent=`${fmt(P.length)} sedes revisadas; ${fmt(pol.length)} reportan que el daño afectó su póliza de seguro.`;
+  $("#salPub").innerHTML=`<thead><tr><th>Municipio</th><th>Institución</th><th>Daño</th><th>Estado</th><th>Intervención</th><th class="r">m²</th><th>Póliza afectada</th></tr></thead><tbody>${ord.map(r=>`<tr><td>${esc(r[0])}</td><td style="white-space:normal">${esc(r[1])}</td><td>${lv(r)}</td><td style="white-space:normal">${esc(r[4])}</td><td>${esc(r[5]==="-"?"–":r[5])}</td><td class="r num">${/^\d/.test(r[6])?fmt(+r[6]):"–"}</td><td>${esc(/^si/i.test(r[7])?"Sí":/^no/i.test(r[7])?"No":r[7]?"En evaluación":"–")}</td></tr>`).join("")}</tbody>`;
+  $("#salPri").innerHTML=`<thead><tr><th>Institución</th><th>Daño</th><th>Intervención</th><th class="r">m²</th><th>Servicios afectados</th></tr></thead><tbody>${[...S.pri].sort((a,b)=>/mayores|reposici/i.test(b[3]+b[5])-/mayores|reposici/i.test(a[3]+a[5])).map(r=>`<tr><td style="white-space:normal">${esc(r[1])}</td><td><span class="lv" style="background:${/mayores|reposici/i.test(r[3]+r[5])?"var(--crit)":"#c8930a"}">${/mayores|reposici/i.test(r[3]+r[5])?"Mayor":"Leve"}</span></td><td>${esc(r[5])}</td><td class="r num" style="white-space:nowrap">${/^\d/.test(r[6])&&+r[6]>0?fmt(Math.round(+r[6])):"–"}</td><td style="white-space:normal">${esc(r[7].charAt(0)+r[7].slice(1).toLowerCase())}</td></tr>`).join("")}</tbody>`;
+  $("#salNota").innerHTML=`<b class="t">Para cruzar con los proyectos</b>El empréstito incluye la reposición del Hospital Santa Teresita de Pácora ($27.845 M), pero este consolidado lo reporta sin afectaciones por el sismo. A la vez, el Hospital de San José necesita reposición y los de La Merced y Neira tienen daño estructural, y ninguno tiene línea en el empréstito. Conviene confirmarlo con la Secretaría de Salud.`;
+  $("#salSrc").textContent=`Fuente: consolidado de la red pública y privada de salud de Caldas, corte ${fcorte(S.corte)}. El EDAN del 14 de septiembre reporta 18 centros de salud afectados con otro método de conteo.`;
+}
 /* ================= VIVIENDA Y DEMOLICIONES (Secretaría de Vivienda) ================= */
 function renderViv(){const V=window.PAE_VIV;if(!V||!$("#vivKpis"))return;const M=v=>"$"+v.toLocaleString("es-CO",{maximumFractionDigits:1})+" M";
   const C=V.comp,rur=C[0],mej=C[3],dem=V.dem.reduce((a,d)=>a+d[1],0),crit=V.dem.reduce((a,d)=>a+(d[7]||0),0),ya=V.dem.reduce((a,d)=>a+d[8],0);
