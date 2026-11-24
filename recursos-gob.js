@@ -6,9 +6,11 @@ window.PAE_REC = {
   total: 222500,
   fuentes: [
     ["Empréstito (Ordenanza 1021 de 2026)", 100000, "#0f4a27", "Aprobado por la Asamblea el 18 de noviembre; falta contratarlo con la banca"],
-    ["Desahorro del FONPET", 64000, "#2f6fa8", "Recursos ahorrados del Fondo Nacional de Pensiones de las Entidades Territoriales"],
-    ["Recursos propios", 37280, "#3d8b57", "Presupuesto departamental"],
+    ["Recursos para educación", 42344, "#2f5fc4", "Recursos de las secretarías destinados a educación; fuentes por detallar"],
+    ["Desahorro del FONPET", 28494, "#2f6fa8", "Fondo Nacional de Pensiones de las Entidades Territoriales"],
+    ["Otros sectores", 24000, "#8790b0", "Recursos de las demás secretarías"],
     ["FOMAG", 19220, "#6a4fc4", "Recursos de educación destinados a infraestructura educativa"],
+    ["Recursos propios", 6442, "#3d8b57", "Presupuesto departamental"],
     ["INFICaldas", 2000, "#d9822b", "Instituto de Financiamiento, Promoción y Desarrollo de Caldas"]
   ],
   lineas: [

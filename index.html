@@ -717,7 +717,7 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
     <div class="wrap">
       <div class="shead"><div><small class="eyebrow">Recursos de la Gobernación · 26 municipios</small><h2 id="h-rec">Lo que pone la Gobernación: $222.500 millones</h2><p>Recursos del Departamento para atender a los 26 municipios distintos de Manizales, que atiende su emergencia de forma independiente. Distribución preliminar del PAE departamental por línea estratégica.</p><div class="bar4" style="margin-top:10px"></div></div></div>
       <div class="grid2" style="align-items:start">
-        <div class="card"><h3>¿De dónde sale la plata?</h3><p class="sub">Cinco fuentes de financiación</p><div class="edustack" id="recF" style="height:40px"></div><table class="t" id="recFt" style="width:100%;margin-top:14px;table-layout:fixed"></table></div>
+        <div class="card"><h3>¿De dónde sale la plata?</h3><p class="sub">Siete fuentes de financiación</p><div class="edustack" id="recF" style="height:40px"></div><table class="t" id="recFt" style="width:100%;margin-top:14px;table-layout:fixed"></table></div>
         <div class="card"><h3>¿En qué se invierte?</h3><p class="sub">Siete líneas estratégicas del PAE</p><div class="edustack" id="recL" style="height:40px"></div><table class="t" id="recLt" style="width:100%;margin-top:14px;table-layout:fixed"></table></div>
       </div>
       <div class="card" style="margin-top:20px"><h3>Lo que ya está contratado o en marcha</h3><p class="sub" id="recHsub"></p><table class="t" id="recH" style="width:100%;margin-top:12px;table-layout:fixed"></table></div>
@@ -1762,7 +1762,7 @@ const CIF_IND={
 };
 const cifFmt=(ind,v)=>{const t=(CIF_IND[ind]||{}).t;return t==="$"?moneyM(v):t==="%"?fmt(v)+" %":(v%1?v.toLocaleString("es-CO",{maximumFractionDigits:1}):fmt(v))};
 const cifMerge=C=>{const r=(C||[]).slice(),k=x=>[x.ind,x.fecha,x.cat||""].join("|"),h=new Set(r.map(k));(window.PAE_CIFRAS_NUEVAS||[]).forEach(x=>{if(!h.has(k(x)))r.push(x)});return r};
-const accMerge=A=>{const r=(A||[]).slice(),k=x=>x.fecha+"|"+x.titulo,h=new Set(r.map(k));(window.PAE_ACC_NUEVAS||[]).forEach(x=>{if(!h.has(k(x)))r.push(x)});return r};
+const accMerge=A=>{const r=(A||[]).filter(x=>!/estimación ambiental/i.test(x.titulo||"")),k=x=>x.fecha+"|"+x.titulo,h=new Set(r.map(k));(window.PAE_ACC_NUEVAS||[]).forEach(x=>{if(!h.has(k(x)))r.push(x)});return r};
 const cifSerie=(C,ind)=>C.filter(x=>x.ind===ind&&!x.cat).sort((a,b)=>String(a.fecha).localeCompare(String(b.fecha)));
 const cifUlt=(C,ind)=>{const s=cifSerie(C,ind);return s[s.length-1]};
 const cifCats=C=>ind=>{const r=C.filter(x=>x.ind===ind&&x.cat);if(!r.length)return[];const f=r.map(x=>x.fecha).sort().pop();return r.filter(x=>x.fecha===f)};
@@ -1808,7 +1808,7 @@ function renderAH(){
   donut($("#ahCat"),Object.entries(cat).sort((a,b)=>b[1]-a[1]).map(([k,v],i)=>({k,v,c:pal[i%pal.length]})),String(Object.keys(cat).length),"tipos",v=>fmt(v));
 }
 function renderGob(C){
-  C=cifMerge(C);
+  C=cifMerge(C).filter(x=>x.ind!=="fondo_milagro_amb");
   {const A=window.PAE_AH;C=(C||[]).slice();if(A&&!C.some(x=>x.ind==="ahe"&&x.fecha>=A.corte))C.push({ind:"ahe",valor:ahTotal(),fecha:A.corte,fuente:"Centro de acopio humanitario",nota:"Consolidado por municipio y aliado"})}
   renderAH();
   if(!C||!C.length){$("#gobKpis").innerHTML='<p class="muted">El equipo coordinador aún no ha registrado cifras.</p>';return}

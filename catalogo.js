@@ -94,12 +94,14 @@ window.PAE_CIFRAS_NUEVAS=[
  {ind:"arriendo_municipios",valor:17,fecha:"2026-11-23",fuente:"Balance de la Gobernación"},
  {ind:"ungrd_giros",valor:3647310263,fecha:"2026-10-30",fuente:"SuperGiros",nota:"3.827 giros programados; 3.111 cobrados por $2.946 M"},
  {ind:"ungrd_cobrado_pct",valor:81,fecha:"2026-10-30",fuente:"SuperGiros"},
- {ind:"plan_total",valor:222500000000,fecha:"2026-11-23",fuente:"Gobernación de Caldas · PAE departamental",nota:"Empréstito, desahorro del FONPET, recursos propios, FOMAG e INFICaldas"},
- {ind:"plan_fuente",cat:"Empréstito",valor:100000000000,fecha:"2026-11-23",fuente:"Gobernación de Caldas"},
- {ind:"plan_fuente",cat:"Desahorro del FONPET",valor:64000000000,fecha:"2026-11-23",fuente:"Gobernación de Caldas"},
- {ind:"plan_fuente",cat:"Recursos propios",valor:37280000000,fecha:"2026-11-23",fuente:"Gobernación de Caldas"},
- {ind:"plan_fuente",cat:"FOMAG",valor:19220000000,fecha:"2026-11-23",fuente:"Gobernación de Caldas"},
- {ind:"plan_fuente",cat:"INFICaldas",valor:2000000000,fecha:"2026-11-23",fuente:"Gobernación de Caldas"}
+ {ind:"plan_total",valor:222500000000,fecha:"2026-11-24",fuente:"Gobernación de Caldas · PAE departamental",nota:"Empréstito, educación, desahorro del FONPET, otros sectores, FOMAG, recursos propios e INFICaldas"},
+ {ind:"plan_fuente",cat:"Empréstito",valor:100000000000,fecha:"2026-11-24",fuente:"Gobernación de Caldas"},
+ {ind:"plan_fuente",cat:"Educación",valor:42344000000,fecha:"2026-11-24",fuente:"Gobernación de Caldas"},
+ {ind:"plan_fuente",cat:"Desahorro del FONPET",valor:28494000000,fecha:"2026-11-24",fuente:"Gobernación de Caldas"},
+ {ind:"plan_fuente",cat:"Otros sectores",valor:24000000000,fecha:"2026-11-24",fuente:"Gobernación de Caldas"},
+ {ind:"plan_fuente",cat:"FOMAG",valor:19220000000,fecha:"2026-11-24",fuente:"Gobernación de Caldas"},
+ {ind:"plan_fuente",cat:"Recursos propios",valor:6442000000,fecha:"2026-11-24",fuente:"Gobernación de Caldas"},
+ {ind:"plan_fuente",cat:"INFICaldas",valor:2000000000,fecha:"2026-11-24",fuente:"Gobernación de Caldas"}
 ];
 window.PAE_ACC_NUEVAS=[
  {fecha:"2026-11-17",titulo:"Balance de vivienda y demoliciones",texto:"La Secretaría de Vivienda y Territorio consolida la necesidad de vivienda de los 26 municipios y la Reserva Santa María ($407.721,8 millones) y el inventario de 393 edificaciones por demoler (oficio S.V 1198)",fuente:"Secretaría de Vivienda y Territorio"},
