@@ -21,6 +21,7 @@
 <script src="ayuda-humanitaria.js"></script>
 <script src="educacion.js"></script>
 <script src="vivienda.js"></script>
+<script src="rud.js"></script>
 <script src="salud.js"></script>
 <script src="recursos-gob.js"></script>
 <script src="xlsx.js"></script>
@@ -597,7 +598,7 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
       <span class="pill">Sismo M 7,4 · 10 de agosto de 2026</span><span class="pill">Decreto 392 · calamidad pública</span>
     </div>
     <div class="h4n" id="h4n" aria-label="Las cifras clave">
-      <div class="n r"><b>23.492</b><span>viviendas afectadas, 2.989 de ellas destruidas</span><span class="sello o">Oficial · EDAN · corte 14-sep-2026</span></div>
+      <div class="n r"><b>23.557</b><span>viviendas afectadas, 2.856 de ellas destruidas</span><span class="sello o">Oficial · EDAN · corte 23-nov-2026</span></div>
       <div class="n g"><b>…</b><span>cuestan los proyectos que reportan los municipios</span></div>
       <div class="n v"><b>…</b><span>ya tienen recursos asegurados</span></div>
       <div class="n"><b>…</b><span>municipios enviaron su reporte</span></div>
@@ -628,28 +629,34 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
 
   <section class="band white" id="danos" data-tab="danos" aria-labelledby="h-lb">
     <div class="wrap">
-      <div class="shead"><div><small class="eyebrow">Línea base de afectaciones</small><h2 id="h-lb">Caldas tiene 23.492 viviendas afectadas, y casi la mitad están en Manizales</h2><p>Cada cifra se muestra con su fuente y su fecha de corte; las series no se suman ni se promedian entre sí.</p></div></div>
+      <div class="shead"><div><small class="eyebrow">Línea base de afectaciones</small><h2 id="h-lb">Caldas tiene 23.557 viviendas afectadas, y casi la mitad están en Manizales</h2><p>Cada cifra se muestra con su fuente y su fecha de corte; las series no se suman ni se promedian entre sí.</p></div></div>
       <div class="grid3">
-        <div class="stat"><small>EDAN 14-sep</small><b class="num">22.469</b><span>familias afectadas</span></div>
-        <div class="stat"><small>EDAN 14-sep</small><b class="num">23.492</b><span>viviendas averiadas (20.503) o destruidas (2.989)</span></div>
-        <div class="stat"><small>EDAN 14-sep</small><b class="num">7 · 334</b><span>personas fallecidas · heridas · ninguna desaparecida</span></div>
-        <div class="stat"><small>EDAN 14-sep</small><b class="num">436</b><span>centros educativos afectados</span></div>
+        <div class="stat"><small>EDAN 23-nov</small><b class="num">22.476</b><span>familias afectadas</span></div>
+        <div class="stat"><small>EDAN 23-nov</small><b class="num">23.557</b><span>viviendas averiadas (20.701) o destruidas (2.856)</span></div>
+        <div class="stat"><small>EDAN 23-nov</small><b class="num">7 · 334</b><span>personas fallecidas · heridas · ninguna desaparecida</span></div>
+        <div class="stat"><small>EDAN 23-nov</small><b class="num">436</b><span>centros educativos afectados (425 averiados, 11 destruidos)</span></div>
         <div class="stat g"><small>DPN EDANPRI 11-oct</small><b class="num">$2,88 b</b><span>daños valorados (billones)</span></div>
         <div class="stat g"><small>PAE 19-oct</small><b class="num">$2,23 b</b><span>necesidad estimada PAE (26 municipios)</span></div>
       </div>
       <div class="grid2" style="margin-top:22px">
-        <div class="card"><h3>Viviendas afectadas por municipio</h3><p class="sub">EDAN, corte 14-sep-2026 · Manizales: 11.513 (49 %), se muestra aparte</p><div class="hb" id="pubViv" style="margin-top:12px;--lw:110px"></div></div>
+        <div class="card"><h3>Viviendas afectadas por municipio</h3><p class="sub">EDAN, corte 23-nov-2026 · Manizales: 11.512 (49 %), se muestra aparte</p><div class="hb" id="pubViv" style="margin-top:12px;--lw:110px"></div></div>
         <div>
-          <div class="card"><h3>Por subregión</h3><p class="sub">EDAN, corte 14-sep-2026</p><div class="hb" id="pubSub" style="margin-top:12px;--lw:140px"></div></div>
+          <div class="card"><h3>Por subregión</h3><p class="sub">EDAN, corte 23-nov-2026 · incluye Manizales</p><div class="hb" id="pubSub" style="margin-top:12px;--lw:140px"></div></div>
           <div class="scroll" style="margin-top:16px"><table class="t"><thead><tr><th>Indicador</th><th class="r">Cifra</th><th>Fuente y corte</th></tr></thead><tbody>
-            <tr><td>Centros de salud afectados</td><td class="r">18</td><td>EDAN, 14-sep-2026</td></tr>
+            <tr><td>Centros de salud afectados</td><td class="r">18</td><td>EDAN, 23-nov-2026</td></tr>
             <tr><td>Sistemas de acueducto afectados</td><td class="r">53 (20 municipales, 33 veredales)</td><td>EDAN; Fondo Milagro ambiental, 27-oct</td></tr>
-            <tr><td>Centros comunitarios afectados</td><td class="r">171</td><td>EDAN, 14-sep-2026</td></tr>
-            <tr><td>Familias inscritas en el RUD</td><td class="r">22.132 (45.324 personas)</td><td>RUD UNGRD, 27-oct-2026</td></tr>
+            <tr><td>Centros comunitarios afectados</td><td class="r">171</td><td>EDAN, 23-nov-2026</td></tr>
+            <tr><td>Familias inscritas en el RUD</td><td class="r">22.130 (45.321 personas)</td><td>RUD UNGRD, corte 4-sep-2026</td></tr>
           </tbody></table></div>
         </div>
       </div>
-      <div class="note" style="margin-top:18px"><b class="t">Atención con las cifras</b>El reporte del día cero (Decreto 392), el EDAN, el RUD y el EDANPRI tienen cortes y métodos distintos; por ejemplo, el Decreto 392 registraba 124 viviendas destruidas, el RUD registra 573, el EDAN del 14 de septiembre 2.989 y el PAE nacional de la UNGRD 2.673. La plataforma muestra cada cifra con su fuente y su fecha, nunca las promedia.</div>
+      <div class="note" style="margin-top:18px"><b class="t">Atención con las cifras</b>El reporte del día cero (Decreto 392), el EDAN, el RUD y el EDANPRI tienen cortes y métodos distintos; por ejemplo, el Decreto 392 registraba 124 viviendas destruidas, el RUD registra 573, el EDAN del 23 de noviembre 2.856 y el PAE nacional de la UNGRD 2.673. La plataforma muestra cada cifra con su fuente y su fecha, nunca las promedia.</div>
+      <details class="card edudet" style="margin-top:18px"><summary><b>Registro Único de Damnificados (RUD) por municipio</b> <span class="muted">· corte 4-sep-2026 · ver tabla</span></summary>
+        <p class="sub" style="margin-top:10px">Familias y personas inscritas en el RUD de la UNGRD y estado de sus viviendas. El RUD clasifica solo las viviendas de las familias inscritas, por eso sus totales son menores que los del EDAN.</p>
+        <div class="scroll"><table class="t" id="rudT"></table></div></details>
+      <details class="card edudet" style="margin-top:12px"><summary><b>EDAN por municipio e infraestructura afectada</b> <span class="muted">· corte 23-nov-2026 · ver tablas</span></summary>
+        <div class="grid2" style="margin-top:12px"><div class="scroll"><table class="t" id="edanT"></table></div><div class="scroll"><table class="t" id="edanI"></table></div></div>
+        <p class="srcnote">Fuente: UDEGER, reporte cuantitativo de afectaciones EDAN con corte al 23 de noviembre de 2026. No se reportan personas desaparecidas.</p></details>
     </div>
   </section>
 
@@ -666,7 +673,7 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
         <div class="card"><h3>Personas afectadas por departamento</h3><p class="sub">Porcentaje del total nacional · RUD</p><div class="hbx" id="natPer"></div></div>
         <div class="card"><h3>Valor del PAE nacional por departamento</h3><p class="sub">Billones de pesos · 2026–2030</p><div class="hbx" id="natPae"></div></div>
       </div>
-      <p class="srcnote">Fuente: UNGRD, <a href="https://portal.gestiondelriesgo.gov.co/pae" target="_blank" rel="noopener">PAE Sismo 2026</a> (<a href="https://portal.gestiondelriesgo.gov.co/pae/Documents/PAE-SISMO-2026.pdf" target="_blank" rel="noopener">documento</a>), tablas de población, vivienda, educación y valor por departamento; RUD y sectores con corte de septiembre y octubre de 2026. Estas cifras difieren de las del EDAN que usa el resto de esta plataforma porque tienen otra fuente y otro corte: por ejemplo, 22.282 frente a 23.492 viviendas afectadas.</p>
+      <p class="srcnote">Fuente: UNGRD, <a href="https://portal.gestiondelriesgo.gov.co/pae" target="_blank" rel="noopener">PAE Sismo 2026</a> (<a href="https://portal.gestiondelriesgo.gov.co/pae/Documents/PAE-SISMO-2026.pdf" target="_blank" rel="noopener">documento</a>), tablas de población, vivienda, educación y valor por departamento; RUD y sectores con corte de septiembre y octubre de 2026. Estas cifras difieren de las del EDAN que usa el resto de esta plataforma porque tienen otra fuente y otro corte: por ejemplo, 22.282 frente a 23.557 viviendas afectadas.</p>
     </div>
   </section>
 
@@ -736,7 +743,7 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
   <section class="band" id="cartera" data-tab="plata" aria-labelledby="h-pae">
     <div class="wrap">
       <div class="shead"><div><small class="eyebrow">Cartera reportada frente al PAE</small><h2 id="h-pae">Cartera reportada frente al PAE</h2><p>Costo de las intervenciones reportadas por los 26 municipios distintos de Manizales, comparado con la necesidad estimada por línea en el PAE departamental (19-oct-2026). Manizales se lee aparte porque el dimensionamiento departamental cubre a los otros 26.</p></div></div>
-      <div class="note" style="margin-bottom:18px"><b class="t">Por qué la necesidad cambia según la fuente</b>El PAE departamental (19-oct) estima la necesidad por línea; las secretarías la calculan después, componente por componente, y el PAE nacional de la UNGRD usa su propio método. Por eso no coinciden ni se suman: <b>vivienda</b>, $575.000 M en el PAE departamental frente a $407.722 M en el balance de la Secretaría de Vivienda (17-nov); <b>colegios</b>, $300.000 M en el PAE departamental, $120.000 M estimados por la Secretaría de Educación (23-nov) y $1,39 billones en daños del sector en el PAE nacional; <b>sedes afectadas</b>, 436 en el EDAN (14-sep), 711 en la revisión de la Secretaría de Educación (26 municipios) y 742 en el PAE nacional.</div>
+      <div class="note" style="margin-bottom:18px"><b class="t">Por qué la necesidad cambia según la fuente</b>El PAE departamental (19-oct) estima la necesidad por línea; las secretarías la calculan después, componente por componente, y el PAE nacional de la UNGRD usa su propio método. Por eso no coinciden ni se suman: <b>vivienda</b>, $575.000 M en el PAE departamental frente a $407.722 M en el balance de la Secretaría de Vivienda (17-nov); <b>colegios</b>, $300.000 M en el PAE departamental, $120.000 M estimados por la Secretaría de Educación (23-nov) y $1,39 billones en daños del sector en el PAE nacional; <b>sedes afectadas</b>, 436 en el EDAN (23-nov), 711 en la revisión de la Secretaría de Educación (26 municipios) y 742 en el PAE nacional.</div>
       <div class="cov" id="cmpCov"></div>
       <div class="cmpctl">
         <div class="cmplg" aria-hidden="true"><span><i class="sw rep"></i>Reportado</span><span><i class="sw esp"></i>Esperable de los municipios que ya reportaron</span><span><i class="sw pen"></i>Pendiente de los que no han reportado</span></div>
@@ -1176,7 +1183,7 @@ async function call(action,extra){
 /* ---- demo: misma lógica que el servidor, guardada en este navegador ---- */
 function demoDB(){return lsGet("pae.demo")||{reportes:{},acciones:null,bitacora:[]}}
 function demoSave(db){lsSet("pae.demo",db)}
-function demoRep(db,d){if(!db.reportes[d])db.reportes[d]={estado:"sin iniciar",version:0,actualizado:"",enviado:"",validado:"",reporte:{},adm:{lineaBase:window.PAE_VIV_EDAN&&window.PAE_VIV_EDAN[MUNI[d].nombre]!=null?{viviendasAfectadas:window.PAE_VIV_EDAN[MUNI[d].nombre],fuente:"EDAN, corte 14-sep-2026"}:{}}};return db.reportes[d]}
+function demoRep(db,d){if(!db.reportes[d])db.reportes[d]={estado:"sin iniciar",version:0,actualizado:"",enviado:"",validado:"",reporte:{},adm:{lineaBase:window.PAE_VIV_EDAN&&window.PAE_VIV_EDAN[MUNI[d].nombre]!=null?{viviendasAfectadas:window.PAE_VIV_EDAN[MUNI[d].nombre],fuente:"EDAN, corte 23-nov-2026"}:{}}};return db.reportes[d]}
 function demoOut(d,r,admin){const o={dane:d,municipio:MUNI[d].nombre,subregion:MUNI[d].subregion,estado:r.estado,version:r.version,actualizado:r.actualizado,enviado:r.enviado,validado:r.validado,reporte:r.reporte,observaciones:r.adm.observaciones||[],lineaBase:r.adm.lineaBase||{}};if(admin){o.dictamen=r.adm.dictamen||"";o.prioridad=r.adm.prioridad||"";o.fondoMilagro=r.adm.fondoMilagro||""}return o}
 function demoLog(db,u,d,a,det){db.bitacora.unshift({fecha:new Date().toISOString(),usuario:u==="gobernacion"?"Gobernación":(MUNI[u]?MUNI[u].nombre:u),municipio:d&&MUNI[d]?MUNI[d].nombre:"",accion:a,detalle:det||""})}
 async function demo(a,b){
@@ -1377,6 +1384,11 @@ function renderCartera(){
 function cmpBars(el,rows){
   el.innerHTML=rows.map(r=>{const p=r.nec?Math.min(100,r.rep/(r.nec*1e6)*100):0;return `<div class="r"><span><b class="code">${r.id}</b>${esc(r.nombre)}</span><div class="track" role="img" aria-label="${r.id}: reportado ${fmtM(r.rep)} millones de ${fmt(r.nec)} millones"><i style="width:${p}%"></i></div><span class="v num">${fmtM(r.rep)} / ${fmt(r.nec)}</span></div>`}).join("");
 }
+function renderRud(){const R=window.PAE_RUD,E=window.PAE_EDAN23;if(!R||!E||!$("#rudT"))return;const f=x=>fmt(x);
+  $("#rudT").innerHTML=`<thead><tr><th>Municipio</th>${R.cols.map(c=>`<th class="r">${esc(c[0].toUpperCase()+c.slice(1))}</th>`).join("")}</tr></thead><tbody>${[...R.rows].sort((a,b)=>b[1]-a[1]).map(r=>`<tr><td>${esc(r[0])}</td>${r.slice(1).map(v=>`<td class="r num">${f(v)}</td>`).join("")}</tr>`).join("")}<tr><td><b>Total</b></td>${R.total.map(v=>`<td class="r num"><b>${f(v)}</b></td>`).join("")}</tr></tbody>`;
+  const mu=Object.entries(E.mun).sort((a,b)=>b[1][0]-a[1][0]),T=[0,1,2,3,4].map(i=>mu.reduce((a,m)=>a+m[1][i],0));
+  $("#edanT").innerHTML=`<thead><tr><th>Municipio</th><th class="r">Familias</th><th class="r">Viv. averiadas</th><th class="r">Viv. destruidas</th><th class="r">Heridos</th><th class="r">Fallecidos</th></tr></thead><tbody>${mu.map(([k,v])=>`<tr><td>${esc(k)}</td>${v.map(x=>`<td class="r num">${f(x)}</td>`).join("")}</tr>`).join("")}<tr><td><b>Total</b></td>${T.map(v=>`<td class="r num"><b>${f(v)}</b></td>`).join("")}</tr></tbody>`;
+  $("#edanI").innerHTML=`<thead><tr><th>Infraestructura</th><th class="r">Averiada</th><th class="r">Destruida</th></tr></thead><tbody>${Object.entries(E.infra).map(([k,v])=>`<tr><td>${esc(k)}</td><td class="r num">${f(v[0])}</td><td class="r num">${f(v[1])}</td></tr>`).join("")}</tbody>`;}
 function hbars(el,rows,color){const mx=Math.max(1,...rows.map(r=>r[1]));el.innerHTML=rows.map(([k,v,ex])=>`<div class="r"><span title="${esc(k)}">${esc(k)}</span><div class="bar"><i style="width:calc(${v/mx} * (100% - 120px));background:${color||"var(--teal)"}"></i><em><b>${fmt(v)}</b>${ex?" "+ex:""}</em></div></div>`).join("")}
 /* ================= DOCUMENTO PAE (versiones por corte) ================= */
 function fechaLarga(iso){const[y,mo,d]=String(iso).split("-").map(Number);const M=["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];return`${d} de ${M[mo-1]} de ${y}`}
@@ -1406,9 +1418,11 @@ async function loadPublic(){
   $("#pubTot").innerHTML=`<div class="stat" style="border-top-color:var(--crit)"><small>Necesidad · 27 municipios</small><b class="num">${moneyM(2227050e6+totMan)}</b><span>de referencia para el departamento</span><em class="det">$2.227.050 M del PAE departamental (26 municipios, 19-oct-2026) + ${totMan?moneyM(totMan)+" reportados por Manizales":"Manizales aún sin costos"}</em></div><div class="stat"><small>26 municipios</small><b class="num">${moneyM(tot26)}</b><span>en intervenciones reportadas</span><em class="det">${pctTxt(pNec)} de los $2.227.050 M de necesidad estimada en el PAE · ${nRep26} de 26 municipios con costos</em></div><div class="stat b"><small>Cartera total · 27 municipios</small><b class="num">${moneyM(tot26+totMan)}</b><span>en intervenciones reportadas</span><em class="det">${moneyM(tot26)} de los 26 municipios + ${totMan?moneyM(totMan)+" de Manizales":"Manizales aún sin costos"}</em></div><div class="stat g"><small>27 municipios</small><b class="num">${moneyM(conf)}</b><span>en recursos confirmados</span><em class="det">de ${moneyM(cp)} en proyectos · brecha ${moneyM(Math.max(0,cp-conf))}</em></div>`;
   $("#h-pae").textContent=tot26?`Lo reportado por los municipios suma ${moneyM(tot26)}: el ${pctTxt(pNec)} de la necesidad estimada en el PAE`:"Los municipios aún no reportan costos frente al PAE";
   renderBrecha(M);
-  const viv=M.filter(m=>m.dane!=="17001"&&m.lineaBase&&m.lineaBase.viviendasAfectadas!=null).map(m=>[m.municipio,num(m.lineaBase.viviendasAfectadas)]).sort((a,b)=>b[1]-a[1]);
+  const EDV=window.PAE_VIV_EDAN||{},vB=m=>EDV[m.municipio]!=null?EDV[m.municipio]:(m.lineaBase&&m.lineaBase.viviendasAfectadas!=null?num(m.lineaBase.viviendasAfectadas):null);
+  const viv=M.filter(m=>m.dane!=="17001"&&vB(m)!=null).map(m=>[m.municipio,vB(m)]).sort((a,b)=>b[1]-a[1]);
   hbars($("#pubViv"),viv);
-  hbars($("#pubSub"),[["Centro Sur",13984,"· 59,5 %"],["Bajo Occidente",3996,"· 17,0 %"],["Alto Occidente",2310,"· 9,8 %"],["Norte",1977,"· 8,4 %"],["Alto Oriente",685,"· 2,9 %"],["Magdalena Caldense",540,"· 2,3 %"]],"var(--gold)");
+  {const sb={};M.forEach(m=>{const v=vB(m);if(v!=null)sb[m.subregion]=(sb[m.subregion]||0)+v});const st=Object.values(sb).reduce((a,b)=>a+b,0)||1;hbars($("#pubSub"),Object.entries(sb).sort((a,b)=>b[1]-a[1]).map(([k,v])=>[k,v,"· "+(v/st*100).toFixed(1).replace(".",",")+" %"]),"var(--gold)");}
+  renderRud();
   renderAcciones(accMerge(d.acciones),$("#pubAcc"));
   renderResumen(d);
   initTablero(M);MP.M=M;MP.F3=d.fase3||[];renderMapa();renderEdu();renderViv();renderSalud();renderGob(Array.isArray(d.cifras)?d.cifras:(window.PAE_CIFRAS||[]));  // servidor sin «cifras» (versión anterior): usa las iniciales
@@ -1429,9 +1443,9 @@ function renderResumen(d){
     n[2].innerHTML=`<b>${pctTxt(pc)}</b><span>del costo tiene la plata asegurada: ${bigMoney(conf)}. Faltan ${bigMoney(gap)}</span>${selloM}`;
     n[3].innerHTML=`<b>${env+val} de 27</b><span>municipios enviaron su reporte; ${val?`${val} ya ${val===1?"está validado":"están validados"}`:"la Gobernación los está revisando"}</span><span class="sello i">Plataforma en línea · ${esc(corte)}</span>`;}
   $("#q30").innerHTML=`
-    <div class="card"><h3>¿Qué pasó?</h3><p class="big">Un sismo de magnitud 7,4 dejó <strong>23.492 viviendas afectadas</strong> en Caldas, 2.989 de ellas destruidas.</p>
-      <p>Hay 22.469 familias afectadas, 7 personas fallecidas y 334 heridas; no hubo personas desaparecidas. La mitad de las viviendas afectadas está en Manizales; en proporción a su tamaño, los más golpeados son Belalcázar y San José.</p>
-      <span class="sello o">Oficial · EDAN · corte 14-sep-2026</span><a class="more" href="#danos" data-go="danos">Ver los daños →</a></div>
+    <div class="card"><h3>¿Qué pasó?</h3><p class="big">Un sismo de magnitud 7,4 dejó <strong>23.557 viviendas afectadas</strong> en Caldas, 2.856 de ellas destruidas.</p>
+      <p>Hay 22.476 familias afectadas, 7 personas fallecidas y 334 heridas; no hubo personas desaparecidas. La mitad de las viviendas afectadas está en Manizales; en proporción a su tamaño, los más golpeados son Belalcázar y San José.</p>
+      <span class="sello o">Oficial · EDAN · corte 23-nov-2026</span><a class="more" href="#danos" data-go="danos">Ver los daños →</a></div>
     <div class="card"><h3>¿Qué se necesita?</h3><p class="big">Los municipios han propuesto <strong>${fmt(nP)} proyectos por ${bigMoney(cP)}</strong>.</p>
       <p>${man.costoProyectos?`De eso, Manizales concentra ${bigMoney(man.costoProyectos)}. `:""}Para los otros 26 municipios, el PAE departamental estima una necesidad de $2,23 billones. El PAE nacional de la UNGRD programa $4,80 billones para Caldas entre 2026 y 2030.</p>
       ${selloM}<a class="more" href="#cartera" data-go="plata">Ver en qué se gastaría →</a></div>
