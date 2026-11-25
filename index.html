@@ -651,6 +651,18 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
         </div>
       </div>
       <div class="note" style="margin-top:18px"><b class="t">Atención con las cifras</b>El reporte del día cero (Decreto 392), el EDAN, el RUD y el EDANPRI tienen cortes y métodos distintos; por ejemplo, el Decreto 392 registraba 124 viviendas destruidas, el RUD registra 573, el EDAN del 23 de noviembre 2.856 y el PAE nacional de la UNGRD 2.673. La plataforma muestra cada cifra con su fuente y su fecha, nunca las promedia.</div>
+      <details class="card edudet" style="margin-top:18px"><summary><b>Reporte del día cero (Decreto 392)</b> <span class="muted">· 10-ago-2026 · ver detalle</span></summary>
+        <p class="sub" style="margin-top:10px">Cifras presentadas al Consejo Departamental de Gestión del Riesgo el día del sismo. Muestran cómo creció el balance: de 2.027 viviendas afectadas el primer día a 23.557 en el EDAN del 23 de noviembre.</p>
+        <div class="grid2" style="margin-top:8px"><div class="scroll"><table class="t"><thead><tr><th>Indicador</th><th class="r">Día cero</th><th class="r">EDAN 23-nov</th></tr></thead><tbody>
+          <tr><td>Viviendas afectadas</td><td class="r num">2.027</td><td class="r num">23.557</td></tr>
+          <tr><td>Viviendas destruidas</td><td class="r num">124</td><td class="r num">2.856</td></tr>
+          <tr><td>Heridos</td><td class="r num">219</td><td class="r num">334</td></tr>
+          <tr><td>Fallecidos</td><td class="r num">6</td><td class="r num">7</td></tr>
+          <tr><td>Instituciones educativas afectadas</td><td class="r num">173</td><td class="r num">436</td></tr>
+          <tr><td>Equipamiento colectivo</td><td class="r num">68</td><td class="r num">–</td></tr>
+          <tr><td>Sistemas de servicio público</td><td class="r num">5</td><td class="r num">53 acueductos</td></tr></tbody></table></div>
+        <div><p style="margin:0 0 6px"><b>Red vial departamental afectada (8 tramos)</b></p><ul style="margin:0;padding-left:18px;line-height:1.5;font-size:14px"><li>Manzanares–Marquetalia: sector Santa Bárbara</li><li>Manizales–Fresno: vía nacional, sector Cerro Bravo</li><li>Manizales–Neira: sector Cementos Caldas</li><li>Manizales–Tres Puertas</li><li>Chinchiná–Marsella: sector Curazao–La Plata</li><li>Villamaría–El Parnaso: sector El Pindo</li><li>Villamaría–Río Claro: sector El Destierro</li><li>San José–El Crucero</li></ul>
+        <p style="margin:10px 0 0;font-size:14px"><b>Hospitales afectados:</b> Santa Sofía (traslado de unas 130 personas por colapso de su estructura), Viterbo, Neira, Supía, Chinchiná y San José. También la Rama Judicial, el centro carcelario y la sede principal del ICBF.</p></div></div></details>
       <details class="card edudet" style="margin-top:18px"><summary><b>Registro Único de Damnificados (RUD) por municipio</b> <span class="muted">· corte 4-sep-2026 · ver tabla</span></summary>
         <p class="sub" style="margin-top:10px">Familias y personas inscritas en el RUD de la UNGRD y estado de sus viviendas. El RUD clasifica solo las viviendas de las familias inscritas, por eso sus totales son menores que los del EDAN.</p>
         <div class="scroll"><table class="t" id="rudT"></table></div></details>
@@ -892,6 +904,12 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
       <div>
         <div class="shead"><div><h2>Calendario y vencimientos</h2><p>Días restantes de cada hito. Ritmo de reporte: actualización municipal cada quince días y corte consolidado mensual.</p></div></div>
         <div class="card"><div class="cal" id="pubCal"></div></div>
+        <div class="card" style="margin-top:16px"><h3>Actos administrativos de la emergencia</h3><p class="sub">Gobernación de Caldas · 10 de agosto de 2026</p>
+          <ul class="dlist" style="margin:10px 0 0;padding-left:18px;line-height:1.55">
+            <li><b>Decreto 392:</b> declara la calamidad pública departamental por 6 meses, prorrogable hasta por el mismo término con concepto favorable del Consejo Departamental de Gestión del Riesgo. Ordena el Plan de Acción Específico en 15 días hábiles, con seguimiento de las Secretarías de Medio Ambiente y Planeación, que reportan a la UNGRD. Aplica el régimen especial de contratación de la Ley 1523 (art. 66). Se apoya en el Acta n.º 07 del Consejo Departamental. <a href="documentos/Decreto_392_2026_calamidad_publica.pdf" target="_blank" rel="noopener">Descargar (PDF)</a></li>
+            <li style="margin-top:6px"><b>Decreto 393:</b> declara la urgencia manifiesta hasta que se superen los hechos; los contratos deben tener relación directa con la emergencia y su copia va a la Contraloría General de Caldas. <a href="documentos/Decreto_393_2026_urgencia_manifiesta.pdf" target="_blank" rel="noopener">Descargar (PDF)</a></li>
+          </ul>
+          <p class="sub" style="margin-top:10px">El día del sismo, 18 municipios anunciaron que declararían calamidad pública y 2 estaban evaluándolo.</p></div>
       </div>
     </div>
   </section>
@@ -1322,7 +1340,7 @@ const CAL=[
  ["2026-10-19","PAE departamental, versión preliminar","Referencia de ejes, líneas y necesidad estimada"],
  ["2026-11-19","Vencimiento asociado al Decreto 1419","Priorizar el reporte de proyectos que dependan de esa medida"],
  ["2026-12-31","Vencimiento asociado al Decreto 1414","Cierre de vigencia: compromisos 2026 reportados"],
- ["2027-02-10","Fin de los seis meses de la calamidad departamental, salvo prórroga","Revisar con el Consejo Departamental si se prorroga y ajustar el PAE"],
+ ["2027-02-10","Fin de los seis meses de la calamidad departamental, salvo prórroga","Puede prorrogarse hasta por seis meses más, con concepto favorable del Consejo Departamental de Gestión del Riesgo (Decreto 392, art. 1)"],
  ["2027-08-11","Fin de la situación de desastre nacional (Decreto 1171)","Proyectos de corto plazo (2026–2027) en ejecución"],
  ["2030-12-31","Mediano plazo del PAE Nacional (2028–2030)","Proyectos de reconstrucción definitiva"]];
 function renderCal(){
