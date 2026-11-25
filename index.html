@@ -167,6 +167,12 @@ p{margin:0}
 #cifT select{max-width:260px}
 .oxihero{display:grid;grid-template-columns:minmax(0,900px);gap:36px;align-items:center}
 .oxilogo{background:#fff;border-radius:18px;padding:10px;box-shadow:0 14px 34px rgba(0,0,0,.3)}.oxilogo img{display:block;width:100%;border-radius:10px}
+.pmkpi{grid-template-columns:repeat(5,1fr)}.pmkpi b{font-size:clamp(20px,2.2vw,28px)!important;white-space:nowrap}.pmlist>div{padding:9px 0;border-top:1px solid var(--line)}.pmlist>div:first-child{border-top:0}.pmlist b{display:block}.pmlist span{display:block;color:var(--muted);font-size:14px}.pm3{grid-template-columns:repeat(3,1fr)}
+.pmdep{display:grid;gap:12px}.pmd{border:1px solid var(--line);border-radius:12px;padding:12px 14px}.pmd.on{border:2px solid var(--green);background:#eef6f0}.pmd>b{display:block;font:800 15px var(--head);margin-bottom:8px;color:var(--dark)}.pmd>div{display:flex;flex-wrap:wrap;gap:8px}
+.pmm{display:inline-flex;align-items:center;gap:8px;background:var(--white,#fff);border:1px solid var(--line);border-radius:99px;padding:5px 12px;font-weight:600;font-size:14px}.pmm em{font-style:normal;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}.pmm.tbd{border-style:dashed;color:var(--muted)}
+.pmfase{display:grid;grid-template-columns:34px 1fr;gap:12px;padding:10px 0;border-top:1px solid var(--line)}.pmfase>b{width:34px;height:34px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800}.pmfase strong{display:block}.pmfase span{color:var(--muted);font-size:14px}
+.pmgal{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:22px}.pmgal figure{margin:0;border-radius:14px;overflow:hidden;background:var(--white,#fff);border:1px solid var(--line)}.pmgal img{width:100%;height:220px;object-fit:cover;display:block}.pmgal figcaption{padding:8px 12px;font-weight:600;font-size:14px}
+@media (max-width:900px){.pmkpi{grid-template-columns:repeat(3,1fr)}.pmgal{grid-template-columns:1fr}.pm3{grid-template-columns:1fr}}@media (max-width:560px){.pmkpi{grid-template-columns:1fr 1fr}}
 .oxiart{margin-top:12px;border-top:1px solid var(--line)}.oar{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;padding:11px 0;border-bottom:1px solid var(--line)}.oar>div{min-width:0;flex:1}.oar b{display:block;font-weight:600;line-height:1.35}.oar span{display:block;color:var(--muted);font-size:13px;margin-top:2px}.oar em{font-style:normal;font-weight:700;white-space:nowrap;text-align:right}.oar.tot b,.oar.tot em{font-weight:800}@media (max-width:560px){.oar{flex-direction:column;gap:4px}.oar em{text-align:left}}
 .oxikpi{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:20px}
 .oxikpi div{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:14px;padding:12px 14px;color:#fff}
@@ -945,6 +951,83 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
 </div>
 
 <!-- =================== OBRAS POR IMPUESTOS =================== -->
+<div id="v-pueblos" data-view hidden>
+  <section class="hero photo" style="--img:url(img/pm/belalcazar-cristo-noche.jpg)"><div class="wrap oxihero">
+    <div>
+      <span class="eyebrow">Turismo · reactivación de los pueblos afectados</span>
+      <h1>Pueblos Milagro Turísticos</h1>
+      <p class="lead">La recuperación turística empieza fortaleciendo lo existente, cocreando con la comunidad y generando confianza a los visitantes. Una iniciativa de FONTUR y aliados en 12 municipios de 5 departamentos; en Caldas, Belalcázar.</p>
+      <div class="oxikpi pmkpi"><div><b class="num">$100.000 M</b><span>inversión</span></div><div><b class="num">12</b><span>municipios</span></div><div><b class="num">5</b><span>departamentos</span></div><div><b class="num">24</b><span>meses</span></div><div><b class="num">1 + 1</b><span>en Caldas: Belalcázar y uno por definir</span></div></div>
+    </div>
+  </div></section>
+
+  <section class="band white"><div class="wrap">
+    <div class="shead"><span class="n">01</span><div><h2>El proyecto: acupuntura urbana</h2><p>Pequeños puntos, grandes transformaciones. En lugar de grandes obras, intervenciones precisas en los lugares que más pesan en la vida del pueblo y en la visita de los turistas: una calle, un mirador, una plaza, las fachadas. Como dijo Jaime Lerner, exalcalde de Curitiba: «Una buena idea puede cambiar una ciudad».</p></div></div>
+    <h3 class="oxih3">Un proceso integral en cinco frentes</h3>
+    <div class="oxigrid5">
+      <div class="oxic"><b>Gobernanza local</b><span>Acuerdos con la comunidad, la alcaldía y los actores del territorio.</span></div>
+      <div class="oxic"><b>Técnico</b><span>Reparación y estabilidad de las edificaciones intervenidas.</span></div>
+      <div class="oxic"><b>Artístico</b><span>Muralismo, color y arte en el piso con identidad local.</span></div>
+      <div class="oxic"><b>Urbano arquitectónico</b><span>Espacio público, miradores, mobiliario, iluminación y paisajismo.</span></div>
+      <div class="oxic"><b>Inclusión productiva</b><span>Comercio, emprendimientos y empleo alrededor de la visita.</span></div>
+    </div>
+    <p class="sub" style="margin-top:12px">Con urbanismo participativo, gestión social y negociación territorial como herramientas de construcción comunitaria.</p>
+    <div class="grid2" style="margin-top:22px">
+      <div class="card"><h3>Cuatro criterios para intervenir</h3><div class="pmlist">
+        <div><b>1. Corresponsabilidad comunitaria</b><span>La comunidad participa y cuida.</span></div>
+        <div><b>2. Cocreación y diseños participativos</b><span>La comunidad diseña con el equipo.</span></div>
+        <div><b>3. Procesos artísticos con identidad cultural</b><span>Arte con identidad local.</span></div>
+        <div><b>4. Acupunturas urbanas estratégicas</b><span>Puntos de alto impacto.</span></div></div></div>
+      <div class="card"><h3>Quién pone la plata</h3><p class="sub">Inversión total: $100.000 millones</p>
+        <div class="edustack" style="height:40px;margin-top:10px"><i style="flex:51;background:#8a1e6e">51 %</i><i style="flex:20;background:#2f6fa8">20 %</i><i style="flex:1;background:#e5b000"></i><i style="flex:28;background:repeating-linear-gradient(45deg,#d9822b,#d9822b 6px,#e8a868 6px,#e8a868 12px)">28 %</i></div>
+        <div class="pmlist" style="margin-top:12px">
+          <div><b>FONTUR · $51.000 M</b><span>Fondo Nacional de Turismo</span></div>
+          <div><b>Fundación Santo Domingo · $20.000 M</b><span>Aliado privado</span></div>
+          <div><b>Fundación Pintuco · $1.000 M</b><span>Aliado privado</span></div>
+          <div><b>Aliados por vincular · $28.000 M</b><span>Recursos que aún hay que conseguir</span></div></div>
+        <p class="sub" style="margin-top:10px">Acompañan el Ministerio de Comercio, Industria y Turismo y Empresas y Fundaciones Unidas por Colombia.</p></div>
+    </div>
+  </div></section>
+
+  <section class="band cream"><div class="wrap">
+    <div class="shead"><span class="n">02</span><div><h2>Los 12 pueblos</h2><p>Dos fases en 24 meses. Filandia y Génova tienen un alcance focalizado: solo color de fachadas y muralismo.</p></div></div>
+    <div class="grid2" style="align-items:start">
+      <div class="card" style="padding:0;overflow:hidden"><img src="img/pm/mapa-pueblos.jpg" alt="Mapa de los 12 municipios de Pueblos Milagro en Chocó, Valle del Cauca, Quindío, Risaralda y Caldas" loading="lazy" style="width:100%;display:block"></div>
+      <div class="card"><div class="pmdep" id="pmDep"></div></div>
+    </div>
+  </div></section>
+
+  <section class="band white" id="pm-belalcazar" style="scroll-margin-top:90px"><div class="wrap">
+    <div class="shead"><span class="n">03</span><div><h2>En Caldas: Belalcázar</h2><p>«Territorios que resisten, comunidades que inspiran». Belalcázar recupera y revitaliza la Calle Jardín, que florece de nuevo y se conecta con el Cristo Rey, símbolo de resiliencia y esperanza. Está en la Fase 1. El segundo municipio de Caldas se definirá para la Fase 2.</p></div></div>
+    <div class="card" style="padding:0;overflow:hidden"><img src="img/pm/belalcazar-plan.jpg" alt="Plan de acciones para Belalcázar: Cristo Rey, recuperación de techos y Calle Jardín" loading="lazy" style="width:100%;display:block"></div>
+    <div class="oxigrid5 pm3" style="margin-top:16px">
+      <div class="oxic"><b>Cristo Rey</b><span>Intervención del mirador y ancla religiosa.</span></div>
+      <div class="oxic"><b>Recuperación de techos</b><span>Reposición de cubiertas afectadas, con un macromural que se ve desde arriba.</span></div>
+      <div class="oxic"><b>Calle Jardín · Más Vida</b><span>Recuperación integral del corredor: la Calle de la Esperanza.</span></div>
+    </div>
+    <div class="grid2" style="margin-top:22px;align-items:start">
+      <div class="card"><h3>La Calle de la Esperanza</h3><p class="sub">Arte, color y comunidad para volver a encontrarnos</p>
+        <div class="pmfase"><b>1</b><div><strong>Fachadas y estabilidad</strong><span>Recuperar las viviendas afectadas, conservando la arquitectura típica y sus colores.</span></div></div>
+        <div class="pmfase"><b>2</b><div><strong>Arte en el piso</strong><span>La calle se vuelve un lienzo con pintura para tráfico, en homenaje al Cristo Redentor.</span></div></div>
+        <div class="pmfase"><b>3</b><div><strong>Umbrales de luz y esperanza</strong><span>Estructuras livianas en guadua con iluminación y mensajes; en paralelo, redes subterráneas.</span></div></div>
+      </div>
+      <div class="card"><h3>El mirador del Cristo Rey</h3><p class="sub">Patrimonio, paisaje y comunidad</p>
+        <div class="pmfase"><b>1</b><div><strong>Pasamanos y dotación turística</strong><span>Pasamanos seguros, telescopios y tótems incluyentes (código QR, braille y guía auditiva).</span></div></div>
+        <div class="pmfase"><b>2</b><div><strong>Zonas de estancia</strong><span>Bioconstrucción, jardines y zonas verdes que se mimetizan con el paisaje.</span></div></div>
+        <div class="pmfase"><b>3</b><div><strong>Iluminación del Cristo y el parque</strong><span>Luz eficiente que lo convierte en un hito del paisaje, seguro de noche.</span></div></div>
+      </div>
+    </div>
+    <div class="pmgal">
+      <figure><img src="img/pm/belalcazar-calle-esperanza.jpg" alt="Propuesta para la Calle de la Esperanza en Belalcázar" loading="lazy"><figcaption>Calle de la Esperanza</figcaption></figure>
+      <figure><img src="img/pm/belalcazar-cristo-rey.jpg" alt="Propuesta para el mirador del Cristo Rey en Belalcázar" loading="lazy"><figcaption>Mirador del Cristo Rey</figcaption></figure>
+      <figure><img src="img/pm/belalcazar-techos.jpg" alt="Propuesta de macromural en los techos de Belalcázar" loading="lazy"><figcaption>Techos recuperados con arte</figcaption></figure>
+    </div>
+    <p class="sub" style="margin-top:8px">Imágenes de referencia, no diseños detallados.</p>
+    <div class="note" style="margin-top:18px" id="pmCruce"></div>
+    <p class="srcnote">Fuente: presentación «Pueblos Milagro Turísticos» (FONTUR, Ministerio de Comercio, Industria y Turismo, Fundación Santo Domingo, Fundación Pintuco y Empresas y Fundaciones Unidas por Colombia), 17 de noviembre de 2026.</p>
+  </div></section>
+</div>
+
 <div id="v-oxi" data-view hidden>
   <section class="hero photo" style="--img:url(img/oxi/p5-render.jpg)"><div class="wrap oxihero">
     <div>
@@ -1186,7 +1269,7 @@ function alertas(rep){
 /* ================= NAV / ROUTER ================= */
 function renderNav(){
   const v=(location.hash||"#inicio").slice(1);
-  let h=`<a href="#inicio">Consolidado</a><a href="#documento">Documento PAE</a><a href="#acciones">Acciones de la Gobernación</a><a href="#fase3">Proyectos Fase III</a><a href="#oxi">Obras por Impuestos</a>`;
+  let h=`<a href="#inicio">Consolidado</a><a href="#documento">Documento PAE</a><a href="#acciones">Acciones de la Gobernación</a><a href="#fase3">Proyectos Fase III</a><a href="#oxi">Obras por Impuestos</a><a href="#pueblos">Pueblos Milagro / ProCaldas</a>`;
   if(SES&&SES.rol==="municipio")h+=`<a href="#municipio">Mi reporte</a>`;
   if(SES&&SES.rol==="gobernacion")h+=`<a href="#gobernacion">Panel Gobernación</a>`;
   if(SES&&SES.rol==="aliado")h+=`<a href="#gobernacion">Panel departamental</a>`;
@@ -1197,7 +1280,7 @@ function renderNav(){
   $$("#nav a").forEach(a=>{if(a.getAttribute("href")==="#"+v)a.setAttribute("aria-current","page")});
   const lb=$("#logoutBtn");if(lb)lb.addEventListener("click",()=>logout());
 }
-const VIEWS=["inicio","fase3","oxi","ingresar","municipio","gobernacion"];
+const VIEWS=["inicio","fase3","oxi","pueblos","ingresar","municipio","gobernacion"];
 function route(){
   let v=(location.hash||"#inicio").slice(1);
   const anc=["resumen",...Object.keys(TAB_DE)].includes(v)?v:null;
@@ -1214,6 +1297,7 @@ function route(){
   if(v==="inicio"){renderDocs();initTabs();renderGlosario();loadPublic();}
   if(v==="fase3")loadFase3();
   if(v==="oxi")renderOxi();
+  if(v==="pueblos")renderPueblos();
   if(v==="ingresar")initLogin();
   if(v==="municipio")openMunicipio();
   if(v==="gobernacion")openGob();
@@ -1882,6 +1966,14 @@ function renderOxi(){
 $("#oxiFil").addEventListener("click",e=>{const b=e.target.closest("[data-f]");if(!b)return;OXIF=b.dataset.f;renderOxi()});
 $("#oxiList").addEventListener("click",e=>{const b=e.target.closest("[data-v]");if(!b)return;const im=b.closest(".im"),img=im.querySelector("img");img.src=b.dataset.v==="e"?img.dataset.e:img.dataset.r;img.alt=(b.dataset.v==="e"?"Estado actual de la edificación afectada":"Referencia de diseño");im.querySelectorAll("[data-v]").forEach(x=>x.setAttribute("aria-pressed",x===b))});
 
+
+/* ================= PUEBLOS MILAGRO ================= */
+const PM=[["Caldas",[["Belalcázar",1],["Por definir",2]]],["Risaralda",[["Santa Rosa de Cabal",1],["Marsella",1]]],["Quindío",[["Quimbaya",1],["Montenegro",2],["Filandia*",1],["Génova*",1]]],["Valle del Cauca",[["Roldanillo",1],["Sevilla",1]]],["Chocó",[["Nuquí",1],["Bahía Solano",2]]]];
+function renderPueblos(){
+  $("#pmDep").innerHTML=PM.map(([d,L])=>`<div class="pmd${d==="Caldas"?" on":""}"><b>${esc(d)}</b><div>${L.map(([m,f])=>`<span class="pmm${m==="Por definir"?" tbd":""}">${esc(m)}<em>Fase ${f}</em></span>`).join("")}</div></div>`).join("")+`<p class="sub" style="margin:12px 0 0">* Solo color de fachadas y muralismo.</p>`;
+  const V=window.PAE_VIV,d=V&&V.dem.find(x=>x[0]==="Belalcázar"),e=V&&V.emp&&V.emp.mun.find(x=>x[0]==="Belalcázar");
+  $("#pmCruce").innerHTML=`<b class="t">Belalcázar en la reconstrucción</b>${d?`El municipio reporta <b>${fmt(d[1])} edificaciones por demoler</b>, entre ellas su estación de bomberos. `:""}${e?`El empréstito departamental incluye una <b>estación de bomberos nueva por $5.125 millones</b>. `:""}Pueblos Milagro complementa esa reconstrucción con la recuperación turística: fachadas, techos, espacio público y el mirador del Cristo Rey. <a href="#vivienda">Ver vivienda y demoliciones</a>`;
+}
 /* ================= PROYECTOS FASE III ================= */
 let F3=null;
 async function loadFase3(){
