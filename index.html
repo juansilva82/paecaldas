@@ -666,9 +666,13 @@ footer .logos{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
       <details class="card edudet" style="margin-top:18px"><summary><b>Registro Único de Damnificados (RUD) por municipio</b> <span class="muted">· corte 4-sep-2026 · ver tabla</span></summary>
         <p class="sub" style="margin-top:10px">Familias y personas inscritas en el RUD de la UNGRD y estado de sus viviendas. El RUD clasifica solo las viviendas de las familias inscritas, por eso sus totales son menores que los del EDAN.</p>
         <div class="scroll"><table class="t" id="rudT"></table></div></details>
+      <details class="card edudet" style="margin-top:12px"><summary><b>Sector agropecuario: fincas y beneficiaderos</b> <span class="muted">· 25 municipios · ver tabla</span></summary>
+        <div class="grid4" style="margin-top:12px" id="agroK"></div>
+        <div class="scroll" style="margin-top:10px"><table class="t" id="agroT"></table></div>
+        <p class="srcnote" id="agroN"></p></details>
       <details class="card edudet" style="margin-top:12px"><summary><b>EDAN por municipio e infraestructura afectada</b> <span class="muted">· corte 23-nov-2026 · ver tablas</span></summary>
         <div class="grid2" style="margin-top:12px"><div class="scroll"><table class="t" id="edanT"></table></div><div class="scroll"><table class="t" id="edanI"></table></div></div>
-        <p class="srcnote">Fuente: UDEGER, reporte cuantitativo de afectaciones EDAN con corte al 23 de noviembre de 2026. No se reportan personas desaparecidas.</p></details>
+        <p class="srcnote">Fuente: UDEGER, reporte cuantitativo de afectaciones EDAN con corte al 23 de noviembre de 2026. No se reportan personas desaparecidas. El único proceso de remoción en masa activo asociado al sismo está en el corregimiento de Arma (Aguadas), con viviendas afectadas (UDEGER, 26-nov). La reducción de viviendas destruidas frente al EDAN del 14 de septiembre se debe al ajuste con los EDAN municipales reportados a la UNGRD.</p></details>
     </div>
   </section>
 
@@ -1407,6 +1411,11 @@ function renderCartera(){
 function cmpBars(el,rows){
   el.innerHTML=rows.map(r=>{const p=r.nec?Math.min(100,r.rep/(r.nec*1e6)*100):0;return `<div class="r"><span><b class="code">${r.id}</b>${esc(r.nombre)}</span><div class="track" role="img" aria-label="${r.id}: reportado ${fmtM(r.rep)} millones de ${fmt(r.nec)} millones"><i style="width:${p}%"></i></div><span class="v num">${fmtM(r.rep)} / ${fmt(r.nec)}</span></div>`}).join("");
 }
+function renderAgro(){const A=window.PAE_AGRO;if(!A||!$("#agroT"))return;const f=x=>fmt(x),T=A.total;
+  $("#agroK").innerHTML=[[T[0],"fincas afectadas"],[T[1],`viviendas rurales afectadas en fincas (${f(T[2])} colapsadas)`],[T[6],`beneficiaderos afectados (${f(T[7])} colapsados, ${f(T[8])} sin operar)`],["$"+f(A.inversion.total)+" M","inversión estimada para recuperar los beneficiaderos"]].map(([v,t])=>`<div class="stat"><b class="num">${typeof v=="number"?f(v):v}</b><span>${t}</span></div>`).join("");
+  const idx=[0,1,2,3,6,7,8,9];
+  $("#agroT").innerHTML=`<thead><tr><th>Municipio</th>${idx.map(i=>`<th class="r">${esc(A.cols[i])}</th>`).join("")}</tr></thead><tbody>${[...A.rows].sort((a,b)=>b[1]-a[1]).map(r=>`<tr><td>${esc(r[0])}</td>${idx.map(i=>`<td class="r num">${f(r[i+1])}</td>`).join("")}</tr>`).join("")}<tr><td><b>Total</b></td>${idx.map(i=>`<td class="r num"><b>${f(T[i])}</b></td>`).join("")}</tr></tbody>`;
+  $("#agroN").textContent=`Fuente: ${A.fuente}. Inversión estimada: ${f(A.inversion.operando[0])} beneficiaderos operando con afectaciones a $2 M cada uno ($${f(A.inversion.operando[2])} M) y ${f(A.inversion.colapsados_no_operando[0])} colapsados o sin operar a $5 M ($${f(A.inversion.colapsados_no_operando[2])} M). No incluye La Dorada ni Norcasia.`;}
 function renderRud(){const R=window.PAE_RUD,E=window.PAE_EDAN23;if(!R||!E||!$("#rudT"))return;const f=x=>fmt(x);
   $("#rudT").innerHTML=`<thead><tr><th>Municipio</th>${R.cols.map(c=>`<th class="r">${esc(c[0].toUpperCase()+c.slice(1))}</th>`).join("")}</tr></thead><tbody>${[...R.rows].sort((a,b)=>b[1]-a[1]).map(r=>`<tr><td>${esc(r[0])}</td>${r.slice(1).map(v=>`<td class="r num">${f(v)}</td>`).join("")}</tr>`).join("")}<tr><td><b>Total</b></td>${R.total.map(v=>`<td class="r num"><b>${f(v)}</b></td>`).join("")}</tr></tbody>`;
   const mu=Object.entries(E.mun).sort((a,b)=>b[1][0]-a[1][0]),T=[0,1,2,3,4].map(i=>mu.reduce((a,m)=>a+m[1][i],0));
@@ -1445,7 +1454,7 @@ async function loadPublic(){
   const viv=M.filter(m=>m.dane!=="17001"&&vB(m)!=null).map(m=>[m.municipio,vB(m)]).sort((a,b)=>b[1]-a[1]);
   hbars($("#pubViv"),viv);
   {const sb={};M.forEach(m=>{const v=vB(m);if(v!=null)sb[m.subregion]=(sb[m.subregion]||0)+v});const st=Object.values(sb).reduce((a,b)=>a+b,0)||1;hbars($("#pubSub"),Object.entries(sb).sort((a,b)=>b[1]-a[1]).map(([k,v])=>[k,v,"· "+(v/st*100).toFixed(1).replace(".",",")+" %"]),"var(--gold)");}
-  renderRud();
+  renderRud();renderAgro();
   renderAcciones(accMerge(d.acciones),$("#pubAcc"));
   renderResumen(d);
   initTablero(M);MP.M=M;MP.F3=d.fase3||[];renderMapa();renderEdu();renderViv();renderSalud();renderGob(Array.isArray(d.cifras)?d.cifras:(window.PAE_CIFRAS||[]));  // servidor sin «cifras» (versión anterior): usa las iniciales

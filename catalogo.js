@@ -90,7 +90,7 @@ window.PAE_CIFRAS_NUEVAS=[
  {ind:"banco_viviendas",valor:1259,fecha:"2026-11-23",fuente:"Balance de la Gobernación",nota:"Familias atendidas; contrato inicial de $3.500 M ejecutado al 99,99 % y adición de $1.745 M"},
  {ind:"banco_municipios",valor:26,fecha:"2026-11-23",fuente:"Balance de la Gobernación"},
  {ind:"arriendo_familias",valor:1354,fecha:"2026-11-23",fuente:"Balance de la Gobernación",nota:"Subsidios transferidos a 17 municipios"},
- {ind:"arriendo_monto",valor:1108458580,fecha:"2026-11-23",fuente:"Balance de la Gobernación"},
+ {ind:"arriendo_monto",valor:1104358240,fecha:"2026-11-26",fuente:"Resoluciones de transferencia del Fondo Departamental de Gestión del Riesgo remitidas a la Contraloría",nota:"17 resoluciones; Anserma $62.871.880 (el balance del 23-nov indicaba $66.972.220)"},
  {ind:"arriendo_municipios",valor:17,fecha:"2026-11-23",fuente:"Balance de la Gobernación"},
  {ind:"ungrd_giros",valor:3647310263,fecha:"2026-10-30",fuente:"SuperGiros",nota:"3.827 giros programados; 3.111 cobrados por $2.946 M"},
  {ind:"ungrd_cobrado_pct",valor:81,fecha:"2026-10-30",fuente:"SuperGiros"},
