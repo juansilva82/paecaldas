@@ -87,7 +87,7 @@ window.PAE_CIFRAS=[{"ind": "ahe", "valor": 9800, "fecha": "2026-08-26", "fuente"
 /* Actualizaciones de noviembre de 2026 que se suman a lo que el equipo coordinador tenga en su panel
    (si el panel ya trae el mismo dato, con el mismo indicador, fecha y categoría, no se duplica). */
 window.PAE_CIFRAS_NUEVAS=[
- {ind:"banco_viviendas",valor:1259,fecha:"2026-11-23",fuente:"Balance de la Gobernación",nota:"Familias atendidas; contrato inicial de $3.500 M ejecutado al 99,99 % y adición de $1.745 M"},
+ {ind:"banco_viviendas",valor:1262,fecha:"2026-11-23",fuente:"Balance de la Gobernación",nota:"Familias atendidas; contrato inicial de $3.500 M ejecutado al 99,99 % y adición de $1.745 M"},
  {ind:"banco_municipios",valor:26,fecha:"2026-11-23",fuente:"Balance de la Gobernación"},
  {ind:"arriendo_familias",valor:1354,fecha:"2026-11-23",fuente:"Balance de la Gobernación",nota:"Subsidios transferidos a 17 municipios"},
  {ind:"arriendo_monto",valor:1104358240,fecha:"2026-11-26",fuente:"Resoluciones de transferencia del Fondo Departamental de Gestión del Riesgo remitidas a la Contraloría",nota:"17 resoluciones; Anserma $62.871.880 (el balance del 23-nov indicaba $66.972.220)"},

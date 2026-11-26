@@ -28,7 +28,7 @@ window.PAE_REC = {
    con cargo al Fondo Departamental de Gestión del Riesgo de Desastres. Valores en millones de pesos. */
 window.PAE_REC.fdgrd = { incorporado: 21350, acto: "Ordenanza 1016 de 2026" };
 window.PAE_REC.hecho = [
-  ["Banco de materiales", 5245.4, "1.259 familias en 26 municipios: contrato inicial de $3.500 M (ejecutado al 99,99 %) y adición de $1.745 M", "En ejecución"],
+  ["Banco de materiales", 5245.4, "1.262 familias en 26 municipios: contrato inicial de $3.500 M (ejecutado al 99,99 %) y adición de $1.745 M", "En ejecución"],
   ["29 viviendas rurales nuevas", 1926.7, "San José 11, Belalcázar 7, Viterbo 5, Neira 4 y Manzanares 2 (BPID AMB-E-260098). Aparte, Grupo Argos construye 10 en Neira (Adopta un Hogar) y 90 más en 2027", "En adjudicación"],
   ["Kits alimentarios y de aseo", 1325, "6.400 familias afectadas; en recepción en el Centro Logístico Humanitario para distribuir con las alcaldías", "Contratado"],
   ["Subsidios de arrendamiento", 1104.4, "1.354 subsidios en 17 municipios, para familias con vivienda destruida o no habitable; 17 resoluciones de transferencia remitidas a la Contraloría", "Transferido a los municipios"],
