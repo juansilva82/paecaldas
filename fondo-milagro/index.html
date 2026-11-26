@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Caldas se reconstruye · Fondo Milagro</title>
+<link rel="icon" href="/img/escudo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--g:#115A3E;--g2:#0b3f2b;--t:#007A82;--b:#0680C0;--o:#A0732F;--l:#6DB33F;--y:#F9AD07;--ink:#14212b;--mut:#5b6775;--line:#e3e8ec;--bg:#f5f7f6;--card:#fff}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background:var(--bg);line-height:1.5}
+h1,h2,h3,.big{font-family:Montserrat,Inter,sans-serif}
+a{color:var(--t)}
+img{max-width:100%;display:block}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+section.s{padding:76px 0;border-bottom:1px solid var(--line)}
+section.s:nth-of-type(even){background:#fff}
+.kick{font:700 12px/1 Montserrat,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--t);margin:0 0 10px}
+h2{font-size:clamp(26px,3.4vw,40px);line-height:1.12;margin:0 0 14px;color:var(--g2)}
+.lead{font-size:clamp(16px,1.6vw,19px);color:#334;max-width:820px;margin:0 0 30px}
+.src{font-size:12.5px;color:var(--mut);margin-top:14px}
+/* barra superior */
+.top{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:16px;height:60px}
+.top img{height:34px}.top nav{margin-left:auto;display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+.top nav a{font:600 13px Inter,system-ui,sans-serif;color:var(--ink);text-decoration:none;padding:8px 10px;border-radius:8px;white-space:nowrap}
+.top nav a:hover,.top nav a.on{background:#e8f2ee;color:var(--g)}
+.pbtn{font:600 13px Inter,system-ui,sans-serif;border:0;background:var(--g);color:#fff;padding:9px 14px;border-radius:9px;cursor:pointer;white-space:nowrap}
+/* portada */
+.hero{position:relative;min-height:calc(100vh - 60px);display:flex;align-items:flex-end;color:#fff;overflow:hidden;background:#0b3f2b}
+.hero img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.42}
+.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,63,43,.15),rgba(11,63,43,.92) 78%)}
+.hero .wrap{position:relative;z-index:2;padding-bottom:64px;padding-top:80px}
+.hero .logos{display:flex;gap:22px;align-items:center;margin-bottom:28px}.hero .logos img{height:52px}
+.hero h1{font-size:clamp(34px,5.6vw,68px);line-height:1.02;margin:0 0 16px;max-width:900px;font-weight:800}
+.hero p{font-size:clamp(17px,1.8vw,21px);max-width:760px;margin:0 0 30px;color:#e6f1ec}
+.hero .nums{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;max-width:900px}
+.hero .nums div{border-left:3px solid var(--y);padding:4px 0 4px 14px}
+.hero .nums b{display:block;font:800 clamp(26px,3.4vw,40px) Montserrat,Inter,system-ui,sans-serif;letter-spacing:-.01em}
+.hero .nums span{font-size:14px;color:#d9ebe3}.hero .nums span.n{font:inherit;color:inherit}
+.cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+.cta a{font:600 15px Inter,system-ui,sans-serif;padding:13px 18px;border-radius:10px;text-decoration:none}
+.cta .a1{background:var(--y);color:#2a1d00}.cta .a2{border:1.5px solid rgba(255,255,255,.6);color:#fff}
+/* tarjetas de cifras */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 18px 16px;min-width:0}
+.kpi b{display:block;font:800 clamp(26px,2.6vw,34px)/1.05 Montserrat,Inter,system-ui,sans-serif;color:var(--g2)}
+.kpi span{font-size:14px;color:var(--mut)}
+.kpi.c1 b{color:#b6402c}.kpi.c2 b{color:var(--t)}.kpi.c3 b{color:var(--o)}.kpi.c4 b{color:var(--b)}
+/* mapa */
+.grid2{display:grid;grid-template-columns:1.25fr 1fr;gap:26px;align-items:start}
+.mapbox{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px;position:relative}
+.mapbox svg{width:100%;height:auto;display:block}
+.mapbox path.m{stroke:#fff;stroke-width:1;cursor:pointer;transition:opacity .2s}
+.mapbox path.m:hover{opacity:.8}.mapbox path.m.sel{stroke:#14212b;stroke-width:2.2}
+.legend{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--mut);margin-top:6px}
+.legend i{display:inline-block;width:120px;height:10px;border-radius:5px;background:linear-gradient(90deg,#e6f2ec,#7fb89e,#115A3E)}
+.tip{position:absolute;pointer-events:none;background:#14212b;color:#fff;font-size:12.5px;padding:7px 9px;border-radius:7px;opacity:0;transition:opacity .12s;white-space:nowrap}
+/* barras */
+.bars{display:flex;flex-direction:column;gap:10px}
+.bar{display:grid;grid-template-columns:minmax(0,230px) 1fr auto;gap:14px;align-items:center}
+.bar .lb{font-weight:600;font-size:15px}.bar .lb small{display:block;font-weight:400;color:var(--mut);font-size:12.5px;line-height:1.3}
+.bar .tr{height:26px;background:#edf1f0;border-radius:6px;overflow:hidden;position:relative}
+.bar .tr i{position:absolute;left:0;top:0;bottom:0;border-radius:6px;width:0;transition:width 1.1s cubic-bezier(.2,.7,.2,1)}
+.bar .tr i.gob{background:var(--l)}.bar .tr i.ya{background:var(--b)}.bar .tr i.pide{background:var(--g)}
+.bar .v{font:700 15px Montserrat,Inter,system-ui,sans-serif;min-width:110px;text-align:right}
+.keyrow{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--mut);margin:0 0 16px}.keyrow i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.totbox{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:26px}
+.totbox div{border-radius:14px;padding:18px;color:#fff}.totbox b{display:block;font:800 clamp(24px,2.8vw,34px) Montserrat,Inter,system-ui,sans-serif}
+.totbox div:nth-child(1){background:var(--g)}.totbox div:nth-child(2){background:var(--t)}.totbox div:nth-child(3){background:var(--g2)}
+/* ya hecho */
+.list{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.it{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;min-width:0}
+.it h4{margin:0 0 4px;font:700 15.5px Montserrat,Inter,system-ui,sans-serif;color:var(--g2)}.it p{margin:0;font-size:13.5px;color:var(--mut)}
+.it .val{font:800 22px Montserrat,Inter,system-ui,sans-serif;color:var(--ink);margin:8px 0 2px}
+.chip{display:inline-block;font:600 11.5px Inter,system-ui,sans-serif;padding:3px 8px;border-radius:999px;background:#e8f2ee;color:var(--g)}
+.chip.c2{background:#e5f1fa;color:#0b5f8f}.chip.c3{background:#fbf1de;color:#7a5410}.chip.c4{background:#eef0f3;color:#4b5563}
+.stack{display:flex;height:34px;border-radius:9px;overflow:hidden;margin:8px 0 10px}
+.stack i{display:block;height:100%}
+.fuentes{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:6px 16px;font-size:13.5px}
+.fuentes div{display:flex;gap:8px;align-items:baseline}.fuentes i{width:10px;height:10px;border-radius:3px;flex:none;transform:translateY(1px)}
+/* proyectos */
+.proj{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+.pc{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;min-width:0}
+.pc .ph{aspect-ratio:16/8;background:#dfe7e3 center/cover no-repeat}
+.pc .ph0{display:flex;flex-direction:column;justify-content:flex-end;padding:16px;color:#fff;background:linear-gradient(135deg,#115A3E,#007A82)}.pc .ph0 span{font:600 12px Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;opacity:.85}.pc .ph0 b{font:800 22px Montserrat,Inter,sans-serif}.pc .ph0.s-viv{background:linear-gradient(135deg,#0b3f2b,#6DB33F)}.pc .ph0.s-edu{background:linear-gradient(135deg,#0680C0,#007A82)}
+.pc .bd{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px;flex:1}
+.pc h4{margin:0;font:700 15.5px/1.3 Montserrat,Inter,system-ui,sans-serif;color:var(--g2)}
+.pc .mu{font-size:13px;color:var(--mut)}
+.pc .val{font:800 20px Montserrat,Inter,system-ui,sans-serif}
+.mat{display:flex;gap:4px;margin-top:auto;padding-top:8px}
+.mat span{flex:1;height:7px;border-radius:4px;background:#e3e8ec}.mat span.on{background:var(--l)}
+.matl{font-size:12px;color:var(--mut);display:flex;justify-content:space-between}
+.filt{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px}
+.filt button{font:600 13px Inter,system-ui,sans-serif;border:1px solid var(--line);background:#fff;padding:7px 12px;border-radius:999px;cursor:pointer}
+.filt button.on{background:var(--g);color:#fff;border-color:var(--g)}
+/* flujo */
+.flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0;align-items:stretch;margin:10px 0 26px}
+.fs{position:relative;background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;margin-right:22px;min-width:0}
+.fs:not(:last-child):after{content:"";position:absolute;right:-19px;top:50%;width:16px;height:16px;border-top:3px solid var(--l);border-right:3px solid var(--l);transform:translateY(-50%) rotate(45deg)}
+.fs b{display:block;font:700 15px Montserrat,Inter,system-ui,sans-serif;color:var(--g2);margin-bottom:4px}.fs span{font-size:13px;color:var(--mut)}
+.fs .n{font:800 12px Montserrat,Inter,system-ui,sans-serif;color:#fff;background:var(--g);width:24px;height:24px;border-radius:50%;display:grid;place-items:center;margin-bottom:8px}
+table.t{width:100%;border-collapse:collapse;font-size:14px;background:#fff;border-radius:12px;overflow:hidden}
+table.t th{background:var(--g);color:#fff;text-align:left;font-weight:600;padding:10px 12px}
+table.t td{padding:9px 12px;border-bottom:1px solid var(--line)}table.t .r{text-align:right;white-space:nowrap}
+/* municipio */
+.msel{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:0 0 18px}
+.msel select{font:600 16px Inter,system-ui,sans-serif;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:#fff;min-width:240px}
+.mpanel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px}
+.mpanel h3{margin:0 0 2px;font-size:26px;color:var(--g2)}.mpanel .sr{color:var(--mut);font-size:14px;margin-bottom:16px}
+.mg{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.mg div{background:var(--bg);border-radius:12px;padding:12px}
+.mg b{display:block;font:800 22px Montserrat,Inter,system-ui,sans-serif}.mg span{font-size:12.5px;color:var(--mut)}
+.mp{margin-top:16px}.mp h4{margin:0 0 8px;font:700 14px Montserrat,Inter,system-ui,sans-serif;color:var(--g2)}
+.mp ul{margin:0;padding-left:18px;font-size:14px}
+/* fotos */
+.gal{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:190px;gap:10px}
+.gal figure{margin:0;position:relative;border-radius:12px;overflow:hidden;background:#dde}
+.gal img{width:100%;height:100%;object-fit:cover}
+.gal figure.w{grid-column:span 2}.gal figure.h{grid-row:span 2}
+.gal figcaption{position:absolute;left:0;right:0;bottom:0;padding:22px 12px 9px;font-size:12.5px;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.72))}
+/* cierre */
+.close{background:var(--g2)!important;color:#fff;border:0}
+.close h2{color:#fff}.close .lead{color:#d9ebe3}
+.cgrid{display:grid;grid-template-columns:1.6fr 1fr;gap:30px;align-items:center}
+.qr{background:#fff;border-radius:16px;padding:16px;text-align:center;color:var(--ink);max-width:260px;justify-self:end}
+.qr img{width:200px;height:200px;margin:0 auto 8px}.qr small{font-size:13px;color:var(--mut)}
+.docs{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.docs a{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.3);color:#fff;text-decoration:none;padding:10px 14px;border-radius:10px;font-weight:600;font-size:14px}
+footer{background:#08301f;color:#a9c7b8;font-size:12.5px;padding:18px 0}
+/* modo presentación */
+body.pres section.s{min-height:100vh;display:flex;align-items:center}
+body.pres section.s>.wrap{width:100%}
+body.pres .top nav{display:none}
+.pnav{position:fixed;right:18px;bottom:18px;z-index:30;display:none;gap:6px}
+body.pres .pnav{display:flex}
+.pnav button{width:46px;height:46px;border-radius:50%;border:0;background:var(--g);color:#fff;font-size:20px;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.2)}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}.reveal.in{opacity:1;transform:none}
+@media (max-width:900px){.grid2,.cgrid{grid-template-columns:1fr}.flow{grid-template-columns:1fr}.fs{margin:0 0 22px}.fs:not(:last-child):after{right:auto;left:50%;top:auto;bottom:-20px;transform:translateX(-50%) rotate(135deg)}
+.gal{grid-template-columns:repeat(2,1fr);grid-auto-rows:150px}.gal figure.w{grid-column:span 2}.qr{justify-self:start}.hero .nums,.totbox{grid-template-columns:1fr}
+.bar{grid-template-columns:1fr auto;gap:4px 10px}.bar .tr{grid-column:1/-1;grid-row:2}.top img.r2{display:none}.top nav{display:none}.pbtn{margin-left:auto;font-size:12px;padding:8px 10px}.top img{height:26px}.top .wrap{gap:10px}.hero .logos{flex-wrap:wrap;gap:14px}.hero .logos img{height:32px;max-width:45%;object-fit:contain}.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.kpi{padding:14px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}.reveal{opacity:1;transform:none}}
+@media print{.top,.pnav,.cta,#print{display:none}.reveal,.bar .tr i{transition:none}section.s{padding:28px 0;break-inside:avoid}.hero{min-height:auto}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <img src="/img/gobierno-caldas.png" alt="Gobierno de Caldas"><img class="r2" src="/img/reconstruir.png" alt="Reconstruir es Avanzar">
+  <nav id="nav">
+    <a href="#impacto">Impacto</a><a href="#hecho">Lo que ya hicimos</a><a href="#solicitud">Lo que pedimos</a><a href="#proyectos">Proyectos listos</a><a href="#cuentas">Cuentas claras</a><a href="#municipios">Por municipio</a><a href="#terreno">En terreno</a>
+  </nav>
+  <button class="pbtn" id="pres" type="button">Modo presentación</button>
+</div></header>
+
+<section class="hero" id="inicio">
+  <img class="bg" src="/img/sismo-catedral.jpg" alt="">
+  <div class="wrap">
+    <div class="logos"><img src="/img/gobierno-caldas-blanco.png" alt="Gobierno de Caldas"><img src="/img/reconstruir-blanco.png" alt="Reconstruir es Avanzar"></div>
+    <h1>Caldas sabe qué necesita para reconstruirse, y ya está poniendo su parte</h1>
+    <p>El sismo del 10 de agosto de 2026 afectó a los 27 municipios. Esta es la ruta de reconstrucción que Caldas presenta al Fondo Milagro: el daño medido, lo que ya hicimos, lo que falta y los proyectos listos para arrancar.</p>
+    <div class="nums">
+      <div><b data-count="23557">0</b><span>viviendas afectadas</span></div>
+      <div><b>$<span class="n" data-count="222500">0</span> M</b><span>que ya pone la Gobernación</span></div>
+      <div><b>$<span class="n" data-count="1.98" data-dec="2">0</span> billones</b><span>que faltan para los 26 municipios que se apoyan en el Departamento</span></div>
+    </div>
+    <div class="cta"><a class="a1" href="#solicitud">Ver lo que pedimos</a><a class="a2" href="#proyectos">Ver proyectos listos</a></div>
+  </div>
+</section>
+
+<section class="s" id="impacto"><div class="wrap">
+  <p class="kick">1 · El impacto</p>
+  <h2>Un sismo que tocó a todo el departamento</h2>
+  <p class="lead">Las cifras salen del EDAN del 23 de noviembre y de los reportes de las secretarías. Toque un municipio en el mapa para ver su detalle.</p>
+  <div class="grid2">
+    <div class="mapbox reveal"><svg id="map" role="img" aria-label="Mapa de Caldas: viviendas afectadas por municipio"></svg><div class="tip" id="tip"></div>
+      <div class="legend">Viviendas afectadas (EDAN) <i></i> más</div></div>
+    <div class="kpis reveal">
+      <div class="kpi c1"><b data-count="23557">0</b><span>viviendas afectadas; 2.856 destruidas</span></div>
+      <div class="kpi"><b data-count="22476">0</b><span>familias afectadas</span></div>
+      <div class="kpi c2"><b data-count="711">0</b><span>de 975 sedes educativas afectadas</span></div>
+      <div class="kpi c3"><b data-count="2595">0</b><span>fincas afectadas y 1.028 beneficiaderos</span></div>
+      <div class="kpi c4"><b data-count="19">0</b><span>sedes de salud pública con daño</span></div>
+      <div class="kpi"><b data-count="390">0</b><span>edificaciones por demoler</span></div>
+      <div class="kpi c1"><b data-count="329">0</b><span>puntos críticos; 164 con riesgo para la vida</span></div>
+      <div class="kpi c2"><b data-count="45321">0</b><span>personas inscritas en el RUD</span></div>
+    </div>
+  </div>
+  <p class="src">Fuentes: EDAN (UDEGER, 23-nov-2026), RUD (4-sep-2026), Secretaría de Educación (23-nov), red de salud (13-oct), inventario de demoliciones de los municipios, consolidado agropecuario (26-nov) y Secretaría de Planeación (puntos críticos, 11-sep).</p>
+</div></section>
+
+<section class="s" id="hecho"><div class="wrap">
+  <p class="kick">2 · Lo que Caldas ya hizo</p>
+  <h2>Antes de pedir, pusimos: $222.500 millones propios</h2>
+  <p class="lead">La Gobernación comprometió recursos de siete fuentes, incluido un empréstito de $100.000 M aprobado por la Asamblea, y ya contrató la atención inmediata. INFICaldas administra y gira; la Gobernación contrata.</p>
+  <div class="reveal"><div class="stack" id="stack"></div><div class="fuentes" id="fuentes"></div></div>
+  <h3 style="margin:34px 0 12px;font-size:20px;color:var(--g2)">Contratado y en marcha</h3>
+  <div class="list reveal" id="hechoL"></div>
+  <div class="kpis reveal" style="margin-top:18px">
+    <div class="kpi c4"><b>$20.288,6 M</b><span>de la UNGRD en apoyo económico a familias (3.827 giros en el primer pago)</span></div>
+    <div class="kpi"><b data-count="34956">0</b><span>unidades de ayuda humanitaria entregadas</span></div>
+    <div class="kpi c3"><b>$9.980 M</b><span>de Grupo Argos para 100 viviendas rurales</span></div>
+    <div class="kpi c2"><b data-count="24">0</b><span>municipios con calamidad pública declarada</span></div>
+  </div>
+</div></section>
+
+<section class="s" id="solicitud"><div class="wrap">
+  <p class="kick">3 · Lo que pedimos</p>
+  <h2>Lo que falta, necesidad por necesidad</h2>
+  <p class="lead">Cada barra muestra la necesidad total del PAE departamental y cuánto cubren ya la Gobernación y otros aportantes. El verde oscuro es lo que Caldas solicita.</p>
+  <div class="keyrow"><span><i style="background:var(--l)"></i>Pone la Gobernación</span><span><i style="background:var(--b)"></i>Ya comprometido por la Nación o privados</span><span><i style="background:var(--g)"></i>Se solicita</span></div>
+  <div class="bars reveal" id="bars"></div>
+  <div class="totbox reveal">
+    <div><span>26 municipios que se apoyan en el Departamento</span><b id="tot26">$1,98 billones</b></div>
+    <div><span>Manizales (reportado por la Alcaldía, descontado el Fondo Milagro)</span><b>$2,06 billones</b></div>
+    <div><span>Total del departamento</span><b id="totAll">$4,04 billones</b></div>
+  </div>
+  <p class="src">Fuente: PAE departamental, formato FR-1703 (necesidad de $2.217.050 M para 26 municipios). Las demoliciones no están en el PAE y se estiman a $30–50 M por inmueble. Los $92.915 M radicados en Obras por Impuestos reducirían el faltante si se aprueban.</p>
+</div></section>
+
+<section class="s" id="proyectos"><div class="wrap">
+  <p class="kick">4 · Proyectos listos para financiar</p>
+  <h2>No llegamos con ideas: llegamos con proyectos</h2>
+  <p class="lead">Proyectos con municipio, valor y etapa definidos. La barra de madurez indica cuánto camino llevan: idea, estudios, diseños o viabilidad, radicado o en adjudicación, en ejecución.</p>
+  <div class="filt" id="filt"></div>
+  <div class="proj" id="proj"></div>
+</div></section>
+
+<section class="s" id="cuentas"><div class="wrap">
+  <p class="kick">5 · Cuentas claras</p>
+  <h2>Cada peso tiene nombre, municipio y contrato</h2>
+  <p class="lead">El recorrido de un recurso del Fondo Milagro en Caldas, de principio a fin, con seguimiento público en esta plataforma.</p>
+  <div class="flow reveal">
+    <div class="fs"><div class="n">1</div><b>Fondo Milagro</b><span>Aprueba el recurso para una línea y un municipio.</span></div>
+    <div class="fs"><div class="n">2</div><b>INFICaldas</b><span>Administra el recurso y gira contra avance.</span></div>
+    <div class="fs"><div class="n">3</div><b>Gobernación</b><span>Contrata con el régimen de la emergencia y envía copia a la Contraloría.</span></div>
+    <div class="fs"><div class="n">4</div><b>Obra en el municipio</b><span>Con interventoría y reporte del municipio en el formato FR-1703.</span></div>
+    <div class="fs"><div class="n">5</div><b>paecaldas.co</b><span>Publica avance, valor y estado de cada proyecto.</span></div>
+  </div>
+  <h3 style="margin:0 0 12px;font-size:20px;color:var(--g2)">Contratos y actos ya remitidos a la Contraloría General de Caldas</h3>
+  <div style="overflow-x:auto" class="reveal"><table class="t" id="contra"></table></div>
+  <p class="src">Fuente: relación de contratos de la emergencia remitida a la Contraloría (26-nov-2026). Las transferencias de subsidios de arriendo se hicieron por 17 resoluciones del Fondo Departamental de Gestión del Riesgo.</p>
+</div></section>
+
+<section class="s" id="municipios"><div class="wrap">
+  <p class="kick">6 · Por municipio</p>
+  <h2>El detalle de cada municipio, en un solo lugar</h2>
+  <div class="msel"><label for="mun" style="font-weight:600">Municipio</label><select id="mun"></select></div>
+  <div class="grid2">
+    <div class="mpanel" id="mpanel"></div>
+    <div class="mapbox"><svg id="map2" role="img" aria-label="Mapa de Caldas"></svg></div>
+  </div>
+</div></section>
+
+<section class="s" id="terreno"><div class="wrap">
+  <p class="kick">7 · En terreno</p>
+  <h2>La respuesta, desde el primer día</h2>
+  <p class="lead">Registro fotográfico de la Unidad Departamental de Gestión del Riesgo.</p>
+  <div class="gal reveal">
+    <figure class="w h"><img src="/img/udeger/u1.jpg" alt="Sesión del Puesto de Mando Unificado" loading="lazy"><figcaption>Puesto de Mando Unificado: coordinación de la respuesta</figcaption></figure>
+    <figure><img src="/img/udeger/u2.jpg" alt="Recorrido de verificación en un municipio afectado" loading="lazy"><figcaption>Recorridos de verificación</figcaption></figure>
+    <figure><img src="/img/udeger/u3.jpg" alt="Recorrido por un barrio afectado" loading="lazy"><figcaption>Visitas a barrios afectados</figcaption></figure>
+    <figure class="w"><img src="/img/udeger/u5.jpg" alt="Equipo de la UDEGER en terreno" loading="lazy"><figcaption>Equipo técnico en terreno</figcaption></figure>
+    <figure><img src="/img/udeger/u4.jpg" alt="Recorrido con autoridades" loading="lazy"><figcaption>Acompañamiento a las alcaldías</figcaption></figure>
+    <figure><img src="/img/udeger/u6.jpg" alt="Mesa de trabajo de la reconstrucción" loading="lazy"><figcaption>Mesas de trabajo de la reconstrucción</figcaption></figure>
+    <figure class="w"><img src="/img/pm/belalcazar-calle-esperanza.jpg" alt="Diseño de la Calle de la Esperanza en Belalcázar" loading="lazy"><figcaption>Belalcázar · Calle de la Esperanza, Pueblos Milagro (diseño)</figcaption></figure>
+  </div>
+</div></section>
+
+<section class="s close" id="cierre"><div class="wrap cgrid">
+  <div>
+    <p class="kick" style="color:var(--y)">La propuesta</p>
+    <h2>Con $1,98 billones, los 26 municipios que se apoyan en el Departamento reconstruyen 1.484 viviendas, 711 sedes educativas y 329 puntos críticos de taludes</h2>
+    <p class="lead">Caldas ya puso $222.500 millones, tiene proyectos radicados y un sistema público de seguimiento. Pedimos al Fondo Milagro que sea el socio de esta reconstrucción.</p>
+    <div class="docs">
+      <a href="/documentos/PAE_Caldas_v2.0_corte_2026-11-19.pdf" target="_blank" rel="noopener">PAE de Caldas (PDF)</a>
+      <a href="/documentos/Decreto_392_2026_calamidad_publica.pdf" target="_blank" rel="noopener">Decreto 392 de 2026</a>
+      <a href="/" target="_blank" rel="noopener">Plataforma paecaldas.co</a>
+      <a href="#" id="print">Guardar esta presentación en PDF</a>
+    </div>
+  </div>
+  <div class="qr"><img src="/img/qr-fondo-milagro.svg" alt="Código QR de esta página"><small>Escanee para llevarse esta presentación en su celular</small></div>
+</div></section>
+<footer><div class="wrap">Gobernación de Caldas · Grupo de Reconstrucción del Departamento · Cifras con corte al 26 de noviembre de 2026 · paecaldas.co</div></footer>
+<div class="pnav"><button type="button" id="pprev" aria-label="Anterior">↑</button><button type="button" id="pnext" aria-label="Siguiente">↓</button><button type="button" id="pexit" aria-label="Salir del modo presentación">✕</button></div>
+
+<script src="/catalogo.js"></script>
+<script src="/mapa-caldas.js"></script>
+<script src="/educacion.js"></script>
+<script src="/vivienda.js"></script>
+<script src="/salud.js"></script>
+<script src="/ayuda-humanitaria.js"></script>
+<script src="/recursos-gob.js"></script>
+<script src="/rud.js"></script>
+<script src="/fondo-milagro/fm-data.js"></script>
+<script src="/fondo-milagro/fm.js"></script>
+</body>
+</html>
