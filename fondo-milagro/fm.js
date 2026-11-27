@@ -45,7 +45,7 @@ function renderSol(){const S=FM.sol.map(x=>({...x,p:x.n-x.g-x.y}));const D=FM.de
     <div class="tr" title="Necesidad total ${M1(x.n)}"><i class="pide" data-w="${w(x.n)}"></i><i class="ya" data-w="${w(x.g+x.y)}"></i><i class="gob" data-w="${w(x.g)}"></i></div>
     <div class="v">${M1(x.p)}</div></div>`}).join("");
   const t26=S.reduce((a,x)=>a+x.p,0),mz=FM.maniz.nec-FM.maniz.fm;
-  $("#tot26").textContent="$"+fmt(t26/1e6,2)+" billones";$("#totAll").textContent="$"+fmt((t26+mz)/1e6,2)+" billones"}
+  $("#tot26").textContent="$"+fmt(t26/1e6,2)+" billones";$("#totAll").textContent="$"+fmt((t26+mz+740000)/1e6,2)+" billones"}
 
 /* ---------- proyectos ---------- */
 const STG=["Idea o plan","Estudios","Diseños o viabilidad","Radicado o en adjudicación","En ejecución"];
