@@ -104,6 +104,8 @@ window.PAE_CIFRAS_NUEVAS=[
  {ind:"plan_fuente",cat:"INFICaldas",valor:2000000000,fecha:"2026-11-24",fuente:"Gobernación de Caldas"}
 ];
 window.PAE_ACC_NUEVAS=[
+ {fecha:"2026-09-14",titulo:"Presupuesto para la emergencia",texto:"Se sanciona la Ordenanza 1016: adición de $41.799,9 millones al presupuesto 2026, con $21.350,3 millones para el Fondo de Gestión del Riesgo ($18.020,3 millones del FOMAG para infraestructura educativa) y traslados por $9.540,5 millones",fuente:"Asamblea Departamental de Caldas"},
+ {fecha:"2026-10-01",titulo:"Exención de estampillas",texto:"Se sanciona la Ordenanza 1017: los pagos de los contratos de la calamidad quedan exentos de las estampillas departamentales (8 %) mientras dure la calamidad pública",fuente:"Asamblea Departamental de Caldas"},
  {fecha:"2026-11-13",titulo:"Alivio en el impuesto de vehículos",texto:"Se sanciona la Ordenanza 1019: descuento de hasta el 80 % en sanciones e intereses de mora del impuesto sobre vehículos; para la vigencia 2026, solo para los damnificados del sismo",fuente:"Asamblea Departamental de Caldas"},
  {fecha:"2026-11-17",titulo:"Balance de vivienda y demoliciones",texto:"La Secretaría de Vivienda y Territorio consolida la necesidad de vivienda de los 26 municipios y la Reserva Santa María ($407.721,8 millones) y el inventario de 393 edificaciones por demoler (oficio S.V 1198)",fuente:"Secretaría de Vivienda y Territorio"},
  {fecha:"2026-11-18",titulo:"Empréstito aprobado",texto:"La Asamblea aprueba en segundo debate la Ordenanza 1021, sancionada el 20 de noviembre: empréstito de hasta $100.000 millones para hospitales, el Laboratorio de Salud Pública, centros infantiles, bomberos, 400 viviendas rurales y comercio",fuente:"Asamblea Departamental de Caldas"},
