@@ -51,7 +51,7 @@ window.PAE_VIV = {
       ["Pácora", [["Reposición del Hospital Santa Teresita", 27845]]],
       ["Victoria", [["Centro de Integración para la Primera Infancia", 5718]]]
     ],
-    nota: "Villamaría, Anserma, Pensilvania, Riosucio y Marulanda tienen demoliciones pero no proyectos en el empréstito. Las 7 escuelas por demoler (Anserma y Riosucio) tampoco tienen línea en él. El informe de la Secretaría describe el empréstito como «en trámite»; la Asamblea ya lo aprobó con la Ordenanza 1021."
+    nota: "Las demoliciones de Villamaría, Anserma, Pensilvania, Riosucio y Marulanda y las 7 escuelas por demoler (Anserma y Riosucio) hacen parte de la solicitud al Fondo Milagro. La Asamblea aprobó el empréstito con la Ordenanza 1021."
   },
   valoresDem: [["Villamaría", "1 de 45", "$1.711 millones", "Edificio Caracoles de Colores (22 apartamentos)"], ["Belalcázar", "37 de 37", "$1.110 a $1.850 millones", "Entre $30 y $50 millones por inmueble"], ["Pensilvania", "14 de 14", "$52 millones", "Cerca de $50.000 por m²"], ["Pácora", "1 de 8", "$38 millones", "Vivienda urbana"]]
 };
