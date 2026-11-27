@@ -104,7 +104,8 @@ window.PAE_CIFRAS_NUEVAS=[
  {ind:"plan_fuente",cat:"INFICaldas",valor:2000000000,fecha:"2026-11-24",fuente:"Gobernación de Caldas"}
 ];
 window.PAE_ACC_NUEVAS=[
+ {fecha:"2026-11-13",titulo:"Alivio en el impuesto de vehículos",texto:"Se sanciona la Ordenanza 1019: descuento de hasta el 80 % en sanciones e intereses de mora del impuesto sobre vehículos; para la vigencia 2026, solo para los damnificados del sismo",fuente:"Asamblea Departamental de Caldas"},
  {fecha:"2026-11-17",titulo:"Balance de vivienda y demoliciones",texto:"La Secretaría de Vivienda y Territorio consolida la necesidad de vivienda de los 26 municipios y la Reserva Santa María ($407.721,8 millones) y el inventario de 393 edificaciones por demoler (oficio S.V 1198)",fuente:"Secretaría de Vivienda y Territorio"},
- {fecha:"2026-11-18",titulo:"Empréstito aprobado",texto:"La Asamblea aprueba en segundo debate la Ordenanza 1021: empréstito de hasta $100.000 millones para hospitales, centros infantiles, bomberos, 400 viviendas rurales y comercio",fuente:"Asamblea Departamental de Caldas"},
+ {fecha:"2026-11-18",titulo:"Empréstito aprobado",texto:"La Asamblea aprueba en segundo debate la Ordenanza 1021, sancionada el 20 de noviembre: empréstito de hasta $100.000 millones para hospitales, el Laboratorio de Salud Pública, centros infantiles, bomberos, 400 viviendas rurales y comercio",fuente:"Asamblea Departamental de Caldas"},
  {fecha:"2026-11-23",titulo:"Plan de reconstrucción de sedes educativas",texto:"La Secretaría de Educación estima en $120.000 millones la reconstrucción de las sedes de los 26 municipios; 92 sedes con estudiantes fuera de su aula y 379 a la espera de estudios y diseños",fuente:"Secretaría de Educación de Caldas"}
 ];
