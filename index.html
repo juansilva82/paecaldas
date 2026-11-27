@@ -2126,7 +2126,7 @@ const CIF_IND={
  plan_fuente:{n:"Plan financiero: valor por fuente",u:"pesos",t:"$",cat:1},
  modificacion:{n:"Modificación presupuestal",u:"pesos",t:"$"},
  animales_kg:{n:"Alimento para animales",u:"kg",t:"n"},
- fondo_milagro_amb:{n:"Estimación ambiental para el Fondo Milagro",u:"pesos",t:"$"}
+ fondo_milagro_amb:{n:"Estimación ambiental preliminar para el Fondo Milagro (octubre)",u:"pesos",t:"$"}
 };
 const cifFmt=(ind,v)=>{const t=(CIF_IND[ind]||{}).t;return t==="$"?moneyM(v):t==="%"?fmt(v)+" %":(v%1?v.toLocaleString("es-CO",{maximumFractionDigits:1}):fmt(v))};
 const cifMerge=C=>{const r=(C||[]).slice(),k=x=>[x.ind,x.fecha,x.cat||""].join("|"),h=new Set(r.map(k));(window.PAE_CIFRAS_NUEVAS||[]).forEach(x=>{if(!h.has(k(x)))r.push(x)});return r};
@@ -2202,7 +2202,7 @@ function renderGob(C){
   const cat=cifCats(C),pen=cat("ungrd_pendientes"),por=cat("portafolio_tipo"),pf=cat("plan_fuente");
   if(pen.length){const t=pen.reduce((a,x)=>a+x.valor,0);$("#gobPenSub").textContent=`${fmt(t)} giros pendientes · ${fcorte(pen[0].fecha)} · ${pen[0].fuente}`;donut($("#gobPen"),pen.sort((a,b)=>b.valor-a.valor).slice(0,6).map((x,i)=>({k:x.cat,v:x.valor,c:/otros/i.test(x.cat)?GRIS:PAL[i]})),fmt(t),"pendientes",v=>fmt(v))}else $("#gobPen").innerHTML='<p class="muted">Sin datos.</p>';
   if(por.length){const t=por.reduce((a,x)=>a+x.valor,0),m=u("portafolio_monto");$("#gobPorSub").textContent=`${fmt(t)} proyectos${m?" por "+moneyM(m.valor):""} · ${fcorte(por[0].fecha)} · ${por[0].fuente}`;donut($("#gobPor"),por.sort((a,b)=>b.valor-a.valor).map((x,i)=>({k:x.cat+(x.nota?" ("+x.nota+")":""),v:x.valor,c:i<6?PAL[i]:GRIS})),fmt(t),"proyectos",v=>fmt(v))}else $("#gobPor").innerHTML='<p class="muted">Sin datos.</p>';
-  const rec=[["plan_total","Plan financiero de la emergencia (fuentes proyectadas)"],["fondo_milagro_amb","Estimación ambiental para el Fondo Milagro"],["portafolio_monto","Portafolio inicial de reconstrucción"],["modificacion","Modificación presupuestal"],["banco_contrato","Contrato del banco de materiales"],["contratos_monto","Contratos de emergencia"],["ungrd_giros","Giros UNGRD acompañados"],["arriendo_monto","Subsidio departamental de arrendamiento"]].map(([k,t])=>{const x=u(k);return x?{k:t,v:x.valor,t:t+" · "+fcorte(x.fecha)+" · "+x.fuente}:null}).filter(Boolean).sort((a,b)=>b.v-a.v);
+  const rec=[["plan_total","Plan financiero de la emergencia (fuentes proyectadas)"],["fondo_milagro_amb","Estimación ambiental preliminar para el Fondo Milagro (octubre)"],["portafolio_monto","Portafolio inicial de reconstrucción"],["modificacion","Modificación presupuestal"],["banco_contrato","Contrato del banco de materiales"],["contratos_monto","Contratos de emergencia"],["ungrd_giros","Giros UNGRD acompañados"],["arriendo_monto","Subsidio departamental de arrendamiento"]].map(([k,t])=>{const x=u(k);return x?{k:t,v:x.valor,t:t+" · "+fcorte(x.fecha)+" · "+x.fuente}:null}).filter(Boolean).sort((a,b)=>b.v-a.v);
   dbars($("#gobRec"),rec,moneyM);
   const pt=u("plan_total");$("#gobPlan").innerHTML=pf.length?"Plan financiero por fuente: "+pf.map(x=>`${esc(x.cat)} ${moneyM(x.valor)}`).join(" · "):pt?`Plan financiero: ${esc(pt.nota||"")}.`:"";
 }
